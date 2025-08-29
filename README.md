@@ -17,7 +17,7 @@ A clear showcase of the association with its missions and activities, including 
 
 - **More Details:**
 
-For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](htttp...)
+For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage1/Portfolio-stage1-Zafira.pdf)
 
 ## 2️⃣ MVP & Main Features
 
