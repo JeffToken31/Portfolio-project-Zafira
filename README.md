@@ -23,7 +23,7 @@ For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](h
 
 A condensed overview of the Project Charter. For full details, see the dedicated document:
 
-[Stage 2 – Project Charter](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage1/Portfolio-stage2-stage2.pdf)
+[Stage 2 – Project Charter](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/dev/stage2/stage2.pdf)
 
 - **Objective (SMART):**
 
