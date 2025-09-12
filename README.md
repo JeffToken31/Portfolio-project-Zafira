@@ -4,7 +4,7 @@
 
 🔗 **Project Name**: Zafira Solidaire
 
-- **Objective::**
+- **Objective:**
 
 Provide visibility and simple tools for the Zafira Solidaire association to showcase its actions, attract new members, highlight its funders (town halls, Pôle emploi, institutions), and present professional services.
 
@@ -19,7 +19,51 @@ A clear showcase of the association with its missions and activities, including 
 
 For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage1/Portfolio-stage1-Zafira.pdf)
 
-## 2️⃣ MVP & Main Features
+## 2️⃣ Project Charter
+
+A condensed overview of the Project Charter. For full details, see the dedicated document:
+
+[Stage 2 – Project Charter](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage1/Portfolio-stage2-stage2.pdf)
+
+- **Objective (SMART):**
+
+  1. Attract at least 3 institutional funders.
+  2. Implement a counter for beneficiaries and clothing donations (functional by 07/11/2025).
+  3. Create an activities section (articles, calendar, event registrations).
+
+- **Stakeholders & Roles:**
+
+  - Internal: project team (PM, devs, UI/UX, QA, doc manager).
+
+  - External: administrators, beneficiaries, sponsors, donors, visitors.
+
+  - Third-party services: HelloAsso (donations), Weezevent (event management).
+
+- **Scope:**
+
+  ✅ Public website, dashboard, member access, donations, sponsor logos.
+
+  ❌ Mobile app, advanced analytics, donation marketplace, founder’s paid catalog.
+
+- **Risks:**
+
+  - Tight deadlines, dependency on content delivery, external API complexity, team’s limited experience with Next/Nest.
+
+  - Mitigation: prioritize MVP features, clear communication, tutor support, testing & backups.
+
+- **High-Level Plan:**
+
+  - Stage 1: Brainstorming
+
+  - Stage 2: Project Charter
+
+  - Stage 3: Technical Documentation (Weeks 5–6)
+
+  - Stage 4: MVP Development (Weeks 7–10)
+
+  - Stage 5: Closure & Presentation (Weeks 11–12)
+
+## 3️⃣ MVP & Main Features
 
 - **Homepage**
 
@@ -63,7 +107,7 @@ For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](h
 
   - Direct link to Hello Asso for donations.
 
-## 3️⃣ Technologies Used
+## 4️⃣ Tech Stack
 
 | Technology            | Purpose / Justification |
 | ----------------------| ------------------------- |
@@ -73,7 +117,7 @@ For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](h
 | Versioning: GitHub      | Efficient collaboration and project versioning          |
 | Containerization: Docker & Docker Compose      | Ensure identical development & deployment environments          |
 
-## 4️⃣ User Types
+## 5️⃣ User Types
 
 - **Administrator:** full access to dashboard, account validation, content management, statistics tracking.
 
@@ -83,7 +127,7 @@ For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](h
 
 - **Donors:** no account required, direct access to donation link.
 
-## 5️⃣ Architecture & Quick Setup
+## 6️⃣ Architecture & Quick Setup
 
 ### Folder Structure
 
@@ -120,7 +164,7 @@ For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](h
 
   `sudo docker-compose exec backend sh`
 
-## 6️⃣ Getting Started
+## 7️⃣ Getting Started
 
 1. Clone this repository:
 
@@ -144,6 +188,6 @@ For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](h
 
 ## 🧑‍🏫 Authors
 
-👨‍💻 Ingrind Morniac: <https://github.com/Mornac>
+👨‍💻 Ingrid Mornac: <https://github.com/Mornac>
 
 👨‍💻 Jeffrey Basset: <https://github.com/JeffToken31>
