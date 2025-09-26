@@ -133,7 +133,7 @@ Stage 3 translates project objectives into a concrete technical blueprint for th
 This concise summary highlights the outputs produced during the stage: prioritized user stories and mockups, a high-level system architecture and layer overview, component and class diagrams, database schema (ERD), sequence diagrams for key flows, API specifications (internal and external), and SCM & QA plans.  
 
 These materials form the technical reference for development and help ensure the project is scalable, maintainable and aligned with stakeholders.  
-👉 For the full technical documentation, see: [stage3/README.md](./stage3/README.md)
+👉 For the full technical documentation, see: [stage3/README.md](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/README.md)
 
 ## 🏗️ Architecture & Quick Setup
 
