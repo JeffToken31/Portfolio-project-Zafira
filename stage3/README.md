@@ -114,7 +114,7 @@ This structured approach ensures clarity on priorities, responsibilities, and ex
 
 ### 🖼️ Mockups
 
-![Project Mockups](./assets/mockups.gif)
+![Project Mockups](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/15-stage3_update_project/stage3/annexes/Zafira-mockup.gif)
 
 Our mockups were designed to give a **visual identity** to the project and to make the user stories more tangible.  
 They serve as a bridge between the functional vision and the actual interface, helping both the development team and stakeholders to project themselves into the future platform.  
