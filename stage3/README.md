@@ -154,6 +154,8 @@ It separates the responsibilities into clear layers, making the system easier to
 
 ### 🔹 High-Level Architecture
 
+This diagram shows the main components of the system and their interactions:
+
 ```mermaid
 
 graph TD
@@ -246,8 +248,6 @@ graph TD
     class External external
     class Users users
 ```
-
-This diagram shows the main components of the system and their interactions:
 
 ### 🖥️ Frontend (Next.js)
 
