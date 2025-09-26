@@ -1,5 +1,20 @@
 # 🌟 Zafira Solidaire – Technical Documentation
 
+## 🗂️Summary
+
+* [📝User Stories & Mockups](#user-stories--mockups)
+* [🏗️System Architecture](#️system-architecture)
+* [🧩Components, Classes & Database Design](#components-classes--database-design)
+* [🔄Sequence Diagrams](#sequence-diagrams)
+* [🌐API Specifications](#api-specifications)
+* [🖥️Public / Frontend](#️public--frontend)
+* [⚙️Admin / Dashboard](#️admin--dashboard)
+* [🛠️SCM & QA Strategies](#️scm--qa-strategies)
+* [💡Technical Justifications](#technical-justifications)
+
+---
+<br/>
+
 ## 📝 User Stories & Mockups
 
 Our platform is designed with multiple user types, each having distinct needs and priorities.
@@ -9,80 +24,80 @@ The following User Stories describe the main actions and goals of each type of u
 
 #### Must Have
 
-- View the mission, objectives, and history of the association to understand its purpose.
-- See the 2 latest blog articles with a link to the full blog to stay informed.
-- View statistics (beneficiaries, clothes collected, etc.) to understand the association's impact.
-- Browse mission, blog, workshops, and events to learn about the association's work.
+* View the mission, objectives, and history of the association to understand its purpose.
+* See the 2 latest blog articles with a link to the full blog to stay informed.
+* View statistics (beneficiaries, clothes collected, etc.) to understand the association's impact.
+* Browse mission, blog, workshops, and events to learn about the association's work.
 
 #### Should Have
 
-- See a preview of workshops with a link to the catalogue to explore professional insertion opportunities.
-- Read more information about the association to learn more about the organization.
-- See upcoming funded events to participate or get informed.
+* See a preview of workshops with a link to the catalogue to explore professional insertion opportunities.
+* Read more information about the association to learn more about the organization.
+* See upcoming funded events to participate or get informed.
 
 #### Could Have
 
-- See partner/donor logos and contact instructions to contact or recognize contributors.
+* See partner/donor logos and contact instructions to contact or recognize contributors.
 
 #### Won’t Have
 
-- Access to the professional paid catalogue of the founder, which remains on a separate website.
+* Access to the professional paid catalogue of the founder, which remains on a separate website.
 
 ### 🛠️ Administrator
 
 #### Must Have
 
-- Add, update, or delete blog articles to keep the blog updated.
-- Add or update workshops and events to keep the catalogue and events current.
-- Update statistics to show up-to-date impact numbers.
-- Approve beneficiary member accounts to control access to private sections.
+* Add, update, or delete blog articles to keep the blog updated.
+* Add or update workshops and events to keep the catalogue and events current.
+* Update statistics to show up-to-date impact numbers.
+* Approve beneficiary member accounts to control access to private sections.
 
 #### Should Have
 
-- Approve or update partner/donor logo requests to display correct supporter information.
+* Approve or update partner/donor logo requests to display correct supporter information.
 
 #### Could Have
 
-- View simple statistics (connections, accounts created, etc.) to monitor platform activity.
+* View simple statistics (connections, accounts created, etc.) to monitor platform activity.
 
 #### Won’t Have
 
-- Advanced analytics; only basic stats are included.
+* Advanced analytics; only basic stats are included.
 
 ### 👤 Beneficiary / User
 
 #### Must Have
 
-- Create an account (validated by admin) to access private features such as the events calendar.
-- View the event calendar to stay informed and register for events.
-- Register for events via Weezevent to secure participation.
+* Create an account (validated by admin) to access private features such as the events calendar.
+* View the event calendar to stay informed and register for events.
+* Register for events via Weezevent to secure participation.
 
 #### Should Have
 
-- Leave a testimonial to share experiences and promote the association.
+* Leave a testimonial to share experiences and promote the association.
 
 #### Won’t Have
 
-- Native mobile application (only a responsive web application is planned).
-- Full automation of workshop registrations (Weezevent integration is limited).
-- Access to a “Community Club” space with messaging and activity feed.
+* Native mobile application (only a responsive web application is planned).
+* Full automation of workshop registrations (Weezevent integration is limited).
+* Access to a “Community Club” space with messaging and activity feed.
 
 ### 🤝 Partner / Donor / Sponsor
 
 #### Must Have
 
-- Be redirected to HelloAsso for secure financial contributions.
-- Access contact information to arrange clothing donations directly with the association.
+* Be redirected to HelloAsso for secure financial contributions.
+* Access contact information to arrange clothing donations directly with the association.
 
 #### Could Have
 
-- Have their logo displayed with contact info to show support publicly.
+* Have their logo displayed with contact info to show support publicly.
 
 #### Won’t Have
 
-- Access to the professional paid catalogue of the founder.
-- Access to an online clothing donation marketplace.
-- Ability to create accounts or manage logos directly via HelloAsso API integration.
+* Access to the professional paid catalogue of the founder.
+* Access to an online clothing donation marketplace.
+* Ability to create accounts or manage logos directly via HelloAsso API integration.
 
 ### 📝 User Stories Table
 
@@ -124,9 +139,9 @@ This ensures that the mobile experience is fluid, accessible, and intuitive, whi
 
 To ensure accessibility, the mockups are available in multiple formats:  
 
-- A **GIF** to quickly preview the main flows,  
-- **Figma** for full exploration,  
-- And **PDF exports** to preserve a static, sharable version.  
+* A **GIF** to quickly preview the main flows,  
+* **Figma** for full exploration,  
+* And **PDF exports** to preserve a static, sharable version.  
 
 A special effort was made on the **visual identity**. The chosen color palette combines **vivid tones** with **sobriety and elegance**, in order to remain both professional and engaging.  
 This balance not only enhances readability but also ensures coherence with the values of the association. Even in the absence of direct feedback, the design has been shaped to reflect the expectations expressed by its president and to stay faithful to the organization’s image.  
@@ -139,13 +154,13 @@ In short, these mockups are more than just visuals: they are a **design foundati
 
 #### 🎨 Figma Designs
 
-- [🌐 Web Mockup (Figma)](https://www.figma.com/community/file/1552746420096755192)  
-- [📱 Mobile Mockup (Figma)](https://www.figma.com/community/file/1552745867417046514)  
+* [🌐 Web Mockup (Figma)](https://www.figma.com/community/file/1552746420096755192)  
+* [📱 Mobile Mockup (Figma)](https://www.figma.com/community/file/1552745867417046514)  
 
 #### 📄 PDF Versions
 
-- [🌐 Web Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/Zafira_website-mockup.pdf)  
-- [📱 Mobile Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/Zafira_mobil-mockup.pdf)  
+* [🌐 Web Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/Zafira_website-mockup.pdf)  
+* [📱 Mobile Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/Zafira_mobil-mockup.pdf)  
 
 ## 🏗️ System Architecture
 
@@ -251,46 +266,46 @@ graph TD
 
 ### 🖥️ Frontend (Next.js)
 
-- Provides all the public pages (*mission, blog, workshops, events*).
-- Two dashboards:
-  - **Beneficiary Dashboard**: personalized features (calendar, testimonials).
-  - **Administrator Dashboard**: content and user management.
+* Provides all the public pages (*mission, blog, workshops, events*).
+* Two dashboards:
+  * **Beneficiary Dashboard**: personalized features (calendar, testimonials).
+  * **Administrator Dashboard**: content and user management.
 
 ### ⚙️ Backend (NestJS)
 
-- Organized into independent modules:
-  - User, Blog, Action, Testimonial, Partner, Statistic.
-- Includes transversal services:
-  - Authentication
-  - Notifications
-  - Scheduling tasks
+* Organized into independent modules:
+  * User, Blog, Action, Testimonial, Partner, Statistic.
+* Includes transversal services:
+  * Authentication
+  * Notifications
+  * Scheduling tasks
 
 ### 🗄️ Database (PostgreSQL)
 
-- Central storage for all persistent entities:
-  - Users, blog articles, workshops, statistics, testimonials, partners.
-- Relational structure ensures **data integrity** and facilitates **reporting**.
+* Central storage for all persistent entities:
+  * Users, blog articles, workshops, statistics, testimonials, partners.
+* Relational structure ensures **data integrity** and facilitates **reporting**.
 
 ### 🌍 External Services
 
-- **Weezevent**: event registration and ticketing.
-- **HelloAsso**: secure donations and sponsorships.
-- **Google Auth**: authentication via Google accounts.
-- **Sendgrid**: transactional emails (notifications, confirmations).
+* **Weezevent**: event registration and ticketing.
+* **HelloAsso**: secure donations and sponsorships.
+* **Google Auth**: authentication via Google accounts.
+* **Sendgrid**: transactional emails (notifications, confirmations).
 
 ---
 
 ### 🔹 Data Flow
 
-- Users (web or mobile) interact with the **frontend**.
-- For **public content** (mission, blog, events), the frontend may:
-  - Call the backend, or
-  - Directly embed external services (e.g., Weezevent iframe).
-- **Authenticated users** (beneficiaries, admins) access dashboards, which call the **backend API**.
-- The backend:
-  - Communicates with the **database** for CRUD operations.
-  - Synchronizes with **external services** when required (HelloAsso, Sendgrid, etc.).
-- Notification services ensure **real-time** or **scheduled updates**  
+* Users (web or mobile) interact with the **frontend**.
+* For **public content** (mission, blog, events), the frontend may:
+  * Call the backend, or
+  * Directly embed external services (e.g., Weezevent iframe).
+* **Authenticated users** (beneficiaries, admins) access dashboards, which call the **backend API**.
+* The backend:
+  * Communicates with the **database** for CRUD operations.
+  * Synchronizes with **external services** when required (HelloAsso, Sendgrid, etc.).
+* Notification services ensure **real-time** or **scheduled updates**  
   (e.g., when a testimonial is submitted or a new action is created).
 
 ### 📚 System Layer Overview
@@ -815,11 +830,11 @@ They show the interactions between frontend, backend, database and external serv
 
 This diagram explains the full Google OAuth sign-in flow:
 
-- backend provides the Google auth URL (with a CSRF state),
-- user is redirected to Google and consents,
-- frontend sends the returned code to the backend,
-- backend exchanges the code for tokens, verifies the ID token, and creates or retrieves the user in the database,
-- backend issues the application JWT and refresh token.
+* backend provides the Google auth URL (with a CSRF state),
+* user is redirected to Google and consents,
+* frontend sends the returned code to the backend,
+* backend exchanges the code for tokens, verifies the ID token, and creates or retrieves the user in the database,
+* backend issues the application JWT and refresh token.
 
 ```mermaid
 sequenceDiagram
@@ -888,13 +903,13 @@ sequenceDiagram
 
 This diagram describes the signup process using email/password and SendGrid for verification:
 
-- user submits the signup form,
+* user submits the signup form,
 
-- backend hashes the password and creates a user record with is_verified=false,
+* backend hashes the password and creates a user record with is_verified=false,
 
-- backend generates a verification token and sends the email via SendGrid,
+* backend generates a verification token and sends the email via SendGrid,
 
-- user clicks the verification link, backend validates the token, and marks the account as verified.
+* user clicks the verification link, backend validates the token, and marks the account as verified.
 
 ```mermaid
 sequenceDiagram
@@ -937,11 +952,11 @@ sequenceDiagram
 
 This diagram illustrates the scheduled statistics pipeline:
 
-- a scheduler triggers the AutoStatistic service daily,
+* a scheduler triggers the AutoStatistic service daily,
 
-- AutoStatistic retrieves base statistics and computes metrics (visitors, beneficiaries, available actions),
+* AutoStatistic retrieves base statistics and computes metrics (visitors, beneficiaries, available actions),
 
-- results are inserted/updated in the database as daily snapshots, with error handling and reporting.
+* results are inserted/updated in the database as daily snapshots, with error handling and reporting.
 
 ```mermaid
 sequenceDiagram
@@ -1166,9 +1181,9 @@ We use GitHub to manage our source code. Here is our workflow and rules:
 
 #### 1️⃣ Branches
 
-- Main: Stable, production-ready code.
-- Dev: Development branch, where all new features and fixes are integrated before going to Main.
-- Issue branches: One branch per issue (fix, add, feat, etc.).
+* Main: Stable, production-ready code.
+* Dev: Development branch, where all new features and fixes are integrated before going to Main.
+* Issue branches: One branch per issue (fix, add, feat, etc.).
 
 #### 2️⃣ Development Workflow
 
@@ -1222,12 +1237,12 @@ git push origin Task5-of-the-stage3
 git push origin <title>/#<issue_number>
 ```
 
-- Open a Pull Request from your branch to Dev.
-- After review and approval → merge into Dev.
+* Open a Pull Request from your branch to Dev.
+* After review and approval → merge into Dev.
 
 5. Merge Dev into Main  
 
-- Once Dev is stable and tested, merge into Main for production.
+* Once Dev is stable and tested, merge into Main for production.
 
 #### 3️⃣ Workflow Diagram (Concise View)
 
@@ -1247,20 +1262,20 @@ Gradual and controlled integration into Main.
 
 ##### Frontend (Next.js)
 
-- Unit Tests: React components, hooks, utilities
-- Integration Tests: Complete pages, Context Providers
-- E2E Tests: Critical user journeys
+* Unit Tests: React components, hooks, utilities
+* Integration Tests: Complete pages, Context Providers
+* E2E Tests: Critical user journeys
 
 ##### Backend (NestJS)
 
-- Unit Tests: Services, controllers, repositories
-- Integration Tests: API endpoints, database
-- Contract Tests: External APIs (Google OAuth, WeezEvent)
+* Unit Tests: Services, controllers, repositories
+* Integration Tests: API endpoints, database
+* Contract Tests: External APIs (Google OAuth, WeezEvent)
 
 ##### Database
 
-- Data Tests: Migrations, constraints, performance
-- Backup Tests: Backup and restore procedures
+* Data Tests: Migrations, constraints, performance
+* Backup Tests: Backup and restore procedures
 
 #### Testing tools
 
@@ -1268,52 +1283,52 @@ Gradual and controlled integration into Main.
 
 It tests individual functions or components.
 
-- Jest:
-  - Test a single behavior per test
-  - Keep tests fast and run on every commit  
+* Jest:
+  * Test a single behavior per test
+  * Keep tests fast and run on every commit  
 Example:
-  - Validating email or form inputs
+  * Validating email or form inputs
 
 #### 2️⃣ Integration Tests
 
 It verifies multiple modules work together correctly.
 
-- Supertest, SQL:
-  - Cover critical flows
-  - Automate tests in CI pipelines  
+* Supertest, SQL:
+  * Cover critical flows
+  * Automate tests in CI pipelines  
 Example:
-  - Form submission to backend returns correct response
-  - Blog controller
+  * Form submission to backend returns correct response
+  * Blog controller
 
 #### 3️⃣ API Tests
 
 It ensures API endpoints function as expected and follows documentation.
 
-- Postman, Swagger:
-  - Automate Postman collection runs in CI/CD
-  - Keep Swagger docs updated  
+* Postman, Swagger:
+  * Automate Postman collection runs in CI/CD
+  * Keep Swagger docs updated  
 Example:
-  - Test GET/POST/PUT/DELETE endpoints
+  * Test GET/POST/PUT/DELETE endpoints
 
 #### 4️⃣ End-to-End (E2E) Tests
 
 We test the complete user journey.
 
-- Cypress or Playwright (optional):
-  - Focus on critical user flows
-  - Maintain stable and maintainable tests  
+* Cypress or Playwright (optional):
+  * Focus on critical user flows
+  * Maintain stable and maintainable tests  
 Example:
-  - Beneficiary journey
+  * Beneficiary journey
 
 #### 5️⃣ Manual Testing
 
 That verifies critical functionality and UX  
 
-- Browser, mobile emulator, QA checklists
-  - Document test results and bugs
-  - Prioritize high-impact features  
+* Browser, mobile emulator, QA checklists
+  * Document test results and bugs
+  * Prioritize high-impact features  
 Example:
-  - Responsive design verification
+  * Responsive design verification
 
 #### Zafira - Possible Specific Testing Strategy
 
@@ -1341,78 +1356,78 @@ Considering the high growth potential of the association, we carefully selected 
 
 #### Next.js
 
-- Chosen for performance, server-side rendering (SSR/SSG), and SEO friendliness.
+* Chosen for performance, server-side rendering (SSR/SSG), and SEO friendliness.
 
-- Enables modular development with reusable pages and components.
+* Enables modular development with reusable pages and components.
 
-- Scalable structure: easy to add new features without adding unnecessary complexity.
+* Scalable structure: easy to add new features without adding unnecessary complexity.
 
 **React**:
 
-- Core of Next.js: reusable components, declarative UI, dynamic state management.
+* Core of Next.js: reusable components, declarative UI, dynamic state management.
 
-- Large ecosystem and community support for long-term maintenance and evolution.
+* Large ecosystem and community support for long-term maintenance and evolution.
 
 **Tailwind CSS**:
 
-- Rapid prototyping with utility-first classes.
+* Rapid prototyping with utility-first classes.
 
-- Ensures a responsive, mobile-first interface.
+* Ensures a responsive, mobile-first interface.
 
-- Maintains consistent and easily modifiable design.
+* Maintains consistent and easily modifiable design.
 
 **Global CSS**:
 
-- For universal rules, variables, and overrides.
+* For universal rules, variables, and overrides.
 
-- Complements Tailwind for custom styles.
+* Complements Tailwind for custom styles.
 
 **Iframes (Weezevent, HelloAsso)**:
 
-- Embed external services for events and donations without handling payments internally.
+* Embed external services for events and donations without handling payments internally.
 
-- Ensures security and simplicity.
+* Ensures security and simplicity.
 
 #### ⚙️ Backend
 
 **NestJS**:
 
-- Node.js framework based on Express and TypeScript.
+* Node.js framework based on Express and TypeScript.
 
-- Promotes a scalable and maintainable architecture with independent modules.
+* Promotes a scalable and maintainable architecture with independent modules.
 
-- Easy to extend functionality without rewriting core architecture.
+* Easy to extend functionality without rewriting core architecture.
 
-- Simplifies route, middleware, and service management for a professional-grade project.
+* Simplifies route, middleware, and service management for a professional-grade project.
 
 **Express.js**:
 
-- Lightweight and performant REST API engine used internally by NestJS.
+* Lightweight and performant REST API engine used internally by NestJS.
 
 **Prisma ORM**:
 
-- Secure, typed communication with PostgreSQL.
+* Secure, typed communication with PostgreSQL.
 
-- Automatic query and migration management.
+* Automatic query and migration management.
 
-- Improves security, maintainability, and developer productivity.
+* Improves security, maintainability, and developer productivity.
 
 **Authentication & Security**:
 
-- JWT + Refresh Tokens for secure sessions.
+* JWT + Refresh Tokens for secure sessions.
 
-- bcrypt for password hashing.
+* bcrypt for password hashing.
 
-- Google OAuth for quick login.
+* Google OAuth for quick login.
 
-- SendGrid for verification emails.
+* SendGrid for verification emails.
 
 #### 🗄 Database
 
 **PostgreSQL**:
 
-- Robust, relational, and scalable database.
+* Robust, relational, and scalable database.
 
-- Supports complex transactions and entity relationships (users, blogs, stats…).
+* Supports complex transactions and entity relationships (users, blogs, stats…).
 
-- Ensures reliability and scalability for the association’s growth.
+* Ensures reliability and scalability for the association’s growth.
