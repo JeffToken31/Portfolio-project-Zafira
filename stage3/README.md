@@ -144,8 +144,8 @@ In short, these mockups are more than just visuals: they are a **design foundati
 
 #### 📄 PDF Versions
 
-- [🌐 Web Mockup PDF](./images/Zafira_website-mockup.pdf)  
-- [📱 Mobile Mockup PDF](./images/Zafira_mobil-mockup.pdf)  
+- [🌐 Web Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/15-stage3_update_project/stage3/annexes/Zafira_website-mockup.pdf)  
+- [📱 Mobile Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/15-stage3_update_project/stage3/annexes/Zafira_mobil-mockup.pdf)  
 
 ## 🏗️ System Architecture
 
@@ -730,7 +730,7 @@ The design emphasizes clarity, accessibility, and alignment with the association
 
 📷 **Component Diagram**  
 
-![Frontend Component Diagram](./image/front_ui.jpg)
+![Frontend Component Diagram](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/15-stage3_update_project/stage3/annexes/front_ui.jpg)
 
 ---
 
