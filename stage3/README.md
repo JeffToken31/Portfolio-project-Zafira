@@ -2,13 +2,13 @@
 
 ## 🗂️Summary
 * [📝User Stories & Mockups](#user-stories--mockups)
-* [🏗️System Architecture](#system-architecture)
+* [🏗️System Architecture](#️system-architecture)
 * [🧩Components, Classes & Database Design](#components-classes--database-design)
 * [🔄Sequence Diagrams](#sequence-diagrams)
 * [🌐API Specifications](#api-specifications)
-* [🖥️Public Frontend](#public-frontend)
-* [⚙️Admin Dashboard](#admin-dashboard)
-* [🛠️SCM & QA Strategies](#scm--qa-strategies)
+* [🖥️Public / Frontend](#️public--frontend)
+* [⚙️Admin / Dashboard](#️admin--dashboard)
+* [🛠️SCM & QA Strategies](#️scm--qa-strategies)
 * [💡Technical Justifications](#technical-justifications)
 
 ---
