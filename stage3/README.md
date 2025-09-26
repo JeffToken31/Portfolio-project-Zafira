@@ -1,11 +1,27 @@
 # 🌟 Zafira Solidaire – Technical Documentation
 
-## 📝 User Stories & Mockups
+## 🗂️Summary
+* [📝User Stories & Mockups](#user-stories--mockups)
+* [🏗️System Architecture](#️system-architecture)
+* [🧩Components, Classes & Database Design](#components-classes--database-design)
+* [🔄Sequence Diagrams](#sequence-diagrams)
+* [🌐API Specifications](#api-specifications)
+* [🖥️Public / Frontend](#️public--frontend)
+* [⚙️Admin / Dashboard](#️admin--dashboard)
+* [🛠️SCM & QA Strategies](#️scm--qa-strategies)
+* [💡Technical Justifications](#technical-justifications)
+
+---
+<br/>
+
+
+## 📝User Stories & Mockups
 
 Our platform is designed with multiple user types, each having distinct needs and priorities.
 The following User Stories describe the main actions and goals of each type of user, structured using the MoSCoW method.
 
-### 👀 Visitor
+### 🧑‍💼 User Stories MosCow
+#### 👀 Visitor
 
 #### Must Have
 
@@ -28,7 +44,7 @@ The following User Stories describe the main actions and goals of each type of u
 
 - Access to the professional paid catalogue of the founder, which remains on a separate website.
 
-### 🛠️ Administrator
+#### 🛠️ Administrator
 
 #### Must Have
 
@@ -49,7 +65,7 @@ The following User Stories describe the main actions and goals of each type of u
 
 - Advanced analytics; only basic stats are included.
 
-### 👤 Beneficiary / User
+#### 👤 Beneficiary / User
 
 #### Must Have
 
@@ -67,7 +83,7 @@ The following User Stories describe the main actions and goals of each type of u
 - Full automation of workshop registrations (Weezevent integration is limited).
 - Access to a “Community Club” space with messaging and activity feed.
 
-### 🤝 Partner / Donor / Sponsor
+#### 🤝 Partner / Donor / Sponsor
 
 #### Must Have
 
@@ -147,7 +163,7 @@ In short, these mockups are more than just visuals: they are a **design foundati
 - [🌐 Web Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/Zafira_website-mockup.pdf)  
 - [📱 Mobile Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/Zafira_mobil-mockup.pdf)  
 
-## 🏗️ System Architecture
+## 🏗️System Architecture
 
 The architecture of our MVP has been designed with **modularity** and **scalability** in mind.  
 It separates the responsibilities into clear layers, making the system easier to maintain, extend, and secure.
@@ -347,7 +363,7 @@ classDiagram
     BusinessLogicLayer --> BusinessLogicLayer : "Shared utilities/internal services"
 ```
 
-## 🧩 Components, Classes & Database Design
+## 🧩Components, Classes & Database Design
 
 This section details the internal structure of the MVP. It covers three main aspects:  
 
@@ -806,7 +822,7 @@ Administrator interface with analytics (visitors per day, total visitors, regist
 
 Complete legal information: contact details (18 rue Charles Gouppy, Aulnay-sous-Bois), institutional links, social networks, newsletter and legal notices.
 
-## 🔄 Sequence Diagrams
+## 🔄Sequence Diagrams
 
 To illustrate the main runtime flows of the application, three sequence diagrams have been prepared.  
 They show the interactions between frontend, backend, database and external services for critical use cases: authentication, signup, and statistics generation.
@@ -973,7 +989,7 @@ sequenceDiagram
     AutoStat-->>Scheduler: 200 OK / Error report
 ```
 
-## 🌐 API Specifications
+## 🌐API Specifications
 
 This section documents all internal and external APIs integrated into the application.  
 It includes authentication flows, content management, statistics, user management, and partner/event services.  
@@ -1006,14 +1022,14 @@ They also allow users to manage their own profiles and passwords, while admin en
 Blog APIs allow both public access to published content and admin management for creating, updating, or deleting posts.  
 Public endpoints are used for the frontend display, while admin endpoints provide full dashboard capabilities.
 
-## Public / Frontend
+## 🖥️Public / Frontend
 
 | URL | Method | Role | Input | Output | Notes |
 |-----|--------|------|-------|--------|-------|
 | /api/blogs | GET | Public | - | JSON array [{id, author_id, title, slug, excerpt, cover_image_url, media_url, media_type, published, published_at}, ...] | Retrieves all published blogs |
 | /api/blogs/:id | GET | Public | id in URL | JSON {id, author_id, title, slug, excerpt, content, cover_image_url, media_url, media_type, published, published_at} | Retrieves a specific published blog |
 
-## Admin / Dashboard
+## ⚙️Admin / Dashboard
 
 | URL | Method | Role | Input | Output | Notes |
 |-----|--------|------|-------|--------|-------|
@@ -1158,9 +1174,9 @@ Each service is embedded securely or accessed via backend routes depending on it
 5. User clicks verification link or follows instructions in the email.
 6. Backend validates the token (checks existence, expiry, and association with user) and completes the process.
 
-## 🛠️ SCM & QA Strategies
+## 🛠️SCM & QA Strategies
 
-### <img src="https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/test_unit.png" alt="test icone" width="20" height="20" style="vertical-align: middle;" /> GitHub Workflow – Source Code Management
+### <img src="https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/logoGit.png" alt="test icone" width="20" height="20" style="vertical-align: middle;" /> GitHub Workflow – Source Code Management
 
 We use GitHub to manage our source code. Here is our workflow and rules:
 
@@ -1241,7 +1257,7 @@ Clear traceability of changes via Issues.
 Organized development with isolated feature branches.  
 Gradual and controlled integration into Main.  
 
-### <img src="https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/logoGit.png" alt="Logo Github" width="20" height="20" style="vertical-align: middle;"/> Quality Assurance (QA) Strategy
+### <img src="https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/test_unit.png" alt="Logo Github" width="20" height="20" style="vertical-align: middle;"/> Quality Assurance (QA) Strategy
 
 #### Layer-by-Layer Strategy
 
@@ -1333,7 +1349,7 @@ Example:
 ||WeezEvent API|
 ||HelloAsso API|
 
-## 💡 Technical Justifications
+## 💡Technical Justifications
 
 Considering the high growth potential of the association, we carefully selected technologies that allow for a scalable and maintainable architecture, adaptable over the project’s entire lifecycle. This approach also provides valuable learning experience, helping us adopt best practices expected by recruiters in modern web development.
 
