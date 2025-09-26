@@ -1,6 +1,6 @@
 # ⭐ Zafira Solidaire
 
-## 1️⃣ Presentation & Brainstorming
+## 💡 Presentation & Brainstorming
 
 🔗 **Project Name**: Zafira Solidaire
 
@@ -19,7 +19,7 @@ A clear showcase of the association with its missions and activities, including 
 
 For brainstorming and concept design, see the PDF: [Stage 1 – Brainstorming](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage1/Portfolio-stage1-Zafira.pdf)
 
-## 2️⃣ Project Charter
+## 📜 Project Charter
 
 A condensed overview of the Project Charter. For full details, see the dedicated document:
 
@@ -63,7 +63,7 @@ A condensed overview of the Project Charter. For full details, see the dedicated
 
   - Stage 5: Closure & Presentation (Weeks 11–12)
 
-## 3️⃣ MVP & Main Features
+## 🚀 MVP & Main Features
 
 - **Homepage**
 
@@ -107,7 +107,7 @@ A condensed overview of the Project Charter. For full details, see the dedicated
 
   - Direct link to Hello Asso for donations.
 
-## 4️⃣ Tech Stack
+## 🛠️ Tech Stack
 
 | Technology            | Purpose / Justification |
 | ----------------------| ------------------------- |
@@ -117,7 +117,7 @@ A condensed overview of the Project Charter. For full details, see the dedicated
 | Versioning: GitHub      | Efficient collaboration and project versioning          |
 | Containerization: Docker & Docker Compose      | Ensure identical development & deployment environments          |
 
-## 5️⃣ User Types
+## 👥 User Types
 
 - **Administrator:** full access to dashboard, account validation, content management, statistics tracking.
 
@@ -127,7 +127,15 @@ A condensed overview of the Project Charter. For full details, see the dedicated
 
 - **Donors:** no account required, direct access to donation link.
 
-## 6️⃣ Architecture & Quick Setup
+## 📘 Technical Documentation (summary)
+
+Stage 3 translates project objectives into a concrete technical blueprint for the MVP.  
+This concise summary highlights the outputs produced during the stage: prioritized user stories and mockups, a high-level system architecture and layer overview, component and class diagrams, database schema (ERD), sequence diagrams for key flows, API specifications (internal and external), and SCM & QA plans.  
+
+These materials form the technical reference for development and help ensure the project is scalable, maintainable and aligned with stakeholders.  
+👉 For the full technical documentation, see: [stage3/README.md](./stage3/README.md)
+
+## 🏗️ Architecture & Quick Setup
 
 ### Folder Structure
 
@@ -164,7 +172,7 @@ A condensed overview of the Project Charter. For full details, see the dedicated
 
   `sudo docker-compose exec backend sh`
 
-## 7️⃣ Getting Started
+## 🏁 Getting Started
 
 1. Clone this repository:
 
