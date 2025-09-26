@@ -114,7 +114,7 @@ This structured approach ensures clarity on priorities, responsibilities, and ex
 
 ### 🖼️ Mockups
 
-![Project Mockups](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/15-stage3_update_project/stage3/annexes/Zafira-mockup.gif)
+![Project Mockups](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/Zafira-mockup.gif)
 
 Our mockups were designed to give a **visual identity** to the project and to make the user stories more tangible.  
 They serve as a bridge between the functional vision and the actual interface, helping both the development team and stakeholders to project themselves into the future platform.  
@@ -144,8 +144,8 @@ In short, these mockups are more than just visuals: they are a **design foundati
 
 #### 📄 PDF Versions
 
-- [🌐 Web Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/15-stage3_update_project/stage3/annexes/Zafira_website-mockup.pdf)  
-- [📱 Mobile Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/15-stage3_update_project/stage3/annexes/Zafira_mobil-mockup.pdf)  
+- [🌐 Web Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/Zafira_website-mockup.pdf)  
+- [📱 Mobile Mockup PDF](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/Zafira_mobil-mockup.pdf)  
 
 ## 🏗️ System Architecture
 
@@ -730,7 +730,7 @@ The design emphasizes clarity, accessibility, and alignment with the association
 
 📷 **Component Diagram**  
 
-![Frontend Component Diagram](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/15-stage3_update_project/stage3/annexes/front_ui.jpg)
+![Frontend Component Diagram](https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/front_ui.jpg)
 
 ---
 
@@ -1076,7 +1076,7 @@ Public endpoints provide read-only access for dashboards and front-end display, 
 
 | URL | Method | Role | Description | Input | Output | Notes |
 |-----|--------|------|-------------|-------|--------|-------|
-| /api/internal/statistics/auto/calculate | POST | Internal / Scheduler | Trigger recalculation of auto statistics | - | { success: true, recalculated_count: X } | Called by cron scheduler internally
+| /api/internal/statistics/auto/calculate | POST | Internal / Scheduler | Trigger recalculation of auto statistics | - | { success: true, recalculated_count: X } | Called by cron scheduler internally|
 
 #### 💬 Testimonial APIs
 
@@ -1160,7 +1160,7 @@ Each service is embedded securely or accessed via backend routes depending on it
 
 ## 🛠️ SCM & QA Strategies
 
-### <img src="image.png" alt="alt text" width="20" height="20" style="vertical-align: middle;" /> GitHub Workflow – Source Code Management
+### <img src="https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/test_unit.png" alt="test icone" width="20" height="20" style="vertical-align: middle;" /> GitHub Workflow – Source Code Management
 
 We use GitHub to manage our source code. Here is our workflow and rules:
 
@@ -1241,7 +1241,7 @@ Clear traceability of changes via Issues.
 Organized development with isolated feature branches.  
 Gradual and controlled integration into Main.  
 
-### <img src="image-1.png" alt="alt text" width="20" height="20" style="vertical-align: middle;"/> Quality Assurance (QA) Strategy
+### <img src="https://github.com/JeffToken31/Portfolio-project-Zafira/blob/main/stage3/annexes/logoGit.png" alt="Logo Github" width="20" height="20" style="vertical-align: middle;"/> Quality Assurance (QA) Strategy
 
 #### Layer-by-Layer Strategy
 
