@@ -1,6 +1,5 @@
 # app/back_end/Dockerfile
-# app/front_end/Dockerfile
-FROM node:18-alpine
+FROM node:20-slim
 
 WORKDIR /app
 
@@ -9,5 +8,5 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
-CMD ["npm", "run", "dev"]
+EXPOSE 3001
+CMD ["npm", "run", "start:dev"]
