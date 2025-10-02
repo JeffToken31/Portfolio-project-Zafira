@@ -8,5 +8,9 @@ RUN npm install
 
 COPY . .
 
+RUN apt-get update -y && apt-get install -y openssl
+
 EXPOSE 3001
+
+RUN npx prisma generate
 CMD ["npm", "run", "start:dev"]
