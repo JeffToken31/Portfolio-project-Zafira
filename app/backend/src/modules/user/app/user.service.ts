@@ -1,58 +1,66 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../../prisma/prisma.service';
-import { Prisma } from '@prisma/client';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
-import { hash } from 'bcryptjs';
+// modules/user/app/user.service.ts
+import { Injectable } from '@nestjs/common';
+import type { IUserRepository } from '../domain/Iuser.repository';
+import { User } from '../domain/user.entity';
+import * as bcrypt from 'bcryptjs';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly userRepo: IUserRepository) {}
 
-  async create(dto: CreateUserDto) {
-    const hashedPassword = await hash(dto.password, 10);
-    return this.prisma.user.create({
-      data: {
-        email: dto.email,
-        password: hashedPassword,
-        name: dto.name,
-      },
-    });
+  // 🔑 Inscription d'un nouvel utilisateur
+  async register(email: string, plainPassword: string): Promise<User> {
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+    const user = new User(
+      randomUUID(),
+      email,
+      hashedPassword,
+      new Date(),
+      new Date(),
+    );
+    return this.userRepo.create(user);
   }
 
-  async findAll() {
-    return this.prisma.user.findMany();
+  // 🔍 Recherche par email
+  async findByEmail(email: string): Promise<User | null> {
+    return this.userRepo.findByEmail(email);
   }
 
-  async findOne(id: number) {
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-    });
-    if (!user) {
-      throw new NotFoundException(`Utilisateur avec l'id ${id} introuvable`);
-    }
-    return user;
+  // ✅ Vérifie le mot de passe pour authentification
+  async validateUser(
+    email: string,
+    plainPassword: string,
+  ): Promise<User | null> {
+    const user = await this.userRepo.findByEmail(email);
+    if (!user) return null;
+
+    const isValid = await bcrypt.compare(plainPassword, user.password);
+    return isValid ? user : null;
   }
 
-  async update(id: number, dto: UpdateUserDto) {
-    const data: Prisma.UserUpdateInput = {
-      email: dto.email,
-      name: dto.name,
-    };
+  // ✏️ Mise à jour des informations d'un utilisateur
+  async updateUser(
+    userId: string,
+    fields: Partial<{ email: string; password: string }>,
+  ): Promise<User> {
+    const user = await this.userRepo.findById(userId);
+    if (!user) throw new NotFoundException('User not found');
 
-    if (dto.password) {
-      data.password = await hash(dto.password, 10);
-    }
+    if (fields.email) user.email = fields.email;
+    if (fields.password)
+      user.updatePassword(await bcrypt.hash(fields.password, 10));
 
-    return this.prisma.user.update({
-      where: { id },
-      data,
-    });
+    return this.userRepo.update(user);
   }
 
-  async remove(id: number) {
-    return this.prisma.user.delete({
-      where: { id },
-    });
+  // 🗑️ Supprimer un utilisateur
+  async deleteUser(userId: string): Promise<void> {
+    await this.userRepo.delete(userId);
+  }
+
+  // 📋 Récupérer tous les utilisateurs (utile pour l'admin)
+  async findAllUsers(): Promise<User[]> {
+    return this.userRepo.findAll();
   }
 }
