@@ -14,10 +14,61 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  PARTNER
+  BENEFICIARY
+}
+
+// --- MODELS ---
 model User {
+  id            String        @id @default(uuid())
+  firstName     String
+  lastName      String
+  email         String        @unique
+  emailVerified Boolean       @default(false)
+  role          Role          @default(BENEFICIARY)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  credentials   Credential[]
+  emailTokens   EmailVerification[]
+}
+
+model Credential {
   id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  password  PasswordCredential?
+  google    GoogleCredential?
+}
+
+model PasswordCredential {
+  id            String   @id @default(uuid())
+  credentialId  String   @unique
+  credential    Credential @relation(fields: [credentialId], references: [id])
+  passwordHash  String
+}
+
+model GoogleCredential {
+  id             String   @id @default(uuid())
+  credentialId   String   @unique
+  credential     Credential @relation(fields: [credentialId], references: [id])
+  googleSub      String   @unique
+  googleEmail    String
+  googleFirstName String?
+  googleLastName  String?
+  googleAvatarUrl String?
+}
+
+model EmailVerification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
 }
