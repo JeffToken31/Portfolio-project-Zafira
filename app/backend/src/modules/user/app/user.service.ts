@@ -1,5 +1,5 @@
 // modules/user/app/user.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import type { IUserRepository } from '../domain/Iuser.repository';
 import { User } from '../domain/user.entity';
 import * as bcrypt from 'bcryptjs';
@@ -7,7 +7,9 @@ import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepo: IUserRepository) {}
+  constructor(
+    @Inject('IUserRepository') private readonly userRepo: IUserRepository,
+  ) {}
 
   // 🔑 Inscription d'un nouvel utilisateur
   async register(email: string, plainPassword: string): Promise<User> {

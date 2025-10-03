@@ -1,4 +1,3 @@
-// modules/user/infra/user.mapper.ts
 import { User } from '../domain/user.entity';
 import { Prisma } from '@prisma/client';
 
@@ -14,13 +13,22 @@ export class UserMapper {
     );
   }
 
-  // 🔄 Domain → Prisma
-  static toPrisma(user: User): Prisma.UserCreateInput | Prisma.UserUpdateInput {
+  // 🔄 Domain → Prisma (Create)
+  static toPrismaCreate(user: User): Prisma.UserCreateInput {
     return {
       id: user.id,
       email: user.email,
       password: user.password,
       createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+  }
+
+  // 🔄 Domain → Prisma (Update)
+  static toPrismaUpdate(user: User): Prisma.UserUpdateInput {
+    return {
+      email: user.email,
+      password: user.password,
       updatedAt: user.updatedAt,
     };
   }

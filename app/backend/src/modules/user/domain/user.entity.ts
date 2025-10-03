@@ -3,10 +3,10 @@ import * as bcrypt from 'bcryptjs';
 
 export class User {
   constructor(
-    public readonly id: string,
-    public readonly email: string,
+    public id: string,
+    public email: string,
     public password: string, // hashé
-    public readonly createdAt: Date,
+    public createdAt: Date,
     public updatedAt: Date,
   ) {}
 

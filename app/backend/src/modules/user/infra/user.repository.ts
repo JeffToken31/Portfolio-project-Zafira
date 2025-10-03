@@ -10,10 +10,10 @@ export class UserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(user: User): Promise<User> {
-    const prismaUser = await this.prisma.user.create({
-      data: UserMapper.toPrisma(user),
+    const created = await this.prisma.user.create({
+      data: UserMapper.toPrismaCreate(user),
     });
-    return UserMapper.toDomain(prismaUser);
+    return UserMapper.toDomain(created);
   }
 
   async findAll(): Promise<User[]> {
@@ -32,11 +32,11 @@ export class UserRepository implements IUserRepository {
   }
 
   async update(user: User): Promise<User> {
-    const prismaUser = await this.prisma.user.update({
+    const updated = await this.prisma.user.update({
       where: { id: user.id },
-      data: UserMapper.toPrisma(user),
+      data: UserMapper.toPrismaUpdate(user),
     });
-    return UserMapper.toDomain(prismaUser);
+    return UserMapper.toDomain(updated);
   }
 
   async delete(id: string): Promise<void> {
