@@ -89,33 +89,26 @@ export class UserRepository implements IUserRepository {
   async setEmailVerified(userId: string): Promise<User> {
     const updated = await this.prisma.user.update({
       where: { id: userId },
-      data: { emailVerified: true },
+      data: {
+        emailVerified: true,
+        updatedAt: new Date(),
+      },
     });
     return UserMapper.toDomain(updated);
   }
 
   async delete(id: string): Promise<void> {
-    // Exécuter toutes les suppressions dans une transaction pour atomicité.
-    await this.prisma.$transaction(async (prisma) => {
-      await prisma.passwordCredential.deleteMany({
+    await this.prisma.$transaction(async (tx) => {
+      await tx.passwordCredential.deleteMany({
         where: { credential: { userId: id } },
       });
-
-      await prisma.googleCredential.deleteMany({
+      await tx.googleCredential.deleteMany({
         where: { credential: { userId: id } },
       });
-
-      await prisma.credential.deleteMany({
-        where: { userId: id },
-      });
-
-      await prisma.emailVerification.deleteMany({
-        where: { userId: id },
-      });
-      await prisma.verificationToken.deleteMany({
-        where: { userId: id },
-      });
-      await prisma.user.delete({ where: { id } });
+      await tx.credential.deleteMany({ where: { userId: id } });
+      await tx.emailVerification.deleteMany({ where: { userId: id } });
+      await tx.verificationToken.deleteMany({ where: { userId: id } });
+      await tx.user.delete({ where: { id } });
     });
   }
 }

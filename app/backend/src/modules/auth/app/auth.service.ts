@@ -16,7 +16,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  // 🟢 Inscription + envoi du mail de vérification
+  // Suscrib and send verification email
   async register(
     email: string,
     password: string,
@@ -28,7 +28,7 @@ export class AuthService {
 
     const hashed = await bcrypt.hash(password, 10);
 
-    // ✅ Utilisation de ton UserService qui appelle le UserRepository
+    // Use UserService to call UserRepository
     const user = await this.userService.register(
       email,
       hashed,
@@ -36,18 +36,17 @@ export class AuthService {
       lastName,
     );
     console.log('user creer');
-    // ✅ Création d’un token via le repository Auth
+    // Creat verification token
     const tokenRow = await this.authRepo.createVerificationToken(user.id);
-    console.log('creat verification token passed');
 
-    // ✅ Envoi du mail
+    // Send mail
     await this.mailService.sendVerificationEmail(email, tokenRow.token);
     console.log('sendVerification called');
 
     return { message: 'User created. Verification email sent.' };
   }
 
-  // 🟢 Vérification email
+  // mail verification
   async verifyEmail(token: string) {
     const row = await this.authRepo.findByToken(token);
     if (!row) throw new UnauthorizedException('Invalid or expired token');
@@ -57,16 +56,16 @@ export class AuthService {
       throw new UnauthorizedException('Token expired');
     }
 
-    // ✅ Appel du UserService pour mettre à jour l’emailVerified
+    // Call userservice to update emailverified
     const user = await this.userService.setEmailVerified(row.userId);
 
-    // ✅ Suppression du token
+    // Delete token verification
     await this.authRepo.deleteByToken(token);
 
     return { message: 'Email verified', user: user.toJSON() };
   }
 
-  // 🟢 Login
+  // Login
   async login(email: string, password: string) {
     const user = await this.userService.validateUser(email, password);
     if (!user) throw new UnauthorizedException('Invalid credentials');
@@ -92,14 +91,14 @@ export class AuthService {
       googleAvatarUrl,
     } = profile;
 
-    // 1️⃣ Cherche si GoogleCredential existe déjà
+    // Check if exist by google credencial
     let user = await this.authRepo.findUserByGoogleSub(googleSub);
 
     if (user) {
-      return user; // user existant
+      return user;
     }
 
-    // 2️⃣ Si pas existant, créer User + Credential + GoogleCredential
+    // If not exist, creating User + Credential + GoogleCredential
     user = await this.authRepo.createUserWithGoogle({
       email: googleEmail,
       firstName: googleFirstName,
@@ -111,9 +110,7 @@ export class AuthService {
     return user;
   }
 
-  /**
-   * Génère un JWT pour le front
-   */
+  // Generate a JWT for the front
   async generateJwt(user: any): Promise<string> {
     const payload = { sub: user.id, email: user.email, role: user.role };
     return this.jwtService.sign(payload, {

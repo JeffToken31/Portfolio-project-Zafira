@@ -1,16 +1,15 @@
 // modules/user/interface/user.controller.ts
 import {
   Controller,
-  Post,
   Body,
   Get,
   Param,
   Put,
   Delete,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { UserService } from '../app/user.service';
-import { RegisterUserDto } from './dto/register-user.dto'; // Assure-toi que ces DTO existent
-import { UpdateUserDto } from './dto/update-user.dto'; // Assure-toi que ces DTO existent
+import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('user')
@@ -26,33 +25,36 @@ export class UserController {
     return { id: user.id, email: user.email };
   }*/
 
-  // 🟢 Récupérer un utilisateur par email
-  @Get(':email')
-  @ApiOperation({ summary: 'Récupérer un utilisateur par email' })
+  // Get user by mail
+  @Get('by-email/:email')
+  @ApiOperation({ summary: 'Get user by mail' })
   async findOne(@Param('email') email: string) {
     const user = await this.userService.findByEmail(email);
     return user ? { id: user.id, email: user.email } : null;
   }
 
-  // 🟢 Récupérer tous les utilisateurs
+  // Get user by ID
+  @Get('by-id/:id')
+  @ApiOperation({ summary: 'Get user by ID' })
+  async findById(@Param('id', ParseUUIDPipe) id: string) {
+    const user = await this.userService.findById(id);
+    return user ? user.toJSON() : { message: 'User not found' };
+  }
+
+  // Get all users
   @Get()
-  @ApiOperation({ summary: 'Récupérer tous les utilisateurs' })
+  @ApiOperation({ summary: 'Get all users' })
   async findAll() {
     const users = await this.userService.findAllUsers();
     return users.map((u) => ({ id: u.id, email: u.email }));
   }
 
-  // 🟢 Mettre à jour un utilisateur
+  // 🟢 Update user
   @Put(':id')
-  @ApiOperation({ summary: 'Mettre à jour un utilisateur' })
+  @ApiOperation({ summary: 'Update user' })
   async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     const updatedUser = await this.userService.updateUser(id, dto);
-    return {
-      id: updatedUser.id,
-      email: updatedUser.email,
-      firstName: updatedUser.firstName,
-      lastName: updatedUser.lastName,
-    };
+    return updatedUser.toJSON();
   }
 
   // 🟢 Supprimer un utilisateur
