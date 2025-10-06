@@ -5,6 +5,7 @@ import { AuthRepository } from '../infra/auth.repository';
 import { MailService } from './mail.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -74,5 +75,50 @@ export class AuthService {
     const access_token = await this.jwtService.signAsync(payload);
 
     return { access_token, user: user.toJSON() };
+  }
+
+  async validateGoogleUser(profile: {
+    googleSub: string;
+    googleEmail: string;
+    googleFirstName?: string;
+    googleLastName?: string;
+    googleAvatarUrl?: string;
+  }): Promise<User> {
+    const {
+      googleSub,
+      googleEmail,
+      googleFirstName,
+      googleLastName,
+      googleAvatarUrl,
+    } = profile;
+
+    // 1️⃣ Cherche si GoogleCredential existe déjà
+    let user = await this.authRepo.findUserByGoogleSub(googleSub);
+
+    if (user) {
+      return user; // user existant
+    }
+
+    // 2️⃣ Si pas existant, créer User + Credential + GoogleCredential
+    user = await this.authRepo.createUserWithGoogle({
+      email: googleEmail,
+      firstName: googleFirstName,
+      lastName: googleLastName,
+      googleSub,
+      googleAvatarUrl,
+    });
+
+    return user;
+  }
+
+  /**
+   * Génère un JWT pour le front
+   */
+  async generateJwt(user: any): Promise<string> {
+    const payload = { sub: user.id, email: user.email, role: user.role };
+    return this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: process.env.JWT_EXPIRES_IN ?? '7d',
+    });
   }
 }

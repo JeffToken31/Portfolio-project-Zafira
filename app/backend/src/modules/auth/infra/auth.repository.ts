@@ -28,4 +28,44 @@ export class AuthRepository {
   async deleteByToken(token: string) {
     await this.prisma.verificationToken.delete({ where: { token } });
   }
+
+  async findUserByGoogleSub(googleSub: string) {
+    const cred = await this.prisma.credential.findFirst({
+      where: { google: { googleSub } },
+      include: { user: true },
+    });
+
+    return cred?.user || null;
+  }
+
+  async createUserWithGoogle(data: {
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    googleSub: string;
+    googleAvatarUrl?: string;
+  }) {
+    return this.prisma.user.create({
+      data: {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        role: 'BENEFICIARY',
+        credentials: {
+          create: {
+            google: {
+              create: {
+                googleSub: data.googleSub,
+                googleEmail: data.email,
+                googleFirstName: data.firstName,
+                googleLastName: data.lastName,
+                googleAvatarUrl: data.googleAvatarUrl,
+              },
+            },
+          },
+        },
+      },
+      include: { credentials: { include: { google: true } } },
+    });
+  }
 }
