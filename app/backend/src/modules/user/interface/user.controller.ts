@@ -9,7 +9,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UserService } from '../app/user.service';
-import { CreateUserDto } from './dto/create-user.dto'; // Assure-toi que ces DTO existent
+import { RegisterUserDto } from './dto/register-user.dto'; // Assure-toi que ces DTO existent
 import { UpdateUserDto } from './dto/update-user.dto'; // Assure-toi que ces DTO existent
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
@@ -18,13 +18,13 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // 🟢 Créer un utilisateur
+  /*
   @Post()
   @ApiOperation({ summary: 'Créer un utilisateur' })
-  async create(@Body() dto: CreateUserDto) {
+  async create(@Body() dto: RegisterUserDto) {
     const user = await this.userService.register(dto.email, dto.password);
     return { id: user.id, email: user.email };
-  }
+  }*/
 
   // 🟢 Récupérer un utilisateur par email
   @Get(':email')
@@ -47,7 +47,12 @@ export class UserController {
   @ApiOperation({ summary: 'Mettre à jour un utilisateur' })
   async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     const updatedUser = await this.userService.updateUser(id, dto);
-    return { id: updatedUser.id, email: updatedUser.email };
+    return {
+      id: updatedUser.id,
+      email: updatedUser.email,
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+    };
   }
 
   // 🟢 Supprimer un utilisateur
