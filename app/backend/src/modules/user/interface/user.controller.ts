@@ -57,9 +57,9 @@ export class UserController {
     return updatedUser.toJSON();
   }
 
-  // 🟢 Supprimer un utilisateur
+  // 🟢 Delete user
   @Delete(':id')
-  @ApiOperation({ summary: 'Supprimer un utilisateur' })
+  @ApiOperation({ summary: 'Delete user' })
   async delete(@Param('id') id: string) {
     await this.userService.deleteUser(id);
     return { message: `Utilisateur ${id} supprimé` };
