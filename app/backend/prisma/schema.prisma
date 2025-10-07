@@ -72,3 +72,21 @@ enum Role {
   ADMIN
   BENEFICIARY
 }
+
+model Blog {
+  id            String    @id @default(uuid())
+  title         String    @unique
+  slug          String    @unique
+  content       String
+  excerpt       String
+  coverImageUrl String?
+  mediaUrl      String?
+  mediaType     MediaType?
+  published     Boolean   @default(false)
+  publishedAt   DateTime?
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
