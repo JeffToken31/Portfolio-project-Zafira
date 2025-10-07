@@ -2,34 +2,53 @@ import { User } from '../domain/user.entity';
 import { Prisma } from '@prisma/client';
 
 export class UserMapper {
-  // 🔄 Prisma → Domain
-  static toDomain(prismaUser: Prisma.UserGetPayload<any>): User {
+  static toDomain(
+    raw: Prisma.UserGetPayload<{
+      select: {
+        id: true;
+        email: true;
+        firstName: true;
+        lastName: true;
+        role: true;
+        emailVerified: true;
+        createdAt: true;
+        updatedAt: true;
+      };
+    }>,
+  ): User {
     return new User(
-      prismaUser.id,
-      prismaUser.email,
-      prismaUser.password,
-      prismaUser.createdAt,
-      prismaUser.updatedAt,
+      raw.id,
+      raw.email,
+      raw.firstName ?? null,
+      raw.lastName ?? null,
+      raw.role ?? 'BENEFICIARY',
+      raw.emailVerified ?? false,
+      raw.createdAt,
+      raw.updatedAt,
     );
   }
 
-  // 🔄 Domain → Prisma (Create)
-  static toPrismaCreate(user: User): Prisma.UserCreateInput {
+  static toPrismaCreate(user: User): Prisma.UserUncheckedCreateInput {
     return {
       id: user.id,
       email: user.email,
-      password: user.password,
+      firstName: user.firstName ?? undefined,
+      lastName: user.lastName ?? undefined,
+      role: user.role,
+      emailVerified: user.emailVerified,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
   }
 
-  // 🔄 Domain → Prisma (Update)
-  static toPrismaUpdate(user: User): Prisma.UserUpdateInput {
+  static toPrismaUpdate(user: User): Prisma.UserUncheckedUpdateInput {
     return {
       email: user.email,
-      password: user.password,
-      updatedAt: user.updatedAt,
+      firstName: user.firstName ?? undefined,
+      lastName: user.lastName ?? undefined,
+      role: user.role,
+      emailVerified: user.emailVerified,
+      updatedAt: new Date(),
     };
   }
 }
