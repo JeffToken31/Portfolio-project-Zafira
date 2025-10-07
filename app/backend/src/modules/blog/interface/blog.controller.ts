@@ -100,12 +100,13 @@ export class BlogController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a blog by ID' })
-  @ApiResponse({ status: 204, description: 'The blog has been deleted.' })
+  @ApiResponse({ status: 200, description: 'The blog has been deleted.' })
   @ApiResponse({ status: 404, description: 'Blog not found.' })
   @ApiResponse({ status: 403, description: 'Forbidden operation.' })
-  async delete(@Param('id') id: string): Promise<void> {
+  async delete(@Param('id') id: string) {
     try {
       await this.blogService.delete(id);
+      return { message: `Utilisateur ${id} supprimé` };
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new BadRequestException(error.message);

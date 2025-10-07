@@ -1,10 +1,12 @@
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { IBlogRepository } from '../domain/Iblog.repository';
 import { Blog } from '../domain/blog.entity';
 import { BlogMapper, RawBlogData } from './blog.mapper';
 
+@Injectable()
 export class BlogRepository implements IBlogRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   private mapPrismaToDomain(raw: RawBlogData | null): Blog {
     if (!raw) throw new Error('Blog not found');

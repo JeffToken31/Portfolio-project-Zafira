@@ -1,10 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import type { IBlogRepository } from '../domain/Iblog.repository';
 import { Blog } from '../domain/blog.entity';
 
 @Injectable()
 export class BlogService {
-  constructor(private readonly blogRepo: IBlogRepository) {}
+  constructor(
+    @Inject('IBlogRepository') private readonly blogRepo: IBlogRepository,
+  ) {}
 
   async getById(id: string): Promise<Blog> {
     const blog = await this.blogRepo.findById(id);

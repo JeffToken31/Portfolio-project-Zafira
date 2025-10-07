@@ -1,21 +1,22 @@
-/*
-  Warnings:
-
-  - You are about to drop the column `password` on the `User` table. All the data in the column will be lost.
-  - Added the required column `firstName` to the `User` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `lastName` to the `User` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('ADMIN', 'BENEFICIARY');
 
--- AlterTable
-ALTER TABLE "User" DROP COLUMN "password",
-ADD COLUMN     "emailVerified" BOOLEAN NOT NULL DEFAULT false,
-ADD COLUMN     "firstName" TEXT NOT NULL,
-ADD COLUMN     "lastName" TEXT NOT NULL,
-ADD COLUMN     "role" "Role" NOT NULL DEFAULT 'BENEFICIARY',
-ALTER COLUMN "updatedAt" DROP DEFAULT;
+-- CreateEnum
+CREATE TYPE "MediaType" AS ENUM ('IMAGE', 'VIDEO');
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "emailVerified" BOOLEAN NOT NULL DEFAULT false,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "role" "Role" NOT NULL DEFAULT 'BENEFICIARY',
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Credential" (
@@ -71,6 +72,25 @@ CREATE TABLE "VerificationToken" (
     CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Blog" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+    "excerpt" TEXT NOT NULL,
+    "coverImageUrl" TEXT,
+    "mediaUrl" TEXT,
+    "mediaType" "MediaType",
+    "published" BOOLEAN NOT NULL DEFAULT false,
+    "publishedAt" TIMESTAMP(3),
+
+    CONSTRAINT "Blog_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
 -- CreateIndex
 CREATE UNIQUE INDEX "PasswordCredential_credentialId_key" ON "PasswordCredential"("credentialId");
 
@@ -85,6 +105,12 @@ CREATE UNIQUE INDEX "EmailVerification_token_key" ON "EmailVerification"("token"
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Blog_title_key" ON "Blog"("title");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Blog_slug_key" ON "Blog"("slug");
 
 -- AddForeignKey
 ALTER TABLE "Credential" ADD CONSTRAINT "Credential_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
