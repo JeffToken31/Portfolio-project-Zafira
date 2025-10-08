@@ -11,58 +11,74 @@ export class UserService {
     @Inject('IUserRepository') private readonly userRepo: IUserRepository,
   ) {}
 
-  // 🔑 Inscription d'un nouvel utilisateur
-  async register(email: string, plainPassword: string): Promise<User> {
-    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+  async register(
+    email: string,
+    hashedPassword: string,
+    firstName?: string,
+    lastName?: string,
+  ): Promise<User> {
     const user = new User(
       randomUUID(),
       email,
-      hashedPassword,
-      new Date(),
-      new Date(),
+      firstName ?? null,
+      lastName ?? null,
     );
-    return this.userRepo.create(user);
+    return this.userRepo.createWithPasswordCredential(user, hashedPassword);
   }
 
-  // 🔍 Recherche par email
   async findByEmail(email: string): Promise<User | null> {
     return this.userRepo.findByEmail(email);
   }
 
-  // ✅ Vérifie le mot de passe pour authentification
+  async findById(id: string): Promise<User | null> {
+    return this.userRepo.findById(id);
+  }
+
   async validateUser(
     email: string,
     plainPassword: string,
   ): Promise<User | null> {
     const user = await this.userRepo.findByEmail(email);
     if (!user) return null;
-
-    const isValid = await bcrypt.compare(plainPassword, user.password);
-    return isValid ? user : null;
+    const hash = await this.userRepo.findPasswordHashByUserId(user.id);
+    if (!hash) return null;
+    const ok = await bcrypt.compare(plainPassword, hash);
+    return ok ? user : null;
   }
 
-  // ✏️ Mise à jour des informations d'un utilisateur
+  async setEmailVerified(userId: string): Promise<User> {
+    return this.userRepo.setEmailVerified(userId);
+  }
+
   async updateUser(
     userId: string,
-    fields: Partial<{ email: string; password: string }>,
+    fields: Partial<{
+      email: string;
+      firstName: string;
+      lastName: string;
+      password?: string;
+    }>,
   ): Promise<User> {
     const user = await this.userRepo.findById(userId);
     if (!user) throw new NotFoundException('User not found');
 
     if (fields.email) user.email = fields.email;
-    if (fields.password)
-      user.updatePassword(await bcrypt.hash(fields.password, 10));
+    if (fields.firstName || fields.lastName)
+      user.updateName(fields.firstName, fields.lastName);
+
+    if (fields.password) {
+      const passwordHash = await bcrypt.hash(fields.password, 10);
+      await this.userRepo.updatePassword(userId, passwordHash);
+    }
 
     return this.userRepo.update(user);
   }
 
-  // 🗑️ Supprimer un utilisateur
-  async deleteUser(userId: string): Promise<void> {
-    await this.userRepo.delete(userId);
-  }
-
-  // 📋 Récupérer tous les utilisateurs (utile pour l'admin)
   async findAllUsers(): Promise<User[]> {
     return this.userRepo.findAll();
+  }
+
+  async deleteUser(userId: string): Promise<void> {
+    await this.userRepo.delete(userId);
   }
 }

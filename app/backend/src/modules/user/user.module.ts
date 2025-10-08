@@ -9,11 +9,12 @@ import { PrismaModule } from '../../prisma/prisma.module';
   controllers: [UserController],
   providers: [
     UserService,
-    {
-      provide: 'IUserRepository', // le token
-      useClass: UserRepository, // l’implémentation
-    },
+    UserRepository,
+    { provide: 'IUserRepository', useClass: UserRepository },
   ],
-  exports: [UserService],
+  exports: [
+    UserService,
+    { provide: 'IUserRepository', useClass: UserRepository },
+  ],
 })
 export class UserModule {}
