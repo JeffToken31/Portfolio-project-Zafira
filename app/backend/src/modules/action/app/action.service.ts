@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  Inject,
-  NotFoundException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import type { IActionRepository } from '../domain/Iaction.repository';
 import { Action } from '../domain/action.entity';
 

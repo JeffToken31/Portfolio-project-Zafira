@@ -7,12 +7,6 @@ import { ActionMapper, RawActionData } from './action.mapper';
 @Injectable()
 export class ActionRepository implements IActionRepository {
   constructor(private readonly prisma: PrismaService) {}
-  publish(action: Action): Promise<Action> {
-    throw new Error('Method not implemented.');
-  }
-  unpublish(action: Action): Promise<Action> {
-    throw new Error('Method not implemented.');
-  }
 
   private mapPrismaToDomain(raw: RawActionData | null): Action {
     if (!raw) throw new Error('Action not found');
@@ -56,5 +50,15 @@ export class ActionRepository implements IActionRepository {
 
   async delete(id: string): Promise<void> {
     await this.prisma.action.delete({ where: { id } });
+  }
+
+  async publish(action: Action): Promise<Action> {
+    action.setPublished(true);
+    return this.update(action);
+  }
+
+  async unpublish(action: Action): Promise<Action> {
+    action.setPublished(false);
+    return this.update(action);
   }
 }
