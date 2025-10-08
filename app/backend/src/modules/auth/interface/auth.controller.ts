@@ -15,16 +15,11 @@ import { LoginDto } from './dto/login.dto';
 import type { Response, Request } from 'express';
 import { User } from '@prisma/client';
 
-// Étendre Request pour inclure `user` injecté par Passport
-interface GoogleRequest extends Request {
-  user?: User;
-}
-
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // 🔹 Inscription classique
+  // Register
   @Post('register')
   register(@Body() dto: RegisterDto) {
     return this.authService.register(
@@ -35,42 +30,42 @@ export class AuthController {
     );
   }
 
-  // 🔹 Vérification email
+  // Vérification mail
   @Post('verify-email')
   verifyEmail(@Query('token') token: string) {
     return this.authService.verifyEmail(token);
   }
 
-  // 🔹 Login classique
+  // Login
   @Post('login')
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto.email, dto.password);
   }
 
-  // 🔹 Route pour initier le login Google
+  // Redirect to google auth
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req: GoogleRequest) {
-    // Passport gère la redirection automatiquement
-  }
+  async googleAuth() {}
 
-  // 🔹 Callback après authentification Google
+  // Callback after google verification
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
-    const prismaUser = req.user as User | undefined;
+  googleAuthRedirect(
+    @Req() req: Request & { user?: User },
+    @Res() res: Response,
+  ) {
+    const prismaUser = req.user;
     if (!prismaUser) {
       return res.status(401).json({ message: 'No user found' });
     }
 
-    // On ne garde que les champs nécessaires pour JWT
     const jwtUser: Pick<User, 'id' | 'email' | 'role'> = {
       id: prismaUser.id,
       email: prismaUser.email,
       role: prismaUser.role,
     };
 
-    const token = await this.authService.generateJwt(jwtUser);
+    const token = this.authService.generateJwt(jwtUser);
     return res.redirect(`http://localhost:3000/login/success?token=${token}`);
   }
 }
