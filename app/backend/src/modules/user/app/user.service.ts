@@ -61,17 +61,16 @@ export class UserService {
   ): Promise<User> {
     const user = await this.userRepo.findById(userId);
     if (!user) throw new NotFoundException('User not found');
+
     if (fields.email) user.email = fields.email;
     if (fields.firstName || fields.lastName)
       user.updateName(fields.firstName, fields.lastName);
+
     if (fields.password) {
-      // update password credential via repo: simplest way is to hash and create new password credential or update existing
-      const hash = await bcrypt.hash(fields.password, 10);
-      // For simplicity, we'll update password by creating a new passwordCredential linked to the existing credential:
-      // (You can add a dedicated method in the repo if you prefer).
-      // Using prisma directly in infra repo is cleaner — we assume repo has update method for password.
-      // Here we call repo.update(user) and expect separate flow to update password (implement later).
+      const passwordHash = await bcrypt.hash(fields.password, 10);
+      await this.userRepo.updatePassword(userId, passwordHash);
     }
+
     return this.userRepo.update(user);
   }
 

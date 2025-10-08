@@ -10,21 +10,32 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { BlogService } from '../app/blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { BlogDtoMapper } from './dto/blog-dto.mapper';
 import { Blog } from '../domain/blog.entity';
+import { Roles } from '../../../common/decorators/roles.decorator';
+import { RolesGuard } from '../../../common/guards/roles.guard';
+import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 
 @ApiTags('blogs')
 @Controller('blogs')
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
-  // CREATE BLOG
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('beneficiary')
   @ApiOperation({ summary: 'Create a new blog' })
   @ApiResponse({ status: 201, description: 'The blog has been created.' })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
@@ -41,8 +52,10 @@ export class BlogController {
     }
   }
 
-  // FULL UPDATE (PUT)
   @Put(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @ApiOperation({ summary: 'Fully update a blog' })
   @ApiResponse({ status: 200, description: 'The blog has been updated.' })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
@@ -52,15 +65,9 @@ export class BlogController {
     @Body() dto: CreateBlogDto,
   ): Promise<Record<string, unknown>> {
     try {
-      // Get existing entity
       const existingBlog = await this.blogService.getById(id);
-
-      // map dto with entity data
       const blogToUpdate = BlogDtoMapper.toDomainFromUpdate(dto, existingBlog);
-
-      // Call service to update
       const updated = await this.blogService.update(blogToUpdate);
-
       return updated.toJSON();
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -70,8 +77,10 @@ export class BlogController {
     }
   }
 
-  // PARTIAL UPDATE
   @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @ApiOperation({ summary: 'Partially update a blog' })
   @ApiResponse({
     status: 200,
@@ -96,8 +105,10 @@ export class BlogController {
     }
   }
 
-  // DELETE BLOG
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('beneficiary')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a blog by ID' })
   @ApiResponse({ status: 200, description: 'The blog has been deleted.' })
@@ -115,7 +126,6 @@ export class BlogController {
     }
   }
 
-  // GET BLOG BY ID
   @Get(':id')
   @ApiOperation({ summary: 'Get a blog by ID' })
   @ApiResponse({ status: 200, description: 'The blog object.' })
@@ -125,7 +135,6 @@ export class BlogController {
     return blog.toJSON();
   }
 
-  // GET LATEST BLOGS
   @Get()
   @ApiOperation({ summary: 'Get latest blogs' })
   @ApiResponse({ status: 200, description: 'List of latest blogs.' })

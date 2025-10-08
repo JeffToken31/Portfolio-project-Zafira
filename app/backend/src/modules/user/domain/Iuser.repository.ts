@@ -11,4 +11,5 @@ export interface IUserRepository {
   update(user: User): Promise<User>;
   setEmailVerified(userId: string): Promise<User>;
   delete(id: string): Promise<void>;
+  updatePassword(userId: string, passwordHash: string): Promise<void>;
 }

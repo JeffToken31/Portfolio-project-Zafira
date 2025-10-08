@@ -70,10 +70,9 @@ export class AuthService {
     const user = await this.userService.validateUser(email, password);
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
-    const payload = { sub: user.id, email: user.email };
-    const access_token = await this.jwtService.signAsync(payload);
-
-    return { access_token, user: user.toJSON() };
+    // Utilise ta méthode generateJwt (inclut role)
+    const token = this.generateJwt(user);
+    return { access_token: token, user: user.toJSON() };
   }
 
   async validateGoogleUser(profile: {
@@ -111,7 +110,7 @@ export class AuthService {
   }
 
   // Generate a JWT for the front
-  async generateJwt(user: any): Promise<string> {
+  generateJwt(user: Pick<User, 'id' | 'email' | 'role'>): string {
     const payload = { sub: user.id, email: user.email, role: user.role };
     return this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,

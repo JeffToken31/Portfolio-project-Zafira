@@ -50,7 +50,7 @@ export class UserRepository implements IUserRepository {
 
   async findAll(): Promise<User[]> {
     const users = await this.prisma.user.findMany();
-    return users.map(UserMapper.toDomain);
+    return users.map((u) => UserMapper.toDomain(u));
   }
 
   async findById(id: string): Promise<User | null> {
@@ -109,6 +109,15 @@ export class UserRepository implements IUserRepository {
       await tx.emailVerification.deleteMany({ where: { userId: id } });
       await tx.verificationToken.deleteMany({ where: { userId: id } });
       await tx.user.delete({ where: { id } });
+    });
+  }
+
+  async updatePassword(userId: string, passwordHash: string): Promise<void> {
+    await this.prisma.passwordCredential.updateMany({
+      where: {
+        credential: { userId },
+      },
+      data: { passwordHash },
     });
   }
 }

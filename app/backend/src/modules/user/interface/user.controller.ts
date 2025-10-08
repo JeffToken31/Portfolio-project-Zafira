@@ -17,14 +17,6 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  /*
-  @Post()
-  @ApiOperation({ summary: 'Créer un utilisateur' })
-  async create(@Body() dto: RegisterUserDto) {
-    const user = await this.userService.register(dto.email, dto.password);
-    return { id: user.id, email: user.email };
-  }*/
-
   // Get user by mail
   @Get('by-email/:email')
   @ApiOperation({ summary: 'Get user by mail' })

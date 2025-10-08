@@ -57,15 +57,20 @@ export class AuthController {
   // 🔹 Callback après authentification Google
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req: GoogleRequest, @Res() res: Response) {
-    if (!req.user) {
+  async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
+    const prismaUser = req.user as User | undefined;
+    if (!prismaUser) {
       return res.status(401).json({ message: 'No user found' });
     }
 
-    // Génération du JWT
-    const token = await this.authService.generateJwt(req.user);
+    // On ne garde que les champs nécessaires pour JWT
+    const jwtUser: Pick<User, 'id' | 'email' | 'role'> = {
+      id: prismaUser.id,
+      email: prismaUser.email,
+      role: prismaUser.role,
+    };
 
-    // Redirection vers le front avec le token
+    const token = await this.authService.generateJwt(jwtUser);
     return res.redirect(`http://localhost:3000/login/success?token=${token}`);
   }
 }
