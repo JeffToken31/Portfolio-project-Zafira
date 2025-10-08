@@ -1,52 +1,60 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
-import { IBlogRepository } from '../domain/Iaction.repository';
-import { Blog } from '../domain/action.entity';
-import { BlogMapper, RawBlogData } from './action.mapper';
+import { IActionRepository } from '../domain/Iaction.repository';
+import { Action } from '../domain/action.entity';
+import { ActionMapper, RawActionData } from './action.mapper';
 
 @Injectable()
-export class BlogRepository implements IBlogRepository {
+export class ActionRepository implements IActionRepository {
   constructor(private readonly prisma: PrismaService) {}
-
-  private mapPrismaToDomain(raw: RawBlogData | null): Blog {
-    if (!raw) throw new Error('Blog not found');
-    return BlogMapper.toDomain(raw);
+  publish(action: Action): Promise<Action> {
+    throw new Error('Method not implemented.');
+  }
+  unpublish(action: Action): Promise<Action> {
+    throw new Error('Method not implemented.');
   }
 
-  async findById(id: string): Promise<Blog | null> {
-    const raw = await this.prisma.blog.findUnique({ where: { id } });
+  private mapPrismaToDomain(raw: RawActionData | null): Action {
+    if (!raw) throw new Error('Action not found');
+    return ActionMapper.toDomain(raw);
+  }
+
+  async findById(id: string): Promise<Action | null> {
+    const raw = await this.prisma.action.findUnique({ where: { id } });
     return raw ? this.mapPrismaToDomain(raw) : null;
   }
 
-  async findBySlug(slug: string): Promise<Blog | null> {
-    const raw = await this.prisma.blog.findUnique({ where: { slug } });
-    return raw ? this.mapPrismaToDomain(raw) : null;
-  }
+  async findAll(params?: {
+    limit?: number;
+    published?: boolean;
+  }): Promise<Action[]> {
+    const { limit, published } = params || {};
 
-  async findLatest(limit: number): Promise<Blog[]> {
-    const raws = await this.prisma.blog.findMany({
+    const raws = await this.prisma.action.findMany({
+      where: published !== undefined ? { published } : undefined,
       orderBy: { publishedAt: 'desc' },
       take: limit,
     });
+
     return raws.map((raw) => this.mapPrismaToDomain(raw));
   }
 
-  async create(blog: Blog): Promise<Blog> {
-    const data = BlogMapper.toPersistence(blog);
-    const raw = await this.prisma.blog.create({ data });
+  async create(action: Action): Promise<Action> {
+    const data = ActionMapper.toPersistence(action);
+    const raw = await this.prisma.action.create({ data });
     return this.mapPrismaToDomain(raw);
   }
 
-  async update(blog: Blog): Promise<Blog> {
-    const data = BlogMapper.toPersistence(blog);
-    const raw = await this.prisma.blog.update({
-      where: { id: blog.id },
+  async update(action: Action): Promise<Action> {
+    const data = ActionMapper.toUpdateInput(action);
+    const raw = await this.prisma.action.update({
+      where: { id: action.id },
       data,
     });
     return this.mapPrismaToDomain(raw);
   }
 
   async delete(id: string): Promise<void> {
-    await this.prisma.blog.delete({ where: { id } });
+    await this.prisma.action.delete({ where: { id } });
   }
 }

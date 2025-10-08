@@ -1,42 +1,58 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
-import type { IBlogRepository } from '../domain/Iaction.repository';
-import { Blog } from '../domain/action.entity';
+import {
+  Injectable,
+  Inject,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
+import type { IActionRepository } from '../domain/Iaction.repository';
+import { Action } from '../domain/action.entity';
 
 @Injectable()
-export class BlogService {
+export class ActionService {
   constructor(
-    @Inject('IBlogRepository') private readonly blogRepo: IBlogRepository,
+    @Inject('IActionRepository')
+    private readonly actionRepo: IActionRepository,
   ) {}
 
-  async getById(id: string): Promise<Blog> {
-    const blog = await this.blogRepo.findById(id);
-    if (!blog) throw new NotFoundException(`Blog ${id} not found`);
-    return blog;
+  // Récupérer une action par id
+  async getById(id: string): Promise<Action> {
+    const action = await this.actionRepo.findById(id);
+    if (!action) throw new NotFoundException(`Action ${id} not found`);
+    return action;
   }
 
-  async getBySlug(slug: string): Promise<Blog> {
-    const blog = await this.blogRepo.findBySlug(slug);
-    if (!blog) throw new NotFoundException(`Blog ${slug} not found`);
-    return blog;
+  async getAll(params?: {
+    limit?: number;
+    published?: boolean;
+  }): Promise<Action[]> {
+    return this.actionRepo.findAll(params);
   }
 
-  async getLatest(limit: number): Promise<Blog[]> {
-    return this.blogRepo.findLatest(limit);
+  async create(action: Action): Promise<Action> {
+    return this.actionRepo.create(action);
   }
 
-  async create(blog: Blog): Promise<Blog> {
-    return this.blogRepo.create(blog);
-  }
-
-  async update(blog: Blog): Promise<Blog> {
-    const existing = await this.blogRepo.findById(blog.id);
-    if (!existing) throw new NotFoundException(`Blog ${blog.id} not found`);
-    return this.blogRepo.update(blog);
+  async update(action: Action): Promise<Action> {
+    const existing = await this.actionRepo.findById(action.id);
+    if (!existing) throw new NotFoundException(`Action ${action.id} not found`);
+    return this.actionRepo.update(action);
   }
 
   async delete(id: string): Promise<void> {
-    const existing = await this.blogRepo.findById(id);
-    if (!existing) throw new NotFoundException(`Blog ${id} not found`);
-    return this.blogRepo.delete(id);
+    const existing = await this.actionRepo.findById(id);
+    if (!existing) throw new NotFoundException(`Action ${id} not found`);
+    return this.actionRepo.delete(id);
+  }
+
+  async publish(id: string): Promise<Action> {
+    const action = await this.actionRepo.findById(id);
+    if (!action) throw new NotFoundException(`Action ${id} not found`);
+    return this.actionRepo.publish(action);
+  }
+
+  async unpublish(id: string): Promise<Action> {
+    const action = await this.actionRepo.findById(id);
+    if (!action) throw new NotFoundException(`Action ${id} not found`);
+    return this.actionRepo.unpublish(action);
   }
 }

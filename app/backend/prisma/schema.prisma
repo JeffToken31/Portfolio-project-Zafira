@@ -90,3 +90,12 @@ enum MediaType {
   IMAGE
   VIDEO
 }
+
+model Action {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  imageUrl    String?
+  published   Boolean  @default(false)
+  publishedAt DateTime?
+}

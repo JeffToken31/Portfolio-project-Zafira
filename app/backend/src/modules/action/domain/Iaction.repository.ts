@@ -1,14 +1,11 @@
-import { Blog } from './action.entity';
+import { Action } from '../domain/action.entity';
 
-export interface IBlogRepository {
-  // CRUD operations
-  findById(id: string): Promise<Blog | null>;
-  findBySlug(slug: string): Promise<Blog | null>;
-  findLatest(limit: number): Promise<Blog[]>;
-
-  create(blog: Blog): Promise<Blog>;
-
-  update(blog: Blog): Promise<Blog>;
-
+export interface IActionRepository {
+  create(action: Action): Promise<Action>;
+  update(action: Action): Promise<Action>;
   delete(id: string): Promise<void>;
+  findAll(params?: { limit?: number; published?: boolean }): Promise<Action[]>;
+  findById(id: string): Promise<Action | null>;
+  publish(action: Action): Promise<Action>;
+  unpublish(action: Action): Promise<Action>;
 }

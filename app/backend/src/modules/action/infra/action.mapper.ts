@@ -1,75 +1,48 @@
-import { Blog, MediaType } from '../domain/action.entity';
+import { Action } from '../domain/action.entity';
 import { Prisma } from '@prisma/client';
 
-// Type strict pour les données Prisma
-export type RawBlogData = Prisma.BlogGetPayload<{
+export type RawActionData = Prisma.ActionGetPayload<{
   select: {
     id: true;
     title: true;
-    slug: true;
-    content: true;
-    excerpt: true;
-    coverImageUrl: true;
-    mediaUrl: true;
-    mediaType: true;
+    description: true;
+    imageUrl: true;
     published: true;
     publishedAt: true;
   };
 }>;
 
-// Helper pour convertir string | null → MediaType | undefined
-function parseMediaType(
-  value: string | null | undefined,
-): MediaType | undefined {
-  if (!value) return undefined;
-  return Object.values(MediaType).includes(value as MediaType)
-    ? (value as MediaType)
-    : undefined;
-}
-
-export class BlogMapper {
+export class ActionMapper {
   // ---------- Mapper Prisma -> Domain ----------
-  static toDomain(raw: RawBlogData): Blog {
-    return new Blog(
+  static toDomain(raw: RawActionData): Action {
+    return new Action(
       raw.id,
       raw.title,
-      raw.slug,
-      raw.content,
-      raw.excerpt ?? '',
-      raw.coverImageUrl ?? undefined,
-      raw.mediaUrl ?? undefined,
-      parseMediaType(raw.mediaType),
+      raw.description,
+      raw.imageUrl ?? undefined,
       raw.published,
       raw.publishedAt ?? undefined,
     );
   }
 
   // ---------- Mapper Domain -> Prisma ----------
-  static toPersistence(blog: Blog): Prisma.BlogCreateInput {
+  static toPersistence(action: Action): Prisma.ActionCreateInput {
     return {
-      title: blog.title,
-      slug: blog.slug,
-      content: blog.content,
-      excerpt: blog.excerpt ?? '',
-      coverImageUrl: blog.coverImageUrl ?? null,
-      mediaUrl: blog.mediaUrl ?? null,
-      mediaType: blog.mediaType ?? null,
-      published: blog.published,
-      publishedAt: blog.publishedAt ?? null,
+      title: action.title,
+      description: action.description,
+      imageUrl: action.imageUrl ?? null,
+      published: action.published,
+      publishedAt: action.publishedAt ?? null,
     };
   }
 
-  static toUpdateInput(blog: Blog): Prisma.BlogUpdateInput {
+  static toUpdateInput(action: Action): Prisma.ActionUpdateInput {
     return {
-      title: blog.title,
-      slug: blog.slug,
-      content: blog.content,
-      excerpt: blog.excerpt,
-      coverImageUrl: blog.coverImageUrl ?? null,
-      mediaUrl: blog.mediaUrl ?? null,
-      mediaType: blog.mediaType ?? null,
-      published: blog.published,
-      publishedAt: blog.publishedAt ?? null,
+      title: action.title,
+      description: action.description,
+      imageUrl: action.imageUrl ?? null,
+      published: action.published,
+      publishedAt: action.publishedAt ?? null,
     };
   }
 }

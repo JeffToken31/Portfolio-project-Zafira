@@ -7,141 +7,201 @@ import {
   Delete,
   Param,
   Body,
+  Query,
   HttpCode,
   HttpStatus,
   BadRequestException,
   UseGuards,
+  Inject,
 } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
+  ApiQuery,
 } from '@nestjs/swagger';
-import { BlogService } from '../app/action.service';
-import { CreateBlogDto } from './dto/create-action.dto';
-import { UpdateBlogDto } from './dto/update-action.dto';
-import { BlogDtoMapper } from './dto/action-dto.mapper';
-import { Blog } from '../domain/action.entity';
+import { ActionService } from '../app/action.service';
+import { CreateActionDto } from './dto/create-action.dto';
+import { UpdateActionDto } from './dto/update-action.dto';
+import { ActionDtoMapper } from './dto/action-dto.mapper';
+import { Action } from '../domain/action.entity';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { RolesGuard } from '../../../common/guards/roles.guard';
 import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 
-@ApiTags('blogs')
-@Controller('blogs')
-export class BlogController {
-  constructor(private readonly blogService: BlogService) {}
+@ApiTags('actions')
+@Controller('actions')
+export class ActionController {
+  constructor(
+    @Inject(ActionService)
+    private readonly actionService: ActionService,
+  ) {}
 
+  // CREATE
   @Post()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('beneficiary')
-  @ApiOperation({ summary: 'Create a new blog' })
-  @ApiResponse({ status: 201, description: 'The blog has been created.' })
+  @ApiOperation({ summary: 'Create a new action' })
+  @ApiResponse({ status: 201, description: 'Action successfully created.' })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
-  async create(@Body() dto: CreateBlogDto): Promise<Record<string, unknown>> {
+  async create(@Body() dto: CreateActionDto): Promise<Record<string, unknown>> {
     try {
-      const blog: Blog = BlogDtoMapper.toDomainFromCreate(dto);
-      const created = await this.blogService.create(blog);
+      const action: Action = ActionDtoMapper.toDomainFromCreate(dto);
+      const created = await this.actionService.create(action);
       return created.toJSON();
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new BadRequestException(error.message);
       }
-      throw new BadRequestException('An unknown error occurred');
+      throw new BadRequestException('Unknown error while creating action');
     }
   }
 
+  // UPDATE (PUT)
   @Put(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
-  @ApiOperation({ summary: 'Fully update a blog' })
-  @ApiResponse({ status: 200, description: 'The blog has been updated.' })
-  @ApiResponse({ status: 400, description: 'Invalid input data.' })
-  @ApiResponse({ status: 404, description: 'Blog not found.' })
+  @ApiOperation({ summary: 'Fully update an action' })
+  @ApiResponse({ status: 200, description: 'Action successfully updated.' })
+  @ApiResponse({ status: 404, description: 'Action not found.' })
   async update(
     @Param('id') id: string,
-    @Body() dto: CreateBlogDto,
+    @Body() dto: CreateActionDto,
   ): Promise<Record<string, unknown>> {
     try {
-      const existingBlog = await this.blogService.getById(id);
-      const blogToUpdate = BlogDtoMapper.toDomainFromUpdate(dto, existingBlog);
-      const updated = await this.blogService.update(blogToUpdate);
+      const existing = await this.actionService.getById(id);
+      const actionToUpdate = ActionDtoMapper.toDomainFromUpdate(dto, existing);
+      const updated = await this.actionService.update(actionToUpdate);
       return updated.toJSON();
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new BadRequestException(error.message);
       }
-      throw new BadRequestException('An unknown error occurred');
+      throw new BadRequestException('Unknown error while updating action');
     }
   }
 
+  // PATCH (PARTIAL UPDATE)
   @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
-  @ApiOperation({ summary: 'Partially update a blog' })
-  @ApiResponse({
-    status: 200,
-    description: 'The blog has been partially updated.',
-  })
-  @ApiResponse({ status: 400, description: 'Invalid input data.' })
-  @ApiResponse({ status: 404, description: 'Blog not found.' })
+  @ApiOperation({ summary: 'Partially update an action' })
+  @ApiResponse({ status: 200, description: 'Action partially updated.' })
+  @ApiResponse({ status: 404, description: 'Action not found.' })
   async patch(
     @Param('id') id: string,
-    @Body() dto: UpdateBlogDto,
+    @Body() dto: UpdateActionDto,
   ): Promise<Record<string, unknown>> {
     try {
-      const existing = await this.blogService.getById(id);
-      const blogToUpdate = BlogDtoMapper.toDomainFromUpdate(dto, existing);
-      const updated = await this.blogService.update(blogToUpdate);
+      const existing = await this.actionService.getById(id);
+      const actionToUpdate = ActionDtoMapper.toDomainFromUpdate(dto, existing);
+      const updated = await this.actionService.update(actionToUpdate);
       return updated.toJSON();
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new BadRequestException(error.message);
       }
-      throw new BadRequestException('An unknown error occurred');
+      throw new BadRequestException('Unknown error while patching action');
     }
   }
 
+  // DELETE
   @Delete(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('beneficiary')
+  @Roles('admin')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Delete a blog by ID' })
-  @ApiResponse({ status: 200, description: 'The blog has been deleted.' })
-  @ApiResponse({ status: 404, description: 'Blog not found.' })
-  @ApiResponse({ status: 403, description: 'Forbidden operation.' })
+  @ApiOperation({ summary: 'Delete an action by ID' })
+  @ApiResponse({ status: 204, description: 'Action deleted.' })
+  @ApiResponse({ status: 404, description: 'Action not found.' })
   async delete(@Param('id') id: string) {
     try {
-      await this.blogService.delete(id);
-      return { message: `Utilisateur ${id} supprimé` };
+      await this.actionService.delete(id);
+      return { message: `Action ${id} deleted successfully.` };
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new BadRequestException(error.message);
       }
-      throw new BadRequestException('An unknown error occurred');
+      throw new BadRequestException('Unknown error while deleting action');
     }
   }
 
+  // GET ONE BY ID
   @Get(':id')
-  @ApiOperation({ summary: 'Get a blog by ID' })
-  @ApiResponse({ status: 200, description: 'The blog object.' })
-  @ApiResponse({ status: 404, description: 'Blog not found.' })
+  @ApiOperation({ summary: 'Get an action by ID' })
+  @ApiResponse({ status: 200, description: 'Action details.' })
+  @ApiResponse({ status: 404, description: 'Action not found.' })
   async findById(@Param('id') id: string): Promise<Record<string, unknown>> {
-    const blog = await this.blogService.getById(id);
-    return blog.toJSON();
+    const action = await this.actionService.getById(id);
+    return action.toJSON();
   }
 
+  // GET ALL / FILTERED / LIMITED
   @Get()
-  @ApiOperation({ summary: 'Get latest blogs' })
-  @ApiResponse({ status: 200, description: 'List of latest blogs.' })
-  async findLatest(
-    @Param('limit') limit = 10,
+  @ApiOperation({
+    summary: 'Get all actions (with optional filters)',
+    description:
+      'Supports query params like `?limit=3` or `?published=true` for filtering.',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Limit the number of returned actions',
+  })
+  @ApiQuery({
+    name: 'published',
+    required: false,
+    type: Boolean,
+    description: 'Filter only published actions',
+  })
+  @ApiResponse({ status: 200, description: 'List of actions.' })
+  async findAll(
+    @Query('limit') limit?: number,
+    @Query('published') published?: boolean,
   ): Promise<Record<string, unknown>[]> {
-    const blogs = await this.blogService.getLatest(Number(limit));
-    return blogs.map((blog) => blog.toJSON());
+    try {
+      const actions = await this.actionService.getAll({
+        limit: limit ? Number(limit) : undefined,
+        published:
+          typeof published === 'string'
+            ? published === 'true'
+            : (published ?? undefined),
+      });
+      return actions.map((a) => a.toJSON());
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new BadRequestException(error.message);
+      }
+      throw new BadRequestException('Unknown error while fetching actions');
+    }
+  }
+
+  @Patch(':id/publish')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  @ApiOperation({ summary: 'Publish an action' })
+  @ApiResponse({ status: 200, description: 'Action published successfully.' })
+  @ApiResponse({ status: 404, description: 'Action not found.' })
+  async publish(@Param('id') id: string) {
+    const action = await this.actionService.publish(id);
+    return ActionDtoMapper.toResponse(action);
+  }
+
+  @Patch(':id/unpublish')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  @ApiOperation({ summary: 'Unpublish an action' })
+  @ApiResponse({ status: 200, description: 'Action unpublished successfully.' })
+  @ApiResponse({ status: 404, description: 'Action not found.' })
+  async unpublish(@Param('id') id: string) {
+    const action = await this.actionService.unpublish(id);
+    return ActionDtoMapper.toResponse(action);
   }
 }
