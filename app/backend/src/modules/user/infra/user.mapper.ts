@@ -1,6 +1,7 @@
 import { User } from '../domain/user.entity';
 import { Prisma } from '@prisma/client';
 
+// Mapper to allow switch with entity and prisma model
 export class UserMapper {
   static toDomain(
     raw: Prisma.UserGetPayload<{

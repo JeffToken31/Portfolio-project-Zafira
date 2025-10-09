@@ -3,6 +3,13 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { AuthService } from '../../app/auth.service';
 
+interface GoogleProfile {
+  id: string;
+  emails?: { value: string }[];
+  name?: { givenName?: string; familyName?: string };
+  photos?: { value?: string }[];
+}
+
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(private readonly authService: AuthService) {
@@ -17,20 +24,22 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   async validate(
     accessToken: string,
     refreshToken: string,
-    profile: any,
+    profile: GoogleProfile,
     done: VerifyCallback,
-  ): Promise<any> {
+  ): Promise<void> {
     try {
+      // Use Googleprofile to typescipt
       const user = await this.authService.validateGoogleUser({
         googleSub: profile.id,
-        googleEmail: profile.emails[0].value,
+        googleEmail: profile.emails?.[0]?.value ?? '',
         googleFirstName: profile.name?.givenName,
         googleLastName: profile.name?.familyName,
         googleAvatarUrl: profile.photos?.[0]?.value,
       });
+
       done(null, user);
     } catch (err) {
-      done(err, false);
+      done(err as Error, false);
     }
   }
 }
