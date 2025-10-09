@@ -13,7 +13,7 @@ export type RawActionData = Prisma.ActionGetPayload<{
 }>;
 
 export class ActionMapper {
-  // ---------- Mapper Prisma -> Domain ----------
+  // Mapper Prisma -> Domain
   static toDomain(raw: RawActionData): Action {
     return new Action(
       raw.id,
@@ -25,7 +25,7 @@ export class ActionMapper {
     );
   }
 
-  // ---------- Mapper Domain -> Prisma ----------
+  // Mapper Domain -> Prisma
   static toPersistence(action: Action): Prisma.ActionCreateInput {
     return {
       title: action.title,

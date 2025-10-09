@@ -9,7 +9,7 @@ export class ActionService {
     private readonly actionRepo: IActionRepository,
   ) {}
 
-  // Récupérer une action par id
+  // Get by id
   async getById(id: string): Promise<Action> {
     const action = await this.actionRepo.findById(id);
     if (!action) throw new NotFoundException(`Action ${id} not found`);

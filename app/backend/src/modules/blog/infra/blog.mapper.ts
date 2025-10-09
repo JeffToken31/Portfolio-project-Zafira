@@ -1,7 +1,7 @@
 import { Blog, MediaType } from '../domain/blog.entity';
 import { Prisma } from '@prisma/client';
 
-// Type strict pour les données Prisma
+// Strict type for data prisma
 export type RawBlogData = Prisma.BlogGetPayload<{
   select: {
     id: true;
@@ -17,7 +17,7 @@ export type RawBlogData = Prisma.BlogGetPayload<{
   };
 }>;
 
-// Helper pour convertir string | null → MediaType | undefined
+// Helper to convert string | null → MediaType | undefined
 function parseMediaType(
   value: string | null | undefined,
 ): MediaType | undefined {
@@ -28,7 +28,7 @@ function parseMediaType(
 }
 
 export class BlogMapper {
-  // ---------- Mapper Prisma -> Domain ----------
+  // Mapper Prisma -> Domain
   static toDomain(raw: RawBlogData): Blog {
     return new Blog(
       raw.id,
@@ -44,7 +44,7 @@ export class BlogMapper {
     );
   }
 
-  // ---------- Mapper Domain -> Prisma ----------
+  // Mapper Domain -> Prisma
   static toPersistence(blog: Blog): Prisma.BlogCreateInput {
     return {
       title: blog.title,

@@ -8,11 +8,11 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateActionDto {
-  @ApiProperty({ example: 'Atelier de réinsertion professionnelle' })
+  @ApiProperty({ example: 'Atelier de ...' })
   @IsString()
   title: string;
 
-  @ApiProperty({ example: 'Session d’aide à la recherche d’emploi' })
+  @ApiProperty({ example: 'Session d’aide...' })
   @IsString()
   description: string;
 

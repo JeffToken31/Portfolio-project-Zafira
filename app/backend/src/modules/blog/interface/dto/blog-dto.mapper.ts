@@ -2,7 +2,7 @@ import { Blog, MediaType } from '../../domain/blog.entity';
 import { CreateBlogDto } from './create-blog.dto';
 import { UpdateBlogDto } from './update-blog.dto';
 
-// Helper to check the mediaType //
+// Helper to check the mediaType
 function parseMediaType(
   value: string | null | undefined,
 ): MediaType | undefined {
@@ -13,7 +13,7 @@ function parseMediaType(
 }
 
 export class BlogDtoMapper {
-  // Map CreateBlogDto to Domain  //
+  // Map CreateBlogDto to Domain
   static toDomainFromCreate(dto: CreateBlogDto): Blog {
     return new Blog(
       crypto.randomUUID(),
@@ -29,7 +29,7 @@ export class BlogDtoMapper {
     );
   }
 
-  //  Map UpdateBlogDto to Domain  //
+  //  Map UpdateBlogDto to Domain
   static toDomainFromUpdate(dto: UpdateBlogDto, existing: Blog): Blog {
     return new Blog(
       existing.id,
@@ -45,7 +45,7 @@ export class BlogDtoMapper {
     );
   }
 
-  //Map Domain to Plain Object (Swagger/Postman)//
+  //Map Domain to Plain Object (Swagger/Postman)
   static toResponse(blog: Blog): Record<string, unknown> {
     return {
       id: blog.id,

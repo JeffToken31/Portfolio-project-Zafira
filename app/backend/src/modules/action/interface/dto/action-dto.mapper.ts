@@ -3,7 +3,7 @@ import { CreateActionDto } from './create-action.dto';
 import { UpdateActionDto } from './update-action.dto';
 
 export class ActionDtoMapper {
-  // 🔹 Map CreateActionDto -> Domain
+  // Map CreateActionDto -> Domain
   static toDomainFromCreate(dto: CreateActionDto): Action {
     return new Action(
       crypto.randomUUID(),
@@ -15,7 +15,7 @@ export class ActionDtoMapper {
     );
   }
 
-  // 🔹 Map UpdateActionDto -> Domain (merge avec l’existant)
+  // Map UpdateActionDto -> Domain
   static toDomainFromUpdate(dto: UpdateActionDto, existing: Action): Action {
     return new Action(
       existing.id,
@@ -27,7 +27,7 @@ export class ActionDtoMapper {
     );
   }
 
-  // 🔹 Domain -> JSON Response (Swagger/Postman)
+  // Domain -> JSON Response (Swagger/Postman)
   static toResponse(action: Action): Record<string, unknown> {
     return {
       id: action.id,

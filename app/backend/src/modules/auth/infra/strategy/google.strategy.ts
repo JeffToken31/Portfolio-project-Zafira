@@ -28,7 +28,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     done: VerifyCallback,
   ): Promise<void> {
     try {
-      // On force TypeScript à savoir que profile est bien notre GoogleProfile
+      // Use Googleprofile to typescipt
       const user = await this.authService.validateGoogleUser({
         googleSub: profile.id,
         googleEmail: profile.emails?.[0]?.value ?? '',

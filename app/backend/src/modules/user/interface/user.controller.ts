@@ -1,4 +1,3 @@
-// modules/user/interface/user.controller.ts
 import {
   Controller,
   Body,
@@ -41,7 +40,7 @@ export class UserController {
     return users.map((u) => ({ id: u.id, email: u.email }));
   }
 
-  // 🟢 Update user
+  // Update user
   @Put(':id')
   @ApiOperation({ summary: 'Update user' })
   async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
@@ -49,7 +48,7 @@ export class UserController {
     return updatedUser.toJSON();
   }
 
-  // 🟢 Delete user
+  // Delete user
   @Delete(':id')
   @ApiOperation({ summary: 'Delete user' })
   async delete(@Param('id') id: string) {
