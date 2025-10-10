@@ -30,6 +30,7 @@ import { Testimonial } from '../domain/testimonial.entity';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { RolesGuard } from '../../../common/guards/roles.guard';
 import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
+import type { JwtUser } from '../../../common/interfaces/jwt-user.interface';
 
 @ApiTags('testimonials')
 @Controller('testimonials')
@@ -52,20 +53,18 @@ export class TestimonialController {
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
   async create(
     @Body() dto: CreateTestimonialDto,
-    @Req() req: any, // Injection de la requête pour récupérer le user
+    @Req() req: { user: JwtUser },
   ): Promise<Record<string, unknown>> {
     try {
-      const userId = req.user.id; // Récupération du userId depuis le JWT
-      const authorName = req.user.name ?? 'Anonymous'; // Nom de l'utilisateur, fallback sur 'Anonymous'
+      const userId = req.user.id;
+      const authorName = req.user.name ?? 'Anonymous';
 
-      // Création de l'entité Testimonial via le mapper
       const testimonial: Testimonial = TestimonialDtoMapper.toDomainFromCreate(
         dto,
         authorName,
         userId,
       );
 
-      // Appel du service avec l'entité créée
       const created = await this.testimonialService.create(testimonial, userId);
 
       return created.toJSON();

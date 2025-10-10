@@ -14,7 +14,7 @@ export type RawTestimonialData = Prisma.TestimonialGetPayload<{
 }>;
 
 export class TestimonialMapper {
-  // --- Prisma → Domaine ---
+  // --- Prisma → Domain ---
   static toDomain(raw: RawTestimonialData): Testimonial {
     return new Testimonial(
       raw.id,
@@ -27,7 +27,7 @@ export class TestimonialMapper {
     );
   }
 
-  // --- Domaine → Prisma (création) ---
+  // --- Domain → Prisma ---
   static toPersistence(
     testimonial: Testimonial,
   ): Prisma.TestimonialCreateInput {
@@ -41,7 +41,7 @@ export class TestimonialMapper {
     };
   }
 
-  // --- Domaine → Prisma (mise à jour) ---
+  // --- Domain → Prisma ---
   static toUpdateInput(
     testimonial: Testimonial,
   ): Prisma.TestimonialUpdateInput {

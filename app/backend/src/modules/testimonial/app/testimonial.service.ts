@@ -34,18 +34,15 @@ export class TestimonialService {
     dto: CreateTestimonialDto,
     userId: string,
   ): Promise<Testimonial> {
-    // Récupération du nom de l'utilisateur depuis le service utilisateur
     const user = await this.userService.findById(userId);
     const authorName = user?.firstName ?? 'Anonymous';
 
-    // Création de l'entité via le mapper
     const testimonial = TestimonialDtoMapper.toDomainFromCreate(
       dto,
       authorName,
-      userId, // ici le beneficiaryId
+      userId,
     );
 
-    // Enregistrement dans le repo
     return this.testimonialRepo.create(testimonial);
   }
 

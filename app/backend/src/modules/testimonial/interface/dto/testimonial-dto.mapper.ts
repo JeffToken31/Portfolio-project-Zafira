@@ -10,10 +10,10 @@ export class TestimonialDtoMapper {
     beneficiaryId: string,
   ): Testimonial {
     return new Testimonial(
-      crypto.randomUUID(), // id
-      authorName, // authorName issu du JWT
-      dto.content, // contenu du témoignage
-      beneficiaryId, // beneficiaryId issu du JWT
+      crypto.randomUUID(),
+      authorName,
+      dto.content,
+      beneficiaryId,
       dto.validated ?? false,
       dto.published ?? false,
       dto.publishedAt,
@@ -27,9 +27,9 @@ export class TestimonialDtoMapper {
   ): Testimonial {
     return new Testimonial(
       existing.id,
-      existing.authorName, // authorName non modifiable
+      existing.authorName,
       dto.content ?? existing.content,
-      existing.beneficiaryId, // beneficiaryId non modifiable
+      existing.beneficiaryId,
       dto.validated ?? existing.validated,
       dto.published ?? existing.published,
       dto.publishedAt ?? existing.publishedAt,
