@@ -110,3 +110,15 @@ model Partner {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+model Testimonial {
+  id             String   @id @default(uuid())
+  authorName     String
+  content        String
+  beneficiaryId  String? // identifiant du bénéficiaire (optionnel si supprimé)
+  validated      Boolean  @default(false)  // validé par un admin
+  published      Boolean  @default(false)  // visible sur le site
+  publishedAt    DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
