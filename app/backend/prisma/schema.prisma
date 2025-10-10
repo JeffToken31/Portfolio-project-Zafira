@@ -99,3 +99,14 @@ model Action {
   published   Boolean  @default(false)
   publishedAt DateTime?
 }
+
+model Partner {
+  id           String   @id @default(uuid())
+  companyName  String   @unique
+  name         String?
+  email        String?
+  phoneNumber  String?
+  logoUrl      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
