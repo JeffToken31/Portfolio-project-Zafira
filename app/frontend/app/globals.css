@@ -25,7 +25,7 @@
 
   /* 🎨 Couleurs de fond */
   --color-bg: #ffffff;
-  --color-bg-alt: #f9fafb; /* gris clair */
+  --color-bg-alt: oklch(92.8% 0.006 264.531); /* keep on tailwind*/
   --color-surface: #fdfdfd;
 
   /* ✍️ Couleurs de texte */
