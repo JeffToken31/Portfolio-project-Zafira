@@ -1,7 +1,6 @@
 // app/layout.tsx
 import './globals.css';
 import {ReactNode} from 'react';
-import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
 
@@ -18,7 +17,7 @@ export default function RootLayout({children}: LayoutProps) {
       </head>
       <body className="bg-[var(--color-bg)] text-[var(--color-text)] antialiased">
         {/* Navbar fixe */}
-        <Navbar />
+
 
         {/* Contenu dynamique des pages */}
         <main className="min-h-[calc(100vh-100px)]">{children}</main>
