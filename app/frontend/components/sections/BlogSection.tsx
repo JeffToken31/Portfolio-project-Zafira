@@ -46,7 +46,7 @@ export default function BlogSection() {
         </div>
 
         <div className="mt-12">
-          <BlogSectionButton href="/blog">Voir tous les articles</BlogSectionButton>
+          <BlogSectionButton href="/#blog">Voir tous les articles</BlogSectionButton>
         </div>
       </div>
     </section>

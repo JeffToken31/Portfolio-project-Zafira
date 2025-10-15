@@ -10,7 +10,7 @@ export default function ActionSection() {
       <ActionSectionCarousel />
 
       <div className="mt-8">
-        <ActionSectionButton href="/actions">
+        <ActionSectionButton href="/#actions">
           Voir toutes nos actions
         </ActionSectionButton>
       </div>
