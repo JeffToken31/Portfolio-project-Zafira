@@ -25,7 +25,7 @@ export default function LoginForm() {
         />
       </div>
 
-      {/* Mot de passe */}
+      {/* Password*/}
       <div className="flex flex-col">
         <label htmlFor="password" className="text-sm font-medium text-text">
           Mot de passe
@@ -41,12 +41,12 @@ export default function LoginForm() {
         />
       </div>
 
-      {/* Bouton Connexion */}
+      {/* Submit button */}
       <Button type="submit" variant="default" className="w-full">
         Se connecter
       </Button>
 
-      {/* Ou se connecter avec Google */}
+      {/* Google connect */}
       <Button
         type="button"
         variant="outline"
@@ -56,7 +56,7 @@ export default function LoginForm() {
         Se connecter avec Google
       </Button>
 
-      {/* Lien inscription */}
+      {/* Register link */}
       <p className="text-center text-sm text-text-light">
         Pas encore inscrit ?{' '}
         <a href="/register" className="text-primary hover:underline">

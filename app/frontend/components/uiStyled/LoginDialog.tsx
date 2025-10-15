@@ -8,14 +8,11 @@ import LoginForm from '../forms/LoginForm';
 export default function LoginDialog() {
   return (
     <Dialog>
-      {/* Trigger : le bouton "Connexion" */}
       <DialogTrigger asChild>
         <Button variant="connect" size="sm">
           Connexion
         </Button>
       </DialogTrigger>
-
-      {/* Contenu du pop-up */}
       <DialogContent className="max-w-md w-full p-6 rounded-lg bg-white">
         <DialogTitle className="text-xl font-heading mb-4">
           Se connecter
