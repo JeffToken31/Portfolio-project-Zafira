@@ -1,4 +1,5 @@
 import * as Lucide from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -29,15 +30,15 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Liens rapides</h3>
             <ul className="space-y-2">
-              <li><a href="/" className="hover:text-[var(--color-primary)] transition">Accueil</a></li>
-              <li><a href="#mission" className="hover:text-[var(--color-primary)] transition">Mission</a></li>
-              <li><a href="#temoignages" className="hover:text-[var(--color-primary)] transition">Témoignages</a></li>
-              <li><a href="#blog" className="hover:text-[var(--color-primary)] transition">Blog</a></li>
-              <li><a href="#faq" className="hover:text-[var(--color-primary)] transition">FAQ</a></li>
-              <li><a href="#partenaires" className="hover:text-[var(--color-primary)] transition">Partenaires</a></li>
-              <li><a href="#actions" className="hover:text-[var(--color-primary)] transition">Nos actions</a></li>
-              <li><a href="#benevoles" className="hover:text-[var(--color-primary)] transition">Devenir bénévole</a></li>
-              <li><a href="#contact" className="hover:text-[var(--color-primary)] transition">Contact</a></li>
+              <li><Link href="/" className="hover:text-[var(--color-primary)] transition">Accueil</Link></li>
+              <li><Link href="/#mission" className="hover:text-[var(--color-primary)] transition">Mission</Link></li>
+              <li><Link href="/#temoignages" className="hover:text-[var(--color-primary)] transition">Témoignages</Link></li>
+              <li><Link href="/#blog" className="hover:text-[var(--color-primary)] transition">Blog</Link></li>
+              <li><Link href="/#faq" className="hover:text-[var(--color-primary)] transition">FAQ</Link></li>
+              <li><Link href="/#partenaires" className="hover:text-[var(--color-primary)] transition">Partenaires</Link></li>
+              <li><Link href="/#actions" className="hover:text-[var(--color-primary)] transition">Nos actions</Link></li>
+              <li><Link href="/#benevoles" className="hover:text-[var(--color-primary)] transition">Devenir bénévole</Link></li>
+              <li><Link href="/#contact" className="hover:text-[var(--color-primary)] transition">Contact</Link></li>
             </ul>
           </div>
         </div>
