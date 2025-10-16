@@ -66,6 +66,14 @@ export class AuthController {
     };
 
     const token = this.authService.generateJwt(jwtUser);
-    return res.redirect(`http://localhost:3000/login/success?token=${token}`);
+
+    res.cookie('auth_token', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.redirect('http://localhost:3000/');
   }
 }
