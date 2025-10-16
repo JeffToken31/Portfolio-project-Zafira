@@ -38,8 +38,21 @@ export class AuthController {
 
   // Login
   @Post('login')
-  login(@Body() dto: LoginDto) {
-    return this.authService.login(dto.email, dto.password);
+  async login(@Body() dto: LoginDto, @Res() res: Response) {
+    const { access_token, user } = await this.authService.login(
+      dto.email,
+      dto.password,
+    );
+    res.cookie('auth_token', access_token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    return res.json({
+      message: 'Login successful',
+      user,
+    });
   }
 
   // Redirect to google auth
