@@ -9,6 +9,7 @@ import ImpactSection from '@/components/sections/ImpactSection';
 import MissionSection from '@/components/sections/MissionSection';
 import ParticipationSection from '@/components/sections/ParticipationSection';
 import PartnersSection from '@/components/sections/PartnersSection';
+import TestimonialSection from '@/components/sections/TestimonialSection';
 
 export default function HomePage() {
   return (
@@ -43,6 +44,10 @@ export default function HomePage() {
 
       <section id="partners">
         <PartnersSection />
+      </section>
+
+      <section id="testimonials">
+        <TestimonialSection />
       </section>
     </main>
   );
