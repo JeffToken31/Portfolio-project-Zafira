@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { CheckSquare, Gift, Heart, Euro } from 'lucide-react';
+import { CheckSquare, Gift, Heart, Euro, Home } from 'lucide-react';
 import ParticipationCard from '@/components/uiStyled/participation-section-card';
 
 export default function ParticipationSection() {
@@ -26,21 +26,22 @@ export default function ParticipationSection() {
           description="Point de collecte dans toute la ville"
           miniCards={[
             {
-              icon: <CheckSquare className="text-green-500 w-5 h-5" />,
+              icon: <CheckSquare className="text-blue-500 w-5 h-5" />,
               title: 'Vêtements professionnels',
               description: 'Vêtements adaptés au travail',
             },
             {
-              icon: <CheckSquare className="text-green-500 w-5 h-5" />,
+              icon: <CheckSquare className="text-blue-500 w-5 h-5" />,
               title: 'En bon état',
               description: 'Vêtements propres et réutilisables',
             },
             {
-              icon: <CheckSquare className="text-green-500 w-5 h-5" />,
+              icon: <CheckSquare className="text-blue-500 w-5 h-5" />,
               title: 'Toute taille',
               description: 'Du XS au XXL',
             },
             {
+              icon: <Home className="text-blue-500 w-5 h-5" />,
               title: 'Point de dépôt près de chez vous',
               description: '123 rue de la Solidarité, Paris',
             },
@@ -55,7 +56,7 @@ export default function ParticipationSection() {
           description="Votre don a un impact direct"
           miniCards={[
             {
-              icon: <Euro className="w-4 h-4" />,
+              icon: <Euro className="text-red-500 w-6 h-6" />,
               title: 'Avantage fiscal',
               description:
                 'Réduction d’impôts selon la législation en vigueur',
