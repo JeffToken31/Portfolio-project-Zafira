@@ -14,6 +14,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import type { Response, Request } from 'express';
 import { User } from '@prisma/client';
+import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -72,10 +73,11 @@ export class AuthController {
       return res.status(401).json({ message: 'No user found' });
     }
 
-    const jwtUser: Pick<User, 'id' | 'email' | 'role'> = {
+    const jwtUser: Pick<User, 'id' | 'email' | 'role' | 'firstName'> = {
       id: prismaUser.id,
       email: prismaUser.email,
       role: prismaUser.role,
+      firstName: prismaUser.firstName || '', // fallback si pas défini
     };
 
     const token = this.authService.generateJwt(jwtUser);
@@ -88,5 +90,25 @@ export class AuthController {
     });
 
     return res.redirect('http://localhost:3000/');
+  }
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  getMe(@Req() req: Request & { user?: User }) {
+    // req.user is fullfill via strategy jwt
+    if (!req.user) {
+      return { message: 'Not authenticated' };
+    }
+    return { user: req.user };
+  }
+
+  // Route pour logout
+  @Post('logout')
+  logout(@Res() res: Response) {
+    res.clearCookie('auth_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+    });
+    return res.json({ message: 'Logged out successfully' });
   }
 }
