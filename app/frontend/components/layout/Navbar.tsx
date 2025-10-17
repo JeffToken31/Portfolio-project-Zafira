@@ -54,10 +54,9 @@ export default function Navbar() {
               Bonjour, <strong>{user.firstName || user.email}</strong>
             </span>
             <Button
-              variant="outline"
+              variant="connect"
               size="sm"
               onClick={logout}
-              className="border-primary text-primary hover:bg-primary hover:text-white transition"
             >
               Déconnexion
             </Button>
