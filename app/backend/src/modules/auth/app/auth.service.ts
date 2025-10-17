@@ -65,12 +65,10 @@ export class AuthService {
     return { message: 'Email verified', user: user.toJSON() };
   }
 
-  // Login
+  // Login return access token and user
   async login(email: string, password: string) {
     const user = await this.userService.validateUser(email, password);
     if (!user) throw new UnauthorizedException('Invalid credentials');
-
-    // Utilise ta méthode generateJwt (inclut role)
     const token = this.generateJwt(user);
     return { access_token: token, user: user.toJSON() };
   }

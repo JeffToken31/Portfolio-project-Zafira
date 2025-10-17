@@ -14,6 +14,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import type { Response, Request } from 'express';
 import { User } from '@prisma/client';
+import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -38,8 +39,21 @@ export class AuthController {
 
   // Login
   @Post('login')
-  login(@Body() dto: LoginDto) {
-    return this.authService.login(dto.email, dto.password);
+  async login(@Body() dto: LoginDto, @Res() res: Response) {
+    const { access_token, user } = await this.authService.login(
+      dto.email,
+      dto.password,
+    );
+    res.cookie('auth_token', access_token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    return res.json({
+      message: 'Login successful',
+      user,
+    });
   }
 
   // Redirect to google auth
@@ -59,13 +73,42 @@ export class AuthController {
       return res.status(401).json({ message: 'No user found' });
     }
 
-    const jwtUser: Pick<User, 'id' | 'email' | 'role'> = {
+    const jwtUser: Pick<User, 'id' | 'email' | 'role' | 'firstName'> = {
       id: prismaUser.id,
       email: prismaUser.email,
       role: prismaUser.role,
+      firstName: prismaUser.firstName || '', // fallback si pas défini
     };
 
     const token = this.authService.generateJwt(jwtUser);
-    return res.redirect(`http://localhost:3000/login/success?token=${token}`);
+
+    res.cookie('auth_token', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.redirect('http://localhost:3000/');
+  }
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  getMe(@Req() req: Request & { user?: User }) {
+    // req.user is fullfill via strategy jwt
+    if (!req.user) {
+      return { message: 'Not authenticated' };
+    }
+    return { user: req.user };
+  }
+
+  // Route pour logout
+  @Post('logout')
+  logout(@Res() res: Response) {
+    res.clearCookie('auth_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+    });
+    return res.json({ message: 'Logged out successfully' });
   }
 }

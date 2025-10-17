@@ -1,8 +1,9 @@
-// app/layout.tsx
+'use client';
 import './globals.css';
 import {ReactNode} from 'react';
 import Footer from '@/components/layout/Footer';
-
+import Navbar from '@/components/layout/Navbar';
+import {AuthProvider} from '@/lib/context/AuthContext';
 
 interface LayoutProps {
   children: ReactNode;
@@ -16,14 +17,11 @@ export default function RootLayout({children}: LayoutProps) {
         <meta name="description" content="Redonner confiance par l'image" />
       </head>
       <body className="bg-[var(--color-bg)] text-[var(--color-text)] antialiased">
-        {/* Navbar fixe */}
-
-
-        {/* Contenu dynamique des pages */}
-        <main className="min-h-[calc(100vh-100px)]">{children}</main>
-
-        {/* Footer global */}
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <main className="min-h-[calc(100vh-100px)]">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

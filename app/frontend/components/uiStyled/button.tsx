@@ -8,7 +8,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-white text-primary-foreground hover:bg-primary/90',
+        default: 'bg-white text-primary-foreground hover:bg-bg-alt',
+        connect: 'bg-secondary text-white hover:bg-secondary-hover',
         heroSection: 'bg-primary text-white hover:bg-primary-hover',
         destructive: 'bg-destructive text-white hover:bg-destructive/90',
         outline:
@@ -19,8 +20,8 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-9 px-8 py-3 has-[>svg]:px-3',
-        sm: 'h-8 rounded-full gap-1.5 px-3 has-[>svg]:px-2.5',
+        default: 'px-8 py-3 has-[>svg]:px-3',
+        sm: 'h-8 rounded-full gap-1.5 px-3',
         lg: 'h-10 rounded-full px-6 has-[>svg]:px-4',
         icon: 'size-9',
         'icon-sm': 'size-8',
@@ -38,7 +39,7 @@ interface ButtonProps
   extends React.ComponentProps<'button'>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
-  href?: string; // ajout pour support des liens
+  href?: string;
 }
 
 function Button({
