@@ -5,6 +5,7 @@ import HeroSection from '@/components/sections/HeroSection';
 import ActionSection from '@/components/sections/ActionsSection';
 import BlogSection from '@/components/sections/BlogSection';
 import FAQSection from '@/components/sections/FAQSection';
+import ImpactSection from '@/components/sections/ImpactSection';
 
 export default function HomePage() {
   return (
@@ -23,6 +24,10 @@ export default function HomePage() {
       
       <section id="faq">
         <FAQSection />
+      </section>
+
+      <section id="impact">
+        <ImpactSection />
       </section>
     </main>
   );
