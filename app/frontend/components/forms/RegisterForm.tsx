@@ -7,7 +7,7 @@ import { useAuth } from '@/lib/hooks/useAuth';
 import {useRouter} from 'next/navigation';
 
 export default function RegisterForm() {
-  const {register} = useAuth();
+  const {register, login} = useAuth();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [firstname, setFirstname] = React.useState('');
@@ -19,6 +19,14 @@ export default function RegisterForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault();
+    // Check password lenght and email is valide
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      setError('Adresse e-mail invalide');
+      return;
+    }
+
     if (password.length < 8) {
       setError('Le mot de passe doit contenir au moins 8 caractères');
       return;
@@ -33,7 +41,8 @@ export default function RegisterForm() {
     }
 
     try {
-      await register({email, password, firstname, lastname});
+      await register({ email, password, firstname, lastname });
+      await login({email, password});
       router.push('/');
     } catch (err: unknown) {
       const e = err as ErrorResponse;
