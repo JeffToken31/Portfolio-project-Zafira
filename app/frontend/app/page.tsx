@@ -7,6 +7,7 @@ import BlogSection from '@/components/sections/BlogSection';
 import FAQSection from '@/components/sections/FAQSection';
 import ImpactSection from '@/components/sections/ImpactSection';
 import MissionSection from '@/components/sections/MissionSection';
+import ParticipationSection from '@/components/sections/ParticipationSection';
 
 export default function HomePage() {
   return (
@@ -33,6 +34,10 @@ export default function HomePage() {
 
       <section id="mission">
         <MissionSection />
+      </section>
+
+      <section id="participation">
+        <ParticipationSection />
       </section>
     </main>
   );
