@@ -6,6 +6,7 @@ import ActionSection from '@/components/sections/ActionsSection';
 import BlogSection from '@/components/sections/BlogSection';
 import FAQSection from '@/components/sections/FAQSection';
 import ImpactSection from '@/components/sections/ImpactSection';
+import MissionSection from '@/components/sections/MissionSection';
 
 export default function HomePage() {
   return (
@@ -28,6 +29,10 @@ export default function HomePage() {
 
       <section id="impact">
         <ImpactSection />
+      </section>
+
+      <section id="mission">
+        <MissionSection />
       </section>
     </main>
   );
