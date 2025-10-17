@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optionnel : animations */
+@import "tw-animate-css";
+
+/* Mode sombre basé sur .dark */
+/* Use the .dark class on a parent element to enable dark mode variables */
+
+/* Import des polices */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&family=Roboto:wght@400;500&display=swap');
+
+/* 🎨 Design System Global */
+:root {
+  /* 🌈 Couleurs principales */
+  --color-primary: #e9348c;
+  --color-primary-hover: #e81980;
+
+  --color-secondary: #38b6ff;
+  --color-secondary-hover: #0096e0;
+
+  --color-accent: #fedc27;
+  --color-accent-hover: #ffd800;
+
+  /* 🎨 Couleurs de fond */
+  --color-bg: #ffffff;
+  --color-bg-alt: #f9fafb; /* gris clair */
+  --color-surface: #fdfdfd;
+
+  /* ✍️ Couleurs de texte */
+  --color-text: #1f2937;
+  --color-text-light: #ffffff;
+
+  /* 🔲 Bordures, radius & ombres */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+
+  /* ⚡ Transitions */
+  --transition-base: all 0.3s ease-in-out;
+
+  /* 🖋️ Typographie */
+  --font-heading: 'Poppins', 'Helvetica Neue', sans-serif;
+  --font-body: 'Helvetica Neue', 'Inter', sans-serif;
+  --font-ui: 'Roboto', 'Inter', sans-serif;
+}
+
+/* 🌙 Dark Mode */
+.dark {
+  --color-bg: #121212;
+  --color-bg-alt: #1e1e1e;
+  --color-surface: #222222;
+  --color-text: #f3f4f6;
+  --color-text-light: #ffffff;
+}
