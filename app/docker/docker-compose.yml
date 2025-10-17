@@ -25,7 +25,6 @@ services:
       DATABASE_URL: ${DATABASE_URL}
     ports:
       - "3001:3001"
-      - "5555:5555" #prisma studio
     volumes:
       - ../backend:/app
       - /app/node_modules
