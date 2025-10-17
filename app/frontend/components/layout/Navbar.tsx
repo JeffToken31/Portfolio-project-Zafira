@@ -1,13 +1,19 @@
 'use client';
 
+import {HeartHandshake} from 'lucide-react';
+import {useRouter} from 'next/navigation';
+import {useAuth} from '@/lib/hooks/useAuth';
+import {Button} from '../uiStyled/button';
 import MobileMenu from './MobileMenu';
-import { HeartHandshake } from 'lucide-react';
 import LoginDialog from '../uiStyled/LoginDialog';
 
 export default function Navbar() {
+  const router = useRouter();
+  const {user, logout} = useAuth();
+
   return (
     <nav className="w-full px-6 py-4 flex items-center justify-between bg-bg shadow-md">
-      {/* Logo / Brand */}
+      {/* Logo */}
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
           <HeartHandshake className="w-4 h-4 text-white" />
@@ -18,7 +24,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Desktop Links */}
+      {/* Desktop navbar */}
       <div className="hidden md:flex items-center gap-6">
         <a
           href="#actions"
@@ -38,12 +44,48 @@ export default function Navbar() {
         >
           Contact
         </a>
-        <LoginDialog />
+
+        {/* Auth section */}
+        {!user ? (
+          <LoginDialog />
+        ) : (
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-text">
+              Bonjour, <strong>{user.firstName || user.email}</strong>
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={logout}
+              className="border-primary text-primary hover:bg-primary hover:text-white transition"
+            >
+              Déconnexion
+            </Button>
+          </div>
+        )}
       </div>
 
-      {/* Mobile Menu Trigger */}
+      {/* Mobile navbar */}
       <div className="md:hidden flex items-center gap-2">
-        <LoginDialog />
+        {!user ? (
+          <Button
+            variant="connect"
+            size="sm"
+            onClick={() => router.push('/login')}
+            className="px-3 py-2"
+          >
+            Connexion
+          </Button>
+        ) : (
+          <Button
+            variant="connect"
+            size="sm"
+            onClick={logout}
+          >
+            Déconnexion
+          </Button>
+        )}
+
         <MobileMenu />
       </div>
     </nav>
