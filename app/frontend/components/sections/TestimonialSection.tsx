@@ -1,12 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-import TestimonialCard from '../uiStyled/testimonial-section-card';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import TestimonialCard from '@/components/uiStyled/testimonial-section-card';
 
 export default function TestimonialSection() {
-  // 🧭 Témoignages
   const testimonials = [
     {
       avatar: '/images/avatar1.jpg',
@@ -30,15 +29,18 @@ export default function TestimonialSection() {
 
   const [current, setCurrent] = useState(0);
 
-  // 🔁 Fonctions de navigation
+  // 🔁 Navigation
   const next = () => setCurrent((prev) => (prev + 1) % testimonials.length);
   const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
+  // 🔄 Auto-défilement toutes les 5 s
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <section
-      id="temoignages"
-      className="py-20 px-6 md:px-16 bg-[var(--color-bg-alt)] text-[var(--color-text)]"
-    >
+    <section id="temoignages" className="py-20 px-6 md:px-16 bg-[var(--color-bg-alt)] text-[var(--color-text)]">
       {/* 🏷️ Titre */}
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
         Témoignages de nos bénéficiaires
@@ -54,7 +56,7 @@ export default function TestimonialSection() {
           <ChevronLeft className="w-6 h-6 text-[var(--color-primary)]" />
         </button>
 
-        {/* Carte */}
+        {/* Carte animée */}
         <motion.div
           key={current}
           initial={{ opacity: 0, x: 60 }}
@@ -74,7 +76,7 @@ export default function TestimonialSection() {
         </button>
       </div>
 
-      {/* 🔘 Indicateurs */}
+      {/* 🔘 Indicateurs dynamiques */}
       <div className="flex justify-center mt-6 gap-3">
         {testimonials.map((_, index) => (
           <button
@@ -87,7 +89,7 @@ export default function TestimonialSection() {
         ))}
       </div>
 
-      {/* 📊 Mini-cartes de satisfaction */}
+      {/* 📊 Mini-cartes */}
       <div className="flex flex-wrap justify-center gap-8 mt-12">
         <div className="bg-white rounded-lg shadow-md px-8 py-6 text-center w-56">
           <p className="text-4xl font-bold text-pink-500 mb-2">98%</p>

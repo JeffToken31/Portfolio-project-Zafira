@@ -24,9 +24,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
           height={100}
           className="rounded-full object-cover mb-3"
         />
-        <h3 className="text-lg font-semibold text-[var(--color-primary)]">
-          {testimonial.name}
-        </h3>
+        <h3 className="text-lg font-semibold text-[var(--color-primary)]">{testimonial.name}</h3>
         <p className="text-sm text-gray-600">{testimonial.title}</p>
       </div>
 
