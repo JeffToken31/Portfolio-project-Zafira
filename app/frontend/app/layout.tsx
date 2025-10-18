@@ -4,6 +4,9 @@ import {ReactNode} from 'react';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
 import {AuthProvider} from '@/lib/context/AuthContext';
+import {usePartners} from '@/lib/hooks/usePartners';
+import {useBlog} from '@/lib/hooks/useBlog';
+import {useTestimonials} from '@/lib/hooks/useTestimonials';
 
 interface LayoutProps {
   children: ReactNode;
