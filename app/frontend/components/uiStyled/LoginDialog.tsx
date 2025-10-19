@@ -16,7 +16,7 @@ export default function LoginDialog() {
   const {user, logout} = useAuth();
   const [open, setOpen] = React.useState(false);
 
-  // Fermer automatiquement le modal si l'utilisateur est connecté
+  // close modal if user is connected
   React.useEffect(() => {
     if (user) setOpen(false);
   }, [user]);
