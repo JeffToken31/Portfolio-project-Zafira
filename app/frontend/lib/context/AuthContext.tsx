@@ -1,5 +1,6 @@
 'use client';
 
+import {useRouter} from 'next/navigation';
 import React, {
   createContext,
   useContext,
@@ -33,12 +34,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
   const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
 
-  // Optionnel : vérifier si le cookie JWT existe et récupérer user au chargement
+  // Check if cookie exist and keep data when loading
   useEffect(() => {
     async function fetchUser() {
       try {
-        const res = await authApi.fetchUser(); // On créera cette route sur le back
+        const res = await authApi.fetchUser();
         setUser(res.user);
       } catch {
         setUser(null);
@@ -66,6 +68,7 @@ const logout = async () => {
   try {
     await authApi.logout();
     setUser(null);
+    router.push('/');
   } catch (err) {
     console.error('Logout failed', err);
   }
