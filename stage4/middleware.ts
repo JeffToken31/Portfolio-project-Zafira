@@ -56,7 +56,6 @@ export function middleware(req: NextRequest) {
   // --- Default: allow request
   return NextResponse.next();
 }
-
 // --- Apply middleware to selected routes
 export const config = {
   matcher: ['/dashboard/:path*', '/', '/auth/login', '/auth/register'],
