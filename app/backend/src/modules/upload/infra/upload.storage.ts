@@ -11,26 +11,38 @@ if (!existsSync(uploadPath)) {
   mkdirSync(uploadPath, { recursive: true });
 }
 
+// Allowed format
+const allowedMimeTypes = [
+  // pictures
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+
+  // Videos
+  'video/mp4',
+  'video/webm',
+  'video/ogg',
+  'video/mov',
+  'video/quicktime',
+  'video/x-msvideo', // AVI
+  'video/x-matroska', // MKV
+  'video/x-flv', // FLV
+];
+
 function fileFilter(
   req: Request,
   file: Express.Multer.File,
   callback: (error: Error | null, acceptFile: boolean) => void,
 ) {
-  const allowedMimeTypes = [
-    'image/jpeg',
-    'image/png',
-    'image/webp',
-    'video/mp4',
-    'video/webm',
-  ];
-
   if (!allowedMimeTypes.includes(file.mimetype)) {
     return callback(
-      new BadRequestException('Type de fichier non autorisé'),
+      new BadRequestException(
+        `Type de fichier non autorisé : ${file.mimetype}`,
+      ),
       false,
     );
   }
-
   callback(null, true);
 }
 
@@ -55,6 +67,6 @@ export const multerStorage = {
   }),
   fileFilter,
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10 Mo
+    fileSize: 500 * 1024 * 1024, // 500 Mo
   },
 };
