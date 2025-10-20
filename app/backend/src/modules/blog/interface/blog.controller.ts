@@ -33,9 +33,9 @@ export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
   @Post()
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('beneficiary')
+  //@ApiBearerAuth()
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles('beneficiary')
   @ApiOperation({ summary: 'Create a new blog' })
   @ApiResponse({ status: 201, description: 'The blog has been created.' })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })

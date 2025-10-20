@@ -15,6 +15,7 @@ export class CreateBlogDto {
   title: string;
 
   @ApiProperty({ example: 'my-first-blog-post' })
+  @IsOptional()
   @IsString()
   slug: string; // ✅ ajouté
 
@@ -29,12 +30,12 @@ export class CreateBlogDto {
 
   @ApiProperty({ example: 'https://example.com/cover.jpg', required: false })
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   coverImageUrl?: string;
 
   @ApiProperty({ example: 'https://example.com/video.mp4', required: false })
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   mediaUrl?: string;
 
   @ApiProperty({ enum: MediaType, required: false })

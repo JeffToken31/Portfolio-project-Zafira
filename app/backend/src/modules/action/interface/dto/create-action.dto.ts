@@ -18,7 +18,7 @@ export class CreateActionDto {
 
   @ApiProperty({ example: 'https://example.com/image.jpg', required: false })
   @IsOptional()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   imageUrl?: string;
 
   @ApiProperty({ example: true, required: false })

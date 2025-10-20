@@ -40,9 +40,9 @@ export class ActionController {
 
   // CREATE
   @Post()
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('beneficiary')
+  // @ApiBearerAuth()
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles('admin')
   @ApiOperation({ summary: 'Create a new action' })
   @ApiResponse({ status: 201, description: 'Action successfully created.' })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })

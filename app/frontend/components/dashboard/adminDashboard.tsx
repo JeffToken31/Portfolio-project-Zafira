@@ -57,11 +57,11 @@ export default function AdminDashboard() {
       {/* 🚀 Navigation rapide */}
       <nav className="flex justify-between w-full text-[var(--color-primary)] font-semibold">
         {[
-          { name: 'Analytics', href: '/dashboard/analytics' },
-          { name: 'Bénéficiaires', href: '/dashboard/beneficiaires' },
-          { name: 'Témoignages', href: '/dashboard/temoignages' },
-          { name: 'Contenu', href: '/dashboard/contenu' },
-          { name: 'Activités', href: '/dashboard/activites' },
+          { name: 'Analytics', href: '/dashboard/admin/analytics' },
+          { name: 'Bénéficiaires', href: '/dashboard/admin/beneficiaires' },
+          { name: 'Témoignages', href: '/dashboard/admin/temoignages' },
+          { name: 'Blog', href: '/dashboard/admin/blog' },
+          { name: 'Activités', href: '/dashboard/admin/activites' },
         ].map((item) => (
           <Link
             key={item.name}
