@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Image from 'next/image';
 import {Button} from '@/components/uiStyled/button';
 import {uploadFile} from '@/lib/api/upload';
 import {patchBlog} from '@/lib/api/blog';
@@ -20,14 +21,14 @@ export default function AdminBlogEditForm({
   const [content, setContent] = React.useState(blog.content);
   const [published, setPublished] = React.useState(blog.published);
 
-  // fichiers à uploader
   const [file, setFile] = React.useState<File | null>(null);
   const [coverFile, setCoverFile] = React.useState<File | null>(null);
 
-  // preview URLs
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = React.useState<string | null>(
+    blog.mediaUrl ?? null
+  );
   const [coverPreviewUrl, setCoverPreviewUrl] = React.useState<string | null>(
-    null
+    blog.coverImageUrl ?? null
   );
 
   const [loading, setLoading] = React.useState(false);
@@ -37,17 +38,12 @@ export default function AdminBlogEditForm({
   const API_BASE_URL = 'http://localhost:3001';
 
   React.useEffect(() => {
-    // affichage du média actuel
-    if (blog.mediaUrl) setPreviewUrl(blog.mediaUrl);
-    if (blog.coverImageUrl) setCoverPreviewUrl(blog.coverImageUrl);
-
     return () => {
-      if (previewUrl && previewUrl.startsWith('blob:'))
-        URL.revokeObjectURL(previewUrl);
-      if (coverPreviewUrl && coverPreviewUrl.startsWith('blob:'))
+      if (previewUrl?.startsWith('blob:')) URL.revokeObjectURL(previewUrl);
+      if (coverPreviewUrl?.startsWith('blob:'))
         URL.revokeObjectURL(coverPreviewUrl);
     };
-  }, [blog]);
+  }, [previewUrl, coverPreviewUrl]);
 
   const isVideo = (f: File | null, existingUrl?: string) => {
     if (f) return f.type.startsWith('video');
@@ -74,10 +70,11 @@ export default function AdminBlogEditForm({
     setLoading(true);
 
     try {
-      let mediaUrl = blog.mediaUrl;
-      let mediaType = blog.mediaType;
-      let coverImageUrl = blog.coverImageUrl;
+      let mediaUrl = blog.mediaUrl ?? undefined;
+      let mediaType = blog.mediaType ?? undefined;
+      let coverImageUrl = blog.coverImageUrl ?? undefined;
 
+      // --- upload principal ---
       if (file) {
         const uploaded = await uploadFile(file);
         mediaUrl = uploaded.url.startsWith('http')
@@ -86,6 +83,7 @@ export default function AdminBlogEditForm({
         mediaType = uploaded.mimeType.startsWith('video') ? 'VIDEO' : 'IMAGE';
       }
 
+      // --- upload cover ---
       if (coverFile) {
         const uploadedCover = await uploadFile(coverFile);
         coverImageUrl = uploadedCover.url.startsWith('http')
@@ -116,9 +114,7 @@ export default function AdminBlogEditForm({
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-      <h2 className="text-lg font-semibold text-gray-800">Modifier le blog</h2>
-
-      {/* titre */}
+      {/* title */}
       <div className="flex flex-col">
         <label className="text-sm font-medium text-text">Titre</label>
         <input
@@ -132,7 +128,7 @@ export default function AdminBlogEditForm({
         />
       </div>
 
-      {/* contenu */}
+      {/* content */}
       <div className="flex flex-col">
         <label className="text-sm font-medium text-text">Contenu</label>
         <textarea
@@ -146,7 +142,7 @@ export default function AdminBlogEditForm({
         />
       </div>
 
-      {/* média principal */}
+      {/* principal media */}
       <div className="flex flex-col">
         <label className="text-sm font-medium text-text">Média principal</label>
         <label className="mt-1 cursor-pointer inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition w-fit">
@@ -170,9 +166,12 @@ export default function AdminBlogEditForm({
                 controls
               />
             ) : (
-              <img
-                src={previewUrl}
+              <Image
+                src={previewUrl ?? '/placeholder.png'}
                 alt="Preview"
+                width={200}
+                height={200}
+                unoptimized
                 className="max-h-32 w-auto rounded-md object-contain shadow-sm border"
               />
             )}
@@ -180,14 +179,14 @@ export default function AdminBlogEditForm({
         )}
       </div>
 
-      {/* image de couverture optionnelle */}
-      {isVideo(file, previewUrl) && (
+      {/* Covert picture if is video ? */}
+      {isVideo(file, previewUrl ?? undefined) && (
         <div className="flex flex-col">
           <label className="text-sm font-medium text-text">
-            Image de couverture (optionnelle)
+            Image de couverture (optionnelle pour la vidéo)
           </label>
           <label className="mt-1 cursor-pointer inline-flex items-center gap-2 bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary-dark transition w-fit">
-            {coverFile ? 'Changer la couverture' : 'Choisir une image'}
+            {coverFile ? 'Changer la couverture' : 'Insérer une image'}
             <input
               type="file"
               accept="image/*"
@@ -195,17 +194,27 @@ export default function AdminBlogEditForm({
               className="hidden"
             />
           </label>
-          {coverPreviewUrl && (
-            <img
-              src={coverPreviewUrl}
-              alt="Cover preview"
-              className="mt-2 max-h-32 w-auto rounded-md object-contain shadow-sm border"
-            />
+
+          {coverPreviewUrl ? (
+            <div className="mt-2 flex">
+              <Image
+                src={coverPreviewUrl ?? '/placeholder.png'}
+                alt="Cover Preview"
+                width={200}
+                height={200}
+                unoptimized
+                className="max-h-32 w-auto rounded-md object-contain shadow-sm border"
+              />
+            </div>
+          ) : (
+            <p className="text-gray-500 text-sm mt-1">
+              Vous pouvez ajouter une image de couverture pour votre vidéo.
+            </p>
           )}
         </div>
       )}
 
-      {/* publier ? */}
+      {/* published */}
       <div className="flex items-center gap-2 mt-2">
         <input
           id="published"

@@ -9,7 +9,9 @@ import {
   deleteAction,
   ActionDto,
 } from '@/lib/api/actions';
-import {Button} from '@/components/uiStyled/button';
+import { Button } from '@/components/uiStyled/button';
+import Image from 'next/image';
+
 
 export default function AdminActionDashboardPage() {
   const [actions, setActions] = useState<ActionDto[]>([]);
@@ -81,13 +83,13 @@ export default function AdminActionDashboardPage() {
           Dashboard Admin — Gestion des Actions
         </h1>
 
-        {/* Section création */}
+        {/* Create section */}
         <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
           <h2 className="text-lg font-semibold">Créer une nouvelle action</h2>
           <AdminActionForm onCreated={refresh} />
         </section>
 
-        {/* Section liste */}
+        {/* list object section */}
         <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
           <h2 className="text-lg font-semibold">Actions existantes</h2>
 
@@ -105,9 +107,12 @@ export default function AdminActionDashboardPage() {
               >
                 <div className="flex gap-4 items-start">
                   {a.imageUrl ? (
-                    <img
+                    <Image
                       src={a.imageUrl}
                       alt={a.title}
+                      width={200}
+                      height={200}
+                      unoptimized
                       className="w-28 h-28 object-cover rounded-md"
                     />
                   ) : (
@@ -160,7 +165,7 @@ export default function AdminActionDashboardPage() {
         </section>
       </div>
 
-      {/* Modale d’édition */}
+      {/* update modal */}
       <AdminActionEditModal
         open={isEditOpen}
         onClose={() => setIsEditOpen(false)}

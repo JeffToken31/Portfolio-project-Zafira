@@ -5,7 +5,9 @@ import {Button} from '@/components/uiStyled/button';
 import {uploadFile} from '@/lib/api/upload';
 import {patchAction} from '@/lib/api/actions';
 import type {ActionDto} from '@/lib/api/actions';
-import {cn} from '@/lib/utils/cn';
+import { cn } from '@/lib/utils/cn';
+import Image from 'next/image';
+
 
 interface AdminActionEditFormProps {
   action: ActionDto;
@@ -57,7 +59,7 @@ export default function AdminActionEditForm({
         title,
         description,
         published,
-        imageUrl,
+        imageUrl: imageUrl ?? undefined,
       });
 
       setSuccess('Action mise à jour avec succès !');
@@ -74,7 +76,7 @@ export default function AdminActionEditForm({
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <h2 className="text-lg font-semibold text-gray-800">Modifier l’action</h2>
 
-      {/* titre */}
+      {/* title */}
       <div className="flex flex-col">
         <label className="text-sm font-medium text-text">Titre</label>
         <input
@@ -116,16 +118,19 @@ export default function AdminActionEditForm({
         </label>
         {previewUrl && (
           <div className="mt-2 flex">
-            <img
+            <Image
               src={previewUrl}
               alt="Preview"
+              width={200}
+              height={200}
+              unoptimized
               className="max-h-32 w-auto rounded-md object-contain shadow-sm border"
             />
           </div>
         )}
       </div>
 
-      {/* publier ? */}
+      {/* published ? */}
       <div className="flex items-center gap-2 mt-2">
         <input
           id="published"
