@@ -4,9 +4,14 @@ import * as React from 'react';
 import {Button} from '../uiStyled/button';
 import {cn} from '@/lib/utils/cn';
 import {uploadFile} from '@/lib/api/upload';
-import {createBlog, CreateBlogDto} from '@/lib/api/blog';
+import { createBlog, CreateBlogDto } from '@/lib/api/blog';
+import {useRouter} from 'next/navigation';
 
-export default function AdminBlogForm() {
+interface AdminBlogFormProps {
+  onCreated?: () => void;
+}
+
+export default function AdminBlogForm({onCreated}: AdminBlogFormProps) {
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
   const [file, setFile] = React.useState<File | null>(null);
@@ -22,6 +27,7 @@ export default function AdminBlogForm() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [success, setSuccess] = React.useState<string | null>(null);
+  const router = useRouter();
 
   // --- create / revoke object URLs in a controlled way ---
   React.useEffect(() => {
@@ -115,6 +121,8 @@ export default function AdminBlogForm() {
       }
       setFile(null);
       setCoverFile(null);
+      if (onCreated) onCreated();
+      router.refresh();
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message);
       else setError('Erreur inconnue');

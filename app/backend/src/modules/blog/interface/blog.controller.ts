@@ -109,7 +109,7 @@ export class BlogController {
   //@ApiBearerAuth()
   //@UseGuards(JwtAuthGuard, RolesGuard)
   //@Roles('beneficiary')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Delete a blog by ID' })
   @ApiResponse({ status: 200, description: 'The blog has been deleted.' })
   @ApiResponse({ status: 404, description: 'Blog not found.' })

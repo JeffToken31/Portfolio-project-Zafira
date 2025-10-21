@@ -26,7 +26,7 @@ export interface BlogDto {
 
 const API_BASE = 'http://localhost:3001';
 
-// create (tu as déjà)
+// create
 export async function createBlog(blog: CreateBlogDto) {
   const res = await fetch(`${API_BASE}/blogs`, {
     method: 'POST',

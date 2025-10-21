@@ -1,152 +1,179 @@
 'use client';
 
 import React, {useEffect, useState} from 'react';
-import AdminBlogForm from '@/components/forms/AdminBlogForm'; 
+import AdminBlogForm from '@/components/forms/AdminBlogForm';
 import {getBlogs, patchBlog, deleteBlog, BlogDto} from '@/lib/api/blog';
-import {Button} from '@/components/ui/button'; // ou ton Button styled, adapte l'import
+import {Button} from '@/components/uiStyled/button';
+import AdminBlogEditModal from '@/components/dashboard/adminBlogEditModal';
 
 export default function AdminBlogDashboardPage() {
   const [blogs, setBlogs] = useState<BlogDto[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [refreshFlag, setRefreshFlag] = useState(0); // force reload after actions
+  const [refreshFlag, setRefreshFlag] = useState(0);
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [selectedBlog, setSelectedBlog] = useState<BlogDto | null>(null);
 
   useEffect(() => {
-    let mounted = true;
-    async function load() {
+    let active = true;
+    async function fetchBlogs() {
       setLoading(true);
       setError(null);
       try {
         const data = await getBlogs();
-        if (mounted) setBlogs(data);
+        if (active) setBlogs(data);
       } catch (err: unknown) {
         if (err instanceof Error) setError(err.message);
         else setError('Erreur inconnue');
       } finally {
-        if (mounted) setLoading(false);
+        if (active) setLoading(false);
       }
     }
-    load();
+    fetchBlogs();
     return () => {
-      mounted = false;
+      active = false;
     };
   }, [refreshFlag]);
 
-  const refresh = () => setRefreshFlag((v) => v + 1);
+  const refresh = () => setRefreshFlag((x) => x + 1);
 
   const handleTogglePublish = async (b: BlogDto) => {
     try {
       await patchBlog(b.id, {published: !b.published});
       refresh();
     } catch (err: unknown) {
-      console.error(err);
       alert(
-        err instanceof Error ? err.message : 'Erreur lors de la publication'
+        err instanceof Error
+          ? err.message
+          : 'Erreur lors du changement de statut'
       );
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Confirmer la suppression de cet article ?')) return;
+    if (!confirm('Supprimer cet article ?')) return;
     try {
       await deleteBlog(id);
       refresh();
     } catch (err: unknown) {
-      console.error(err);
       alert(
         err instanceof Error ? err.message : 'Erreur lors de la suppression'
       );
     }
   };
 
-  return (
-    <main className="min-h-screen p-6">
-      <div className="max-w-5xl mx-auto space-y-8">
-        <h1 className="text-2xl font-bold">Dashboard Admin — Blogs</h1>
+  const handleEdit = (blog: BlogDto) => {
+    setSelectedBlog(blog);
+    setIsEditOpen(true);
+  };
 
-        {/* Formulaire de création (ton composant existant) */}
-        <section className="bg-white p-6 rounded-lg shadow-sm">
-          <h2 className="text-lg font-semibold mb-4">
-            Créer un nouvel article
-          </h2>
-          <AdminBlogForm />
+  return (
+    <main className="min-h-screen p-6 bg-gray-50">
+      <div className="max-w-6xl mx-auto space-y-8">
+        <h1 className="text-2xl font-bold mb-4 text-gray-800">
+          Dashboard Admin — Gestion du Blog
+        </h1>
+
+        {/* Section création */}
+        <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
+          <h2 className="text-lg font-semibold">Créer un nouvel article</h2>
+          <AdminBlogForm onCreated={refresh} />
         </section>
 
-        {/* Liste des blogs */}
-        <section className="bg-white p-6 rounded-lg shadow-sm">
-          <h2 className="text-lg font-semibold mb-4">Articles existants</h2>
+        {/* Section liste */}
+        <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
+          <h2 className="text-lg font-semibold">Articles existants</h2>
 
           {loading && <p>Chargement...</p>}
           {error && <p className="text-red-500">{error}</p>}
 
-          {!loading && !error && blogs.length === 0 && <p>Aucun article</p>}
+          {!loading && !error && blogs.length === 0 && (
+            <p>Aucun article pour le moment.</p>
+          )}
 
           <div className="space-y-4">
             {blogs.map((b) => (
               <div
                 key={b.id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border rounded p-4"
+                className="flex flex-col md:flex-row md:items-center justify-between gap-4 border border-gray-200 rounded-lg p-4"
               >
-                <div className="flex items-start gap-4">
+                <div className="flex gap-4 items-start">
                   {b.coverImageUrl ? (
                     <img
                       src={b.coverImageUrl}
                       alt={b.title}
-                      className="w-24 h-24 object-cover rounded"
+                      className="w-28 h-28 object-cover rounded-md"
                     />
                   ) : (
-                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center rounded text-sm text-gray-500">
-                      Aucun media
+                    <div className="w-28 h-28 bg-gray-100 flex items-center justify-center rounded-md text-gray-400 text-sm">
+                      Pas de media
                     </div>
                   )}
-                  <div>
-                    <h3 className="font-semibold">{b.title}</h3>
-                    <p
-                      className="text-sm text-gray-600 line-clamp-2"
-                      style={{maxWidth: 420}}
-                    >
+                  <div className="max-w-lg">
+                    <h3 className="font-semibold text-gray-900">{b.title}</h3>
+                    <p className="text-gray-600 text-sm line-clamp-2">
                       {b.content}
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
-                      {b.published ? 'Publié' : 'Brouillon'}
-                      {b.publishedAt
-                        ? ` • ${new Date(b.publishedAt).toLocaleString()}`
-                        : ''}
+                      {b.published
+                        ? `Publié ${
+                            b.publishedAt
+                              ? 'le ' +
+                                new Date(b.publishedAt).toLocaleDateString(
+                                  'fr-FR'
+                                )
+                              : ''
+                          }`
+                        : 'Brouillon'}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex gap-2 items-center">
-                  <button
-                    className="px-3 py-1 rounded bg-indigo-600 text-white text-sm"
+                <div className="flex gap-2 justify-end">
+                  <Button
+                    type="button"
+                    variant="jaune"
+                    size="sm"
                     onClick={() => handleTogglePublish(b)}
                   >
                     {b.published ? 'Dépublier' : 'Publier'}
-                  </button>
+                  </Button>
 
-                  <button
-                    className="px-3 py-1 rounded border text-sm"
-                    onClick={() =>
-                      alert(
-                        'Edition : à implémenter (pré-remplir le formulaire)'
-                      )
-                    }
+                  <Button
+                    type="button"
+                    variant="bleu"
+                    size="sm"
+                    onClick={() => handleEdit(b)}
                   >
                     Modifier
-                  </button>
+                  </Button>
 
-                  <button
-                    className="px-3 py-1 rounded bg-red-600 text-white text-sm"
+                  <Button
+                    type="button"
+                    variant="rose"
+                    size="sm"
                     onClick={() => handleDelete(b.id)}
                   >
                     Supprimer
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}
           </div>
         </section>
       </div>
+
+      {/* Modale d’édition */}
+      <AdminBlogEditModal
+        open={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        blog={selectedBlog}
+        onUpdated={() => {
+          setIsEditOpen(false);
+          refresh();
+        }}
+      />
     </main>
   );
 }
