@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { CheckSquare, Gift, Heart, Euro, Home } from 'lucide-react';
+import { CheckSquare, Gift, Heart, Euro, Home, Info } from 'lucide-react';
 import ParticipationCard from '@/components/uiStyled/participation-section-card';
+import Link from 'next/link';
 
 export default function ParticipationSection() {
   return (
@@ -23,28 +24,12 @@ export default function ParticipationSection() {
           type="clothing"
           icon={<Gift className="text-blue-500 w-6 h-6" />}
           title="Donner des vêtements"
-          description="Point de collecte dans toute la ville"
+          description="Points de collecte dans toute la ville"
           miniCards={[
-            {
-              icon: <CheckSquare className="text-blue-500 w-5 h-5" />,
-              title: 'Vêtements professionnels',
-              description: 'Vêtements adaptés au travail',
-            },
-            {
-              icon: <CheckSquare className="text-blue-500 w-5 h-5" />,
-              title: 'En bon état',
-              description: 'Vêtements propres et réutilisables',
-            },
-            {
-              icon: <CheckSquare className="text-blue-500 w-5 h-5" />,
-              title: 'Toute taille',
-              description: 'Du XS au XXL',
-            },
-            {
-              icon: <Home className="text-blue-500 w-5 h-5" />,
-              title: 'Point de dépôt près de chez vous',
-              description: '123 rue de la Solidarité, Paris',
-            },
+            { icon: <CheckSquare className="text-blue-500 w-5 h-5" />, title: 'Vêtements professionnels', description: 'Vêtements adaptés au travail' },
+            { icon: <CheckSquare className="text-blue-500 w-5 h-5" />, title: 'En bon état', description: 'Vêtements propres et réutilisables' },
+            { icon: <CheckSquare className="text-blue-500 w-5 h-5" />, title: 'Toute taille', description: 'Du XS au XXL' },
+            { icon: <Home className="text-blue-500 w-5 h-5" />, title: 'Point de dépôt près de chez vous', description: '123 rue de la Solidarité, Paris' },
           ]}
         />
 
@@ -56,10 +41,35 @@ export default function ParticipationSection() {
           description="Votre don a un impact direct"
           miniCards={[
             {
-              icon: <Euro className="text-red-500 w-6 h-6" />,
+              icon: <Info className="text-red-500 w-5 h-5" />,
+              title: (
+                <Link
+                  href="/don-helloasso"
+                  className="text-black hover:underline font-medium flex items-center gap-2"
+                >
+                  Formulaire HelloAsso
+                </Link>
+              ),
+              description: 'Remplissez notre formulaire sécurisé de don en ligne',
+            },
+            {
+              icon: <Gift className="text-red-500 w-5 h-5" />,
+              title: (
+                <a
+                  href="https://www.helloasso.com/associations/zafira-vestiaire-solidaire"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-black hover:underline font-medium flex items-center gap-2"
+                >
+                  Faire un don
+                </a>
+              ),
+              description: 'Accédez à notre page officielle sur HelloAsso',
+            },
+            {
+              icon: <Euro className="text-red-500 w-5 h-5" />,
               title: 'Avantage fiscal',
-              description:
-                'Réduction d’impôts selon la législation en vigueur',
+              description: 'Réduction d’impôts selon la législation en vigueur',
             },
           ]}
         />
