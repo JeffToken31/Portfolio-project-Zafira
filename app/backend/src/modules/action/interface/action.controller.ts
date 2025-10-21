@@ -61,9 +61,9 @@ export class ActionController {
 
   // UPDATE (PUT)
   @Put(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@ApiBearerAuth()
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  //@Roles('admin')
   @ApiOperation({ summary: 'Fully update an action' })
   @ApiResponse({ status: 200, description: 'Action successfully updated.' })
   @ApiResponse({ status: 404, description: 'Action not found.' })
@@ -86,9 +86,9 @@ export class ActionController {
 
   // PATCH (PARTIAL UPDATE)
   @Patch(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@ApiBearerAuth()
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  //@Roles('admin')
   @ApiOperation({ summary: 'Partially update an action' })
   @ApiResponse({ status: 200, description: 'Action partially updated.' })
   @ApiResponse({ status: 404, description: 'Action not found.' })
@@ -111,12 +111,12 @@ export class ActionController {
 
   // DELETE
   @Delete(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  //@ApiBearerAuth()
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  //@Roles('admin')
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Delete an action by ID' })
-  @ApiResponse({ status: 204, description: 'Action deleted.' })
+  @ApiResponse({ status: 200, description: 'Action deleted.' })
   @ApiResponse({ status: 404, description: 'Action not found.' })
   async delete(@Param('id') id: string) {
     try {

@@ -55,13 +55,12 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8">
       {/* 🚀 Navigation rapide */}
-      <nav className="flex justify-between w-full text-[var(--color-primary)] font-semibold">
+      <nav className="flex justify-around px-6 w-full text-[var(--color-primary)] font-semibold">
         {[
-          { name: 'Analytics', href: '/dashboard/admin/analytics' },
           { name: 'Bénéficiaires', href: '/dashboard/admin/beneficiaires' },
           { name: 'Témoignages', href: '/dashboard/admin/temoignages' },
           { name: 'Blog', href: '/dashboard/admin/blog' },
-          { name: 'Activités', href: '/dashboard/admin/activites' },
+          { name: 'Prestations', href: '/dashboard/admin/action' },
         ].map((item) => (
           <Link
             key={item.name}

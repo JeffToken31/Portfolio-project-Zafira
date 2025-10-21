@@ -1,3 +1,5 @@
+// lib/api/actions.ts
+
 export interface CreateActionDto {
   title: string;
   description: string;
@@ -5,28 +7,37 @@ export interface CreateActionDto {
   published?: boolean;
 }
 
-// Create
+export interface ActionDto {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl?: string | null;
+  published: boolean;
+  publishedAt?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+const API_BASE = 'http://localhost:3001';
+
+// create
 export async function createAction(action: CreateActionDto) {
-  const res = await fetch('http://localhost:3001/actions', {
+  const res = await fetch(`${API_BASE}/actions`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: {'Content-Type': 'application/json'},
     credentials: 'include',
     body: JSON.stringify(action),
   });
-
   if (!res.ok) {
-    const error = await res.json();
+    const error = await res.json().catch(() => ({}));
     throw new Error(error.message || 'Erreur lors de la création de l’action');
   }
-
   return res.json();
 }
 
-// Get all
-export async function getActions() {
-  const res = await fetch('http://localhost:3001/actions', {
+// GET all
+export async function getActions(): Promise<ActionDto[]> {
+  const res = await fetch(`${API_BASE}/actions`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -34,33 +45,16 @@ export async function getActions() {
   return res.json();
 }
 
-// Get by ID
-export async function getActionById(id: string) {
-  const res = await fetch(`http://localhost:3001/actions/${id}`, {
-    method: 'GET',
-    credentials: 'include',
-  });
-  if (!res.ok) throw new Error('Action non trouvée');
-  return res.json();
-}
-
-// PArial update (patch)
-export interface UpdateActionDto {
-  title?: string;
-  description?: string;
-  imageUrl?: string;
-  published?: boolean;
-}
-
-export async function patchAction(id: string, dto: UpdateActionDto) {
-  const res = await fetch(`http://localhost:3001/actions/${id}`, {
+// PATCH partial update
+export async function patchAction(id: string, dto: Partial<CreateActionDto>) {
+  const res = await fetch(`${API_BASE}/actions/${id}`, {
     method: 'PATCH',
     headers: {'Content-Type': 'application/json'},
     credentials: 'include',
     body: JSON.stringify(dto),
   });
   if (!res.ok) {
-    const error = await res.json();
+    const error = await res.json().catch(() => ({}));
     throw new Error(
       error.message || 'Erreur lors de la mise à jour de l’action'
     );
@@ -68,14 +62,14 @@ export async function patchAction(id: string, dto: UpdateActionDto) {
   return res.json();
 }
 
-// Delete
+// DELETE
 export async function deleteAction(id: string) {
-  const res = await fetch(`http://localhost:3001/actions/${id}`, {
+  const res = await fetch(`${API_BASE}/actions/${id}`, {
     method: 'DELETE',
     credentials: 'include',
   });
   if (!res.ok) {
-    const error = await res.json();
+    const error = await res.json().catch(() => ({}));
     throw new Error(
       error.message || 'Erreur lors de la suppression de l’action'
     );

@@ -10,6 +10,9 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-white text-primary-foreground hover:bg-bg-alt',
         connect: 'bg-secondary text-white hover:bg-secondary-hover',
+        rose: 'bg-primary text-text hover:bg-primary-hover hover:text-white',
+        bleu: 'bg-secondary text-text hover:bg-secondary-hover hover:text-white',
+        jaune: 'bg-accent text-text hover:bg-accent-hover hover:text-white',
         heroSection: 'bg-primary text-white hover:bg-primary-hover',
         destructive: 'bg-destructive text-white hover:bg-destructive/90',
         outline:
