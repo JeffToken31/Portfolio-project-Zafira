@@ -1,54 +1,94 @@
-// app/dashboard/beneficiaire/edit/page.tsx
 'use client';
 
 import { useState } from 'react';
+import { Mail, Phone, MapPin, Calendar, Save } from 'lucide-react';
 
-export default function EditBeneficiairePage() {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+export default function EditProfilBeneficiaire() {
+  // 🔹 Exemple de données initiales mockées
+  const initialUser = {
+    firstName: 'Marie',
+    lastName: 'Dupont',
+    email: 'marie.dupont@example.com',
+    dateCreation: '12 mars 2024',
+  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [user, setUser] = useState(initialUser);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const res = await fetch('/api/beneficiaires', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
-
-    const data = await res.json();
-    setMessage(data.message);
+    // Ici tu pourrais appeler ton API ou le backend pour sauvegarder les modifications
+    alert('Profil mis à jour !');
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white p-8 rounded-2xl shadow">
-      <h2 className="text-2xl font-bold mb-4 text-[var(--color-primary)]">
-        Modifier mes informations
+    <section className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow-md">
+      <h2 className="text-2xl font-bold text-[var(--color-primary)] mb-6 text-center">
+        Modifier mon profil
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Nouvel email :</label>
+      <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+        {/* Prénom */}
+        <div className="flex items-center gap-3">
+          <Save className="w-5 h-5 text-[var(--color-primary)]" />
           <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full border rounded-lg p-2"
-            required
+            type="text"
+            name="firstName"
+            placeholder="Prénom"
+            value={user.firstName}
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
           />
         </div>
 
+        {/* Nom */}
+        <div className="flex items-center gap-3">
+          <Save className="w-5 h-5 text-[var(--color-primary)]" />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Nom"
+            value={user.lastName}
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+
+        {/* Email */}
+        <div className="flex items-center gap-3">
+          <Mail className="w-5 h-5 text-[var(--color-primary)]" />
+          <input
+            type="email"
+            name="email"
+            value={user.email}
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+
+        {/* Date d’inscription (lecture seule) */}
+        <div className="flex items-center gap-3">
+          <Calendar className="w-5 h-5 text-[var(--color-primary)]" />
+          <input
+            type="text"
+            name="dateCreation"
+            value={user.dateCreation}
+            readOnly
+            className="border p-2 rounded w-full bg-gray-100 cursor-not-allowed"
+          />
+        </div>
+
+        {/* Bouton sauvegarder */}
         <button
           type="submit"
-          className="w-full bg-[var(--color-primary)] text-white py-2 rounded-lg hover:bg-[var(--color-primary-dark)] transition"
+          className="bg-[var(--color-primary)] text-black py-3 rounded-lg mt-4 hover:bg-[var(--color-primary-dark)] transition"
         >
-          Enregistrer
+          Enregistrer les modifications
         </button>
-
-        {message && (
-          <p className="text-center text-sm text-gray-600 mt-2">{message}</p>
-        )}
       </form>
-    </div>
+    </section>
   );
 }
