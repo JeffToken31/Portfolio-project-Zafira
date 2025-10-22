@@ -57,7 +57,7 @@ export default function AdminDashboard() {
       {/* 🚀 Navigation rapide */}
       <nav className="flex justify-around px-6 w-full text-[var(--color-primary)] font-semibold">
         {[
-          { name: 'Bénéficiaires', href: '/dashboard/admin/beneficiaires' },
+          { name: 'Bénéficiaires', href: '/dashboard/admin/user' },
           { name: 'Témoignages', href: '/dashboard/admin/temoignages' },
           { name: 'Blog', href: '/dashboard/admin/blog' },
           { name: 'Prestations', href: '/dashboard/admin/action' },

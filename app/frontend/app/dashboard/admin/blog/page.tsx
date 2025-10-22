@@ -5,6 +5,9 @@ import AdminBlogForm from '@/components/forms/AdminBlogForm';
 import {getBlogs, patchBlog, deleteBlog, BlogDto} from '@/lib/api/blog';
 import {Button} from '@/components/uiStyled/button';
 import AdminBlogEditModal from '@/components/dashboard/adminBlogEditModal';
+import Image from 'next/image';
+import NavDashboard from '@/components/uiStyled/nav-dashboard';
+
 
 export default function AdminBlogDashboardPage() {
   const [blogs, setBlogs] = useState<BlogDto[]>([]);
@@ -74,14 +77,14 @@ export default function AdminBlogDashboardPage() {
         <h1 className="text-2xl font-bold mb-4 text-gray-800">
           Dashboard Admin — Gestion du Blog
         </h1>
-
-        {/* Section création */}
+        <NavDashboard />
+        {/* Create section */}
         <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
           <h2 className="text-lg font-semibold">Créer un nouvel article</h2>
           <AdminBlogForm onCreated={refresh} />
         </section>
 
-        {/* Section liste */}
+        {/* List object */}
         <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
           <h2 className="text-lg font-semibold">Articles existants</h2>
 
@@ -100,9 +103,12 @@ export default function AdminBlogDashboardPage() {
               >
                 <div className="flex gap-4 items-start">
                   {b.coverImageUrl ? (
-                    <img
+                    <Image
                       src={b.coverImageUrl}
                       alt={b.title}
+                      width={200}
+                      height={200}
+                      unoptimized
                       className="w-28 h-28 object-cover rounded-md"
                     />
                   ) : (
@@ -164,7 +170,7 @@ export default function AdminBlogDashboardPage() {
         </section>
       </div>
 
-      {/* Modale d’édition */}
+      {/* Modale update */}
       <AdminBlogEditModal
         open={isEditOpen}
         onClose={() => setIsEditOpen(false)}

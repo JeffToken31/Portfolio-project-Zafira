@@ -52,6 +52,7 @@ export class AuthRepository {
         firstName: data.firstName,
         lastName: data.lastName,
         role: 'BENEFICIARY',
+        emailVerified: true,
         credentials: {
           create: {
             google: {

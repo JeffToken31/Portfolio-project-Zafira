@@ -9,7 +9,11 @@ import {
   deleteAction,
   ActionDto,
 } from '@/lib/api/actions';
-import {Button} from '@/components/uiStyled/button';
+import { Button } from '@/components/uiStyled/button';
+import Image from 'next/image';
+import NavDashboard from '@/components/uiStyled/nav-dashboard';
+
+
 
 export default function AdminActionDashboardPage() {
   const [actions, setActions] = useState<ActionDto[]>([]);
@@ -78,16 +82,16 @@ export default function AdminActionDashboardPage() {
     <main className="min-h-screen p-6 bg-gray-50">
       <div className="max-w-6xl mx-auto space-y-8">
         <h1 className="text-2xl font-bold mb-4 text-gray-800">
-          Dashboard Admin — Gestion des Actions
+          Dashboard Admin — Gestion des Actions (prestations proposées)
         </h1>
-
-        {/* Section création */}
+        <NavDashboard />
+        {/* Create section */}
         <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
           <h2 className="text-lg font-semibold">Créer une nouvelle action</h2>
           <AdminActionForm onCreated={refresh} />
         </section>
 
-        {/* Section liste */}
+        {/* list object section */}
         <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
           <h2 className="text-lg font-semibold">Actions existantes</h2>
 
@@ -105,9 +109,12 @@ export default function AdminActionDashboardPage() {
               >
                 <div className="flex gap-4 items-start">
                   {a.imageUrl ? (
-                    <img
+                    <Image
                       src={a.imageUrl}
                       alt={a.title}
+                      width={200}
+                      height={200}
+                      unoptimized
                       className="w-28 h-28 object-cover rounded-md"
                     />
                   ) : (
@@ -160,7 +167,7 @@ export default function AdminActionDashboardPage() {
         </section>
       </div>
 
-      {/* Modale d’édition */}
+      {/* update modal */}
       <AdminActionEditModal
         open={isEditOpen}
         onClose={() => setIsEditOpen(false)}
