@@ -37,7 +37,7 @@ export class UserController {
   @ApiOperation({ summary: 'Get all users' })
   async findAll() {
     const users = await this.userService.findAllUsers();
-    return users.map((u) => ({ id: u.id, email: u.email }));
+    return users.map((u) => u.toJSON());
   }
 
   // Update user
