@@ -6,6 +6,8 @@ import {getBlogs, patchBlog, deleteBlog, BlogDto} from '@/lib/api/blog';
 import {Button} from '@/components/uiStyled/button';
 import AdminBlogEditModal from '@/components/dashboard/adminBlogEditModal';
 import Image from 'next/image';
+import NavDashboard from '@/components/uiStyled/nav-dashboard';
+
 
 export default function AdminBlogDashboardPage() {
   const [blogs, setBlogs] = useState<BlogDto[]>([]);
@@ -75,7 +77,7 @@ export default function AdminBlogDashboardPage() {
         <h1 className="text-2xl font-bold mb-4 text-gray-800">
           Dashboard Admin — Gestion du Blog
         </h1>
-
+        <NavDashboard />
         {/* Create section */}
         <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
           <h2 className="text-lg font-semibold">Créer un nouvel article</h2>

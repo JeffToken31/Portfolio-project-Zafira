@@ -11,6 +11,8 @@ import {
 } from '@/lib/api/actions';
 import { Button } from '@/components/uiStyled/button';
 import Image from 'next/image';
+import NavDashboard from '@/components/uiStyled/nav-dashboard';
+
 
 
 export default function AdminActionDashboardPage() {
@@ -82,7 +84,7 @@ export default function AdminActionDashboardPage() {
         <h1 className="text-2xl font-bold mb-4 text-gray-800">
           Dashboard Admin — Gestion des Actions (prestations proposées)
         </h1>
-
+        <NavDashboard />
         {/* Create section */}
         <section className="bg-white rounded-xl shadow-md p-6 space-y-4">
           <h2 className="text-lg font-semibold">Créer une nouvelle action</h2>
