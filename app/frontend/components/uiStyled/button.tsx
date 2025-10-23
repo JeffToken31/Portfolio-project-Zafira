@@ -17,6 +17,7 @@ const buttonVariants = cva(
         jaune: 'bg-accent text-text hover:bg-accent-hover hover:text-white',
         heroSection: 'bg-secondary text-white hover:bg-secondary-hover',
         destructive: 'bg-destructive text-white hover:bg-destructive/90',
+        blog: 'bg-primary text-white hover:bg-primary-hover hover:text-white',
         outline:
           'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
         secondary:
