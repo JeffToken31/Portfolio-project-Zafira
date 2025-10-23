@@ -2,7 +2,7 @@ import * as Lucide from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--color-bg-alt)] text-[var(--color-text)] mt-20 border-t border-gray-200">
+    <footer className="bg-[var(--color-bg-alt)] text-[var(--color-text)] border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* --- 3 colonnes principales --- */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 justify-center items-center text-center sm:text-left">

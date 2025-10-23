@@ -23,7 +23,7 @@ export default function BlogSectionCard({ title, excerpt, image, link }: BlogCar
         unoptimized
       />
       <div className="p-6 text-left">
-        <h3 className="text-xl font-semibold text-[var(--color-primary)] mb-2">
+        <h3 className="text-xl font-semibold text-text mb-2">
           {title}
         </h3>
         <p className="text-gray-600 mb-4">{excerpt}</p>

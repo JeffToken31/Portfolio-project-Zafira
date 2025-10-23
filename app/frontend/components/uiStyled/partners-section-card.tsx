@@ -20,7 +20,7 @@ export default function PartnersCard({ logo, name, type, typeColor, description 
         height={100}
         className="object-contain mb-4"
       />
-      <h4 className="text-lg font-bold text-[var(--color-primary)]">{name}</h4>
+      <h4 className="text-lg font-bold text-text">{name}</h4>
       <p className={`text-sm font-medium ${typeColor} mb-2`}>{type}</p>
       <p className="text-black text-sm">{description}</p>
     </div>

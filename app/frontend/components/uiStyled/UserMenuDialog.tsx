@@ -1,5 +1,5 @@
 'use client';
-
+import { Button } from '@/components/uiStyled/button';
 import { useState, useEffect, useRef } from 'react';
 import { LogOut, User, Users } from 'lucide-react';
 import { useAuth } from '@/lib/hooks/useAuth';
@@ -29,12 +29,12 @@ export default function UserMenuDialog() {
       onMouseEnter={() => setOpen(true)}   // ouvre au hover desktop
       onMouseLeave={() => setOpen(false)} // ferme au leave desktop
     >
-      <button
-        onClick={() => setOpen(!open)} // toggle clic mobile
-        className="bg-primary text-white px-4 py-2 rounded-md font-medium"
+      <Button
+        onClick={() => setOpen(!open)}
+        variant='connect'
       >
         Mon profil
-      </button>
+      </Button>
 
       <AnimatePresence>
         {open && (

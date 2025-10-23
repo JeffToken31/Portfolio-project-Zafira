@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ImpactSectionCard from '../uiStyled/impact-section-card';
-import ImpactSectionButton from '../uiStyled/impact-section-button';
+import {Button} from '../uiStyled/button';
 import { FaUsers } from 'react-icons/fa';
 import { Shirt } from 'lucide-react';
 import { BookOpenText } from 'lucide-react';
@@ -46,7 +46,7 @@ const ImpactSection: React.FC = () => {
       <div className="container mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold mb-4">Notre Impact</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          CHaque chiffre raconte une histoire de transformation et d'espoir.
+          Chaque chiffre raconte une histoire de transformation et d'espoir.
         </p>
       </div>
 
@@ -57,7 +57,7 @@ const ImpactSection: React.FC = () => {
       </div>
 
       <div className="text-center">
-        <ImpactSectionButton>Ensemble, redonnons l'espoir d'y arriver.</ImpactSectionButton>
+        <Button variant='fake' size='lg'>Ensemble, redonnons l'espoir d'y arriver.</Button>
       </div>
     </section>
   );

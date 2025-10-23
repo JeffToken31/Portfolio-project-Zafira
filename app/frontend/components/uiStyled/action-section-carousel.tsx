@@ -47,8 +47,8 @@ export default function ActionSectionCarousel({
   }
 
   return (
-    <section id="actions" className="py-20 bg-[var(--color-bg-alt)] text-center">
-      <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-primary)] mb-12">
+    <section id="actions" className="pt-20 bg-[var(--color-bg-alt)] text-center">
+      <h2 className="text-3xl md:text-4xl font-bold text-text mb-12">
         Nos Actions
       </h2>
 

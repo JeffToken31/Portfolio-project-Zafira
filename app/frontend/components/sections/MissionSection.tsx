@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Heart, Zap, Users } from 'lucide-react';
 import MissionSectionButton from '@/components/uiStyled/mission-section-button';
+import {Button} from '@/components/uiStyled/button';
 import MissionMiniCard from '@/components/uiStyled/mission-section-card';
 
 export default function MissionSection() {
@@ -13,7 +14,7 @@ export default function MissionSection() {
       className="py-20 px-6 md:px-16 bg-[var(--color-bg-alt)] text-[var(--color-text)]"
     >
       {/* 🏷️ Titre centré */}
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-text">
         Notre mission
       </h2>
 
@@ -28,7 +29,7 @@ export default function MissionSection() {
             className="rounded-lg shadow-lg object-cover"
           />
           {/* 📍 Carte info — déplacée en bas à droite */}
-          <div className="absolute bottom-4 right-4 bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg shadow-md">
+          <div className="absolute bottom-4 right-4 bg-[var(--color-accent)] text-text px-4 py-2 rounded-lg shadow-md">
             <p className="font-semibold text-sm">Depuis 2020</p>
             <p className="text-xs opacity-90">+300 accompagnements</p>
           </div>
@@ -36,10 +37,10 @@ export default function MissionSection() {
 
         {/* 🧭 Contenu texte et boutons */}
         <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          viewport={{ once: true }}
+          initial={{opacity: 0, x: 60}}
+          whileInView={{opacity: 1, x: 0}}
+          transition={{duration: 0.8, ease: 'easeOut'}}
+          viewport={{once: true}}
         >
           <p className="text-lg mb-6 text-[var(--color-background-alt)]">
             Offrir à chaque personne en réinsertion la possibilité de se
@@ -73,9 +74,13 @@ export default function MissionSection() {
 
           {/* Boutons */}
           <div className="flex flex-wrap gap-4">
-            <MissionSectionButton href="/mission">
+            <Button
+              href="/mission"
+              variant="blanc"
+              className="border border-blue-500"
+            >
               En savoir plus
-            </MissionSectionButton>
+            </Button>
             <MissionSectionButton href="/benevole" variant="secondary">
               Nous rejoindre
             </MissionSectionButton>

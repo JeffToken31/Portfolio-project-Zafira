@@ -9,10 +9,10 @@ export default function PartnersSection() {
   return (
     <section
       id="partners"
-      className="py-20 px-6 md:px-16 bg-[var(--color-bg-alt)] text-[var(--color-text)]"
+      className="py-20 px-6 md:px-16 bg-[var(--color-bg-alt)] text-text"
     >
       {/* 🏷️ Titre principal */}
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[var(--color-primary)]">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-text">
         Ensemble, nous allons plus loin
       </h2>
 
@@ -43,7 +43,7 @@ export default function PartnersSection() {
       </div>
 
       {/* 🔹 Sous-titre partenaires */}
-      <h3 className="text-2xl font-bold text-center text-[var(--color-primary)] mb-10">
+      <h3 className="text-2xl font-bold text-center text-text mb-10">
         Nos partenaires principaux
       </h3>
 

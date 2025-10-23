@@ -11,7 +11,7 @@ export default function ParticipationSection() {
       id="participation"
       className="py-20 px-6 md:px-16 bg-[var(--color-bg)] text-[var(--color-text)]"
     >
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[var(--color-primary)]">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-text">
         Participer à notre mission
       </h2>
       <p className="text-center text-lg mb-12 text-black">
@@ -45,7 +45,7 @@ export default function ParticipationSection() {
               title: (
                 <Link
                   href="/don-helloasso"
-                  className="text-black hover:underline font-medium flex items-center gap-2"
+                  className="text-black hover:underline rouded-full font-medium flex items-center gap-2"
                 >
                   Formulaire HelloAsso
                 </Link>

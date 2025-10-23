@@ -13,7 +13,7 @@ interface ImpactSectionButtonProps {
 export default function ImpactSectionButton({ children, onClick, href }: ImpactSectionButtonProps) {
   const btn = (
     <Button
-      className="rounded-full bg-[var(--color-primary)] text-white px-8 py-3 hover:bg-[var(--color-primary-hover)] transition-colors"
+      className="rounded-full bg-[var(--color-primary)] text-white px-8 py-3 hover:bg-[var(--color-accent-hover)] transition-colors"
       size="lg"
       variant="default"
       onClick={onClick}

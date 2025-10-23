@@ -2,7 +2,7 @@
 
 import React from 'react';
 import FAQSectionAccordion from '../uiStyled/faq-section-accordion';
-import FAQSectionButton from '../uiStyled/faq-section-button';
+import {Button} from '../uiStyled/button';
 
 export default function FAQSection() {
   const faqItems = [
@@ -31,7 +31,7 @@ export default function FAQSection() {
   return (
     <section className="py-16 bg-[var(--color-bg-alt)] text-center">
       <div className="container mx-auto px-4 max-w-3xl">
-        <h2 className="text-4xl font-bold mb-6 text-[var(--color-primary)]">
+        <h2 className="text-4xl font-bold mb-6 text-text">
           Foire Aux Questions
         </h2>
         <p className="text-gray-600 mb-10">
@@ -43,9 +43,9 @@ export default function FAQSection() {
 
         {/* 🔘 Bouton "Voir toutes les questions" */}
         <div className="mt-10 flex justify-center">
-          <FAQSectionButton href="#faq">
+          <Button href="#faq" variant='connect'>
             Voir toutes les questions
-          </FAQSectionButton>
+          </Button>
         </div>
       </div>
     </section>

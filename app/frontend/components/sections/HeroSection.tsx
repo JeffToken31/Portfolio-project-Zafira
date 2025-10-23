@@ -4,8 +4,7 @@ import { Button } from '../uiStyled/button';
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[70vh] flex items-center justify-center bg-cover bg-center">
-      <div className="absolute inset-0 bg-black/30"></div>
+    <section className="relative min-h-[70vh] flex items-center justify-center bg-bg bg-center">
 
       <motion.div
         className="relative z-10 text-center px-4 sm:px-6 lg:px-8"

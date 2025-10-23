@@ -2,7 +2,7 @@
 
 import React from 'react';
 import BlogSectionCard from '../uiStyled/blog-section-card';
-import BlogSectionButton from '../uiStyled/blog-section-button';
+import {Button} from '@/components/uiStyled/button';
 
 export default function BlogSection() {
   const articles = [
@@ -32,7 +32,7 @@ export default function BlogSection() {
   return (
     <section className="py-16 bg-[var(--color-background-alt)] text-center">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold mb-4 text-[var(--color-primary)]">
+        <h2 className="text-4xl font-bold mb-4 text-text">
           Nos articles
         </h2>
         <p className="text-lg text-gray-600 mb-12">
@@ -46,7 +46,7 @@ export default function BlogSection() {
         </div>
 
         <div className="mt-12">
-          <BlogSectionButton href="/#blog">Voir tous les articles</BlogSectionButton>
+          <Button href="/#blog" variant='connect'>Tous les articles</Button>
         </div>
       </div>
     </section>

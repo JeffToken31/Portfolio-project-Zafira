@@ -16,9 +16,6 @@ export default function Navbar() {
     if (!user) return <LoginDialog />;
     return (
       <div className="flex items-center gap-3">
-        <span className="text-sm text-text">
-          Bonjour, <strong>{user.firstName || user.email}</strong>
-        </span>
         <UserMenuDialog />
       </div>
     );
