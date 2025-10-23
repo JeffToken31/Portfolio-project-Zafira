@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 
 export interface User {
   id: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
-  role: string;
-  active: boolean;
+  role?: string;
+  active?: boolean;
+  createdAt?: string;
 }
 
 export function useUsers(limit?: number) {
