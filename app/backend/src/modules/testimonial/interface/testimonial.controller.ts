@@ -19,7 +19,7 @@ import {
   ApiTags,
   ApiOperation,
   ApiResponse,
-  ApiBearerAuth,
+  //ApiBearerAuth,
   ApiQuery,
 } from '@nestjs/swagger';
 import { TestimonialService } from '../app/testimonial.service';
@@ -27,8 +27,8 @@ import { CreateTestimonialDto } from './dto/create-testimonial.dto';
 import { UpdateTestimonialDto } from './dto/update-testimonial.dto';
 import { TestimonialDtoMapper } from './dto/testimonial-dto.mapper';
 import { Testimonial } from '../domain/testimonial.entity';
-import { Roles } from '../../../common/decorators/roles.decorator';
-import { RolesGuard } from '../../../common/guards/roles.guard';
+//import { Roles } from '../../../common/decorators/roles.decorator';
+//import { RolesGuard } from '../../../common/guards/roles.guard';
 import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 import type { JwtUser } from '../../../common/interfaces/jwt-user.interface';
 
@@ -42,9 +42,9 @@ export class TestimonialController {
 
   // CREATE
   @Post()
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('beneficiary')
+  //@ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) //RolesGuard)
+  //@Roles('beneficiary')
   @ApiOperation({ summary: 'Create a new testimonial' })
   @ApiResponse({
     status: 201,
@@ -78,9 +78,9 @@ export class TestimonialController {
 
   // UPDATE (PUT)
   @Put(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) //, RolesGuard)
+  //@Roles('admin')
   @ApiOperation({ summary: 'Fully update a testimonial' })
   @ApiResponse({
     status: 200,
@@ -109,9 +109,9 @@ export class TestimonialController {
 
   // PATCH (PARTIAL UPDATE)
   @Patch(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) //, RolesGuard)
+  //@Roles('admin')
   @ApiOperation({ summary: 'Partially update a testimonial' })
   @ApiResponse({ status: 200, description: 'Testimonial partially updated.' })
   @ApiResponse({ status: 404, description: 'Testimonial not found.' })
@@ -137,9 +137,9 @@ export class TestimonialController {
 
   // DELETE
   @Delete(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) //, RolesGuard)
+  //@Roles('admin')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a testimonial by ID' })
   @ApiResponse({ status: 204, description: 'Testimonial deleted.' })
@@ -223,9 +223,9 @@ export class TestimonialController {
 
   // PUBLISH / UNPUBLISH
   @Patch(':id/publish')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) //, RolesGuard)
+  //@Roles('admin')
   @ApiOperation({ summary: 'Publish a testimonial' })
   @ApiResponse({
     status: 200,
@@ -238,9 +238,9 @@ export class TestimonialController {
   }
 
   @Patch(':id/unpublish')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) //, RolesGuard)
+  //@Roles('admin')
   @ApiOperation({ summary: 'Unpublish a testimonial' })
   @ApiResponse({
     status: 200,
@@ -254,9 +254,9 @@ export class TestimonialController {
 
   // VALIDATE / UNVALIDATE
   @Patch(':id/validate')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) //, RolesGuard)
+  //@Roles('admin')
   @ApiOperation({ summary: 'Validate a testimonial' })
   @ApiResponse({
     status: 200,
@@ -269,9 +269,9 @@ export class TestimonialController {
   }
 
   @Patch(':id/unvalidate')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  ////@ApiBearerAuth()
+  @UseGuards(JwtAuthGuard) //, RolesGuard)
+  ////@Roles('admin')
   @ApiOperation({ summary: 'Unvalidate a testimonial' })
   @ApiResponse({
     status: 200,

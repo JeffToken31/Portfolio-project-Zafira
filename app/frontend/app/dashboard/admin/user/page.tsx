@@ -53,8 +53,8 @@ export default function AdminUsersDashboardPage() {
   return (
     <main className="min-h-screen p-6 bg-gray-50">
       <div className="max-w-6xl mx-auto space-y-8">
-        <h1 className="text-2xl font-bold mb-4 text-gray-800">
-          Dashboard Admin — Gestion des utilisateurs
+        <h1 className="text-2xl text-center font-bold mb-4 text-gray-800">
+          Gestion des utilisateurs
         </h1>
         <NavDashboard />
         <section className="bg-white rounded-xl shadow-md p-6 space-y-4">

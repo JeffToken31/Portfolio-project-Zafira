@@ -44,12 +44,12 @@ export default function ActionsPage() {
     <main className="bg-bg">
       <div className="max-w-6xl mx-auto py-12 px-4">
         <h1 className="text-3xl font-bold mb-8 text-center">
-          Toutes les actions
+          Nos prestations
         </h1>
 
         {actions.length === 0 ? (
           <p className="text-gray-500 text-center">
-            Aucune action trouvée pour le moment.
+            Aucune prestations trouvée pour le moment.
           </p>
         ) : (
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

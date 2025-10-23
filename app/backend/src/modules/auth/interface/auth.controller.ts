@@ -46,13 +46,14 @@ export class AuthController {
     );
     res.cookie('auth_token', access_token, {
       httpOnly: true,
-      secure: true,
+      secure: false,
       sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return res.json({
       message: 'Login successful',
       user,
+      access_token,
     });
   }
 

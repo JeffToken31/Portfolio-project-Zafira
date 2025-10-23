@@ -10,7 +10,7 @@ const NavDashboard: React.FC = () => {
   const links = [
     {name: 'Accueil', href: '/dashboard/admin'},
     {name: 'Bénéficiaires', href: '/dashboard/admin/user'},
-    {name: 'Témoignages', href: '/dashboard/admin/temoignages'},
+    {name: 'Témoignages', href: '/dashboard/admin/testimonial'},
     {name: 'Blog', href: '/dashboard/admin/blog'},
     {name: 'Prestations', href: '/dashboard/admin/action'},
   ];

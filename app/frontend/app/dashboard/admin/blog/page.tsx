@@ -74,8 +74,8 @@ export default function AdminBlogDashboardPage() {
   return (
     <main className="min-h-screen p-6 bg-gray-50">
       <div className="max-w-6xl mx-auto space-y-8">
-        <h1 className="text-2xl font-bold mb-4 text-gray-800">
-          Dashboard Admin — Gestion du Blog
+        <h1 className="text-2xl text-center font-bold mb-4 text-gray-800">
+          Gestion du Blog
         </h1>
         <NavDashboard />
         {/* Create section */}
