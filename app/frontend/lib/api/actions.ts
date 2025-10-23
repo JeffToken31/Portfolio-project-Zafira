@@ -35,6 +35,21 @@ export async function createAction(action: CreateActionDto) {
   return res.json();
 }
 
+// GET one by ID
+export async function getActionById(id: string): Promise<ActionDto> {
+  const res = await fetch(`${API_BASE}/actions/${id}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || `Erreur lors de la récupération de l’action ${id}`);
+  }
+
+  return res.json();
+}
+
 // GET all
 export async function getActions(): Promise<ActionDto[]> {
   const res = await fetch(`${API_BASE}/actions`, {
