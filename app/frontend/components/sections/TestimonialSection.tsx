@@ -1,40 +1,59 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {useState, useEffect, useCallback} from 'react';
+import {motion, AnimatePresence} from 'framer-motion';
+import {ChevronLeft, ChevronRight} from 'lucide-react';
 import TestimonialCard from '@/components/uiStyled/testimonial-section-card';
+import {getTestimonials, TestimonialDto} from '@/lib/api/testimonials';
 
 export default function TestimonialSection() {
-  const testimonials = [
-    {
-      name: 'Sophie M.',
-      title: 'Nouvel élan',
-      text: 'Grâce à Zafira Solidaire, j’ai retrouvé confiance et un emploi stable. Une équipe formidable et bienveillante !',
-    },
-    {
-      name: 'Amina D.',
-      title: 'Accompagnement sur mesure',
-      text: 'Un soutien incroyable, à l’écoute de chaque étape de mon parcours. Merci pour cette belle expérience humaine !',
-    },
-    {
-      name: 'Laura D.',
-      title: 'Une seconde chance',
-      text: 'Les ateliers m’ont aidée à me sentir à nouveau valorisée. C’est une belle opportunité de renaissance personnelle.',
-    },
-  ];
-
+  const [testimonials, setTestimonials] = useState<TestimonialDto[]>([]);
   const [current, setCurrent] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  // 🔁 Navigation
-  const next = () => setCurrent((prev) => (prev + 1) % testimonials.length);
-  const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-
-  // 🔄 Auto-défilement toutes les 5 s
+  // 🔹 Récupération des témoignages validés et publiés
   useEffect(() => {
+    let active = true;
+    async function fetchTestimonials() {
+      try {
+        const data = await getTestimonials({validated: true, published: true});
+        if (active) setTestimonials(data);
+      } catch (err) {
+        console.error('Erreur lors du chargement des témoignages', err);
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+    fetchTestimonials();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // 🔁 Navigation du slider
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % testimonials.length);
+  }, [testimonials.length]);
+
+  const prev = useCallback(() => {
+    setCurrent(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
+  }, [testimonials.length]);
+
+  // 🔄 Auto-défilement toutes les 5s
+  useEffect(() => {
+    if (!testimonials.length) return;
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [next, testimonials.length]);
+
+  if (loading)
+    return <p className="text-center">Chargement des témoignages...</p>;
+  if (!testimonials.length)
+    return (
+      <p className="text-center">Aucun témoignage disponible pour le moment.</p>
+    );
 
   return (
     <section
@@ -51,26 +70,36 @@ export default function TestimonialSection() {
         {/* Flèche gauche */}
         <button
           onClick={prev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-full shadow-md p-2 hover:bg-accent"
+          className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-full shadow-md p-2 hover:bg-accent z-10"
         >
           <ChevronLeft className="w-6 h-6 text-[var(--color-primary)]" />
         </button>
 
-        {/* Carte animée */}
-        <motion.div
-          key={current}
-          initial={{opacity: 0, x: 60}}
-          animate={{opacity: 1, x: 0}}
-          exit={{opacity: 0, x: -60}}
-          transition={{duration: 0.5}}
-        >
-          <TestimonialCard testimonial={testimonials[current]} />
-        </motion.div>
+        {/* Carte animée avec gestures */}
+        <AnimatePresence initial={false} mode="wait">
+          <motion.div
+            key={current}
+            initial={{opacity: 0, x: 60}}
+            animate={{opacity: 1, x: 0}}
+            exit={{opacity: 0, x: -60}}
+            transition={{type: 'spring', stiffness: 80, damping: 25}}
+            drag="x"
+            dragConstraints={{left: 0, right: 0}}
+            dragElastic={0.2}
+            onDragEnd={(event, info) => {
+              if (info.offset.x < -50) next();
+              else if (info.offset.x > 50) prev();
+            }}
+            className="mx-auto"
+          >
+            <TestimonialCard testimonial={testimonials[current]} />
+          </motion.div>
+        </AnimatePresence>
 
         {/* Flèche droite */}
         <button
           onClick={next}
-          className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-full shadow-md p-2 hover:bg-accent"
+          className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-full shadow-md p-2 hover:bg-accent z-10"
         >
           <ChevronRight className="w-6 h-6 text-[var(--color-primary)]" />
         </button>
@@ -85,7 +114,7 @@ export default function TestimonialSection() {
             className={`w-3 h-3 rounded-full transition-colors ${
               current === index ? 'bg-secondary' : 'bg-gray-300'
             }`}
-          ></button>
+          />
         ))}
       </div>
     </section>

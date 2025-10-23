@@ -30,7 +30,7 @@ export default function ActionSectionCard({
       <div className="p-6 text-left">
         <h3 className="text-xl font-semibold text-text mb-2">{title}</h3>
         <p className="text-gray-600 mb-4">{description}</p>
-        <BlogSectionButton href={link}>Voir l’action</BlogSectionButton>
+        <BlogSectionButton href={link}>En savoir plus</BlogSectionButton>
       </div>
     </div>
   );

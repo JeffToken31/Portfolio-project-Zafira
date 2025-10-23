@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { useTestimonials } from '@/lib/hooks/useTestimonials';
+import { useTestimonials } from '@/lib/hooks/usePendingTestimonialsCount';
 
 export default function TestimonialSectionCarousel() {
   const { testimonials, loading, error } = useTestimonials(5);

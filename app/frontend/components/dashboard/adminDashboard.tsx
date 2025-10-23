@@ -58,7 +58,7 @@ export default function AdminDashboard() {
       <nav className="flex justify-around px-6 w-full text-[var(--color-primary)] font-semibold">
         {[
           { name: 'Bénéficiaires', href: '/dashboard/admin/user' },
-          { name: 'Témoignages', href: '/dashboard/admin/temoignages' },
+          { name: 'Témoignages', href: '/dashboard/admin/testimonial' },
           { name: 'Blog', href: '/dashboard/admin/blog' },
           { name: 'Prestations', href: '/dashboard/admin/action' },
         ].map((item) => (
