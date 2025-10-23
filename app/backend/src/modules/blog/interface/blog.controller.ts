@@ -72,19 +72,16 @@ export class BlogController {
     return blog.toJSON();
   }
 
-  // UPDATE
-
+  // UPDATE (FULL)
   @Put(':id')
   @ApiOperation({ summary: 'Fully update a blog' })
   @ApiResponse({ status: 200, description: 'The blog has been updated.' })
   async update(
     @Param('id') id: string,
-    @Body() dto: CreateBlogDto,
+    @Body() dto: UpdateBlogDto,
   ): Promise<Record<string, unknown>> {
     try {
-      const existing = await this.blogService.getById(id);
-      const blogToUpdate = BlogDtoMapper.toDomainFromUpdate(dto, existing);
-      const updated = await this.blogService.update(blogToUpdate);
+      const updated = await this.blogService.updateById(id, dto);
       return updated.toJSON();
     } catch (error: unknown) {
       throw new BadRequestException(
@@ -93,6 +90,7 @@ export class BlogController {
     }
   }
 
+  // UPDATE (PARTIAL)
   @Patch(':id')
   @ApiOperation({ summary: 'Partially update a blog' })
   @ApiResponse({
@@ -104,9 +102,7 @@ export class BlogController {
     @Body() dto: UpdateBlogDto,
   ): Promise<Record<string, unknown>> {
     try {
-      const existing = await this.blogService.getById(id);
-      const blogToUpdate = BlogDtoMapper.toDomainFromUpdate(dto, existing);
-      const updated = await this.blogService.update(blogToUpdate);
+      const updated = await this.blogService.updateById(id, dto);
       return updated.toJSON();
     } catch (error: unknown) {
       throw new BadRequestException(
