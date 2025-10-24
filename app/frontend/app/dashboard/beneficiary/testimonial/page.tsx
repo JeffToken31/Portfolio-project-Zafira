@@ -15,7 +15,7 @@ export default function TemoignagePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // 🔹 Récupère les témoignages du bénéficiaire (uniquement les siens)
+  // fetch testimonial
   useEffect(() => {
     async function fetchTemoignages() {
       setLoading(true);
@@ -32,37 +32,36 @@ export default function TemoignagePage() {
     fetchTemoignages();
   }, []);
 
-  // 🔹 Envoie un nouveau témoignage
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setStatus('');
+  // send testimonial
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('');
 
-  try {
-    await createTestimonial({
-      content: message,
-      published: false,
-      validated: false,
-    });
+    try {
+      await createTestimonial({
+        content: message,
+        published: false,
+        validated: false,
+      });
 
-    setStatus('Votre témoignage a bien été envoyé 🎉');
-    setMessage('');
+      setStatus('Votre témoignage a bien été envoyé 🎉');
+      setMessage('');
 
-    // Recharge la liste
-    const data = await getTestimonials();
-    setTemoignages(data);
-  } catch (err: unknown) {
-    setStatus(
-      err instanceof Error
-        ? err.message
-        : "Erreur lors de l'envoi du témoignage"
-    );
-  }
-};
-
+      // reload
+      const data = await getTestimonials();
+      setTemoignages(data);
+    } catch (err: unknown) {
+      setStatus(
+        err instanceof Error
+          ? err.message
+          : "Erreur lors de l'envoi du témoignage"
+      );
+    }
+  };
 
   return (
     <div className="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow space-y-8">
-      {/* Formulaire */}
+      {/* Form */}
       <section>
         <h2 className="text-2xl font-bold mb-4 text-[var(--color-primary)]">
           Partager mon témoignage
@@ -93,7 +92,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         </form>
       </section>
 
-      {/* Liste de ses témoignages */}
+      {/* List of testimonials */}
       <section>
         <h3 className="text-lg font-semibold mb-2">
           Mes témoignages précédents
@@ -120,14 +119,6 @@ const handleSubmit = async (e: React.FormEvent) => {
                 {t.validated
                   ? '✅ Validé'
                   : '⏳ En attente de validation par un administrateur'}
-              </p>
-              <p className="text-xs text-gray-400">
-                Envoyé le{' '}
-                {new Date(t.createdAt).toLocaleDateString('fr-FR', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                })}
               </p>
             </div>
           ))}
