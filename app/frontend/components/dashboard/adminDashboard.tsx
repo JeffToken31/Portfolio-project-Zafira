@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import AdminCard from './admin-card';
 import AdminActivityCard from './admin-activity-card';
+import NavDashboard from '@/components/uiStyled/nav-dashboard';
 import { Eye, TrendingUp, Users, MessageSquare, FileText } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -55,28 +55,13 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8">
       {/* 🚀 Navigation rapide */}
-      <nav className="flex justify-around px-6 w-full text-[var(--color-primary)] font-semibold">
-        {[
-          { name: 'Bénéficiaires', href: '/dashboard/admin/user' },
-          { name: 'Témoignages', href: '/dashboard/admin/testimonial' },
-          { name: 'Blog', href: '/dashboard/admin/blog' },
-          { name: 'Prestations', href: '/dashboard/admin/action' },
-        ].map((item) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            className="hover:text-pink-500 transition-colors duration-200 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-pink-500 after:bottom-[-4px] after:left-0 hover:after:w-full after:transition-all"
-          >
-            {item.name}
-          </Link>
-        ))}
-      </nav>
+      <NavDashboard />
 
       {/* 📊 3 cartes statistiques */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <AdminCard icon={<Eye />} label="Visiteurs aujourd'hui" value="123" />
-        <AdminCard icon={<TrendingUp />} label="Total visiteurs" value="4567" />
-        <AdminCard icon={<Users />} label="Bénéficiaires inscrits" value="89" />
+        <AdminCard icon={<Eye />} label="Visiteurs aujourd'hui" value="6" />
+        <AdminCard icon={<TrendingUp />} label="Total visiteurs" value="45" />
+        <AdminCard icon={<Users />} label="Bénéficiaires inscrits" value="9" />
       </div>
 
       {/* 🕒 Activités récentes */}

@@ -8,7 +8,7 @@ export class CreatePartnerDto {
 
   @ApiProperty({ example: 'https://example.com/logo.png' })
   @IsString()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   logoUrl: string;
 
   @ApiProperty({ example: 'John Doe', required: false })
