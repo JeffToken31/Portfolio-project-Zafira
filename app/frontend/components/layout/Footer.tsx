@@ -23,13 +23,13 @@ export default function Footer() {
             <div className="flex justify-center sm:justify-start items-center gap-2 mt-2">
               <Lucide.Mail size={18} />
               <a href="mailto:contact@zafira-solidaire.fr" className="hover:text-[var(--color-primary)] transition">
-                contact@zafira-solidaire.fr
+                contact@zafiravestiairesolidaire.org
               </a>
             </div>
             <div className="flex justify-center sm:justify-start items-center gap-2 mt-2">
               <Lucide.Phone size={18} />
-              <a href="tel:+33123456789" className="hover:text-[var(--color-primary)] transition">
-                +33 1 23 45 67 89
+              <a href="tel:+33628721631" className="hover:text-[var(--color-primary)] transition">
+                +33 6 28 72 16 31
               </a>
             </div>
             <p>Lundi au vendredi : 9h - 17h</p>
