@@ -2,14 +2,16 @@
 
 import React from 'react';
 import ImpactSectionCard from '../uiStyled/impact-section-card';
+import ImpactMiniCard from '../uiStyled/impact-section-minicard';
 import { Button } from '../uiStyled/button';
 import { FaUsers } from 'react-icons/fa';
-import { Shirt, BookOpenText } from 'lucide-react';
+import { Users, Shirt, BookOpenText, Weight, Presentation } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const ImpactSection: React.FC = () => {
   const impactData = [
     {
-      icon: <FaUsers />,
+      icon: <Users />,
       number: 150,
       title: 'Bénéficiaires accompagnés',
       description: 'Personnes aidées cette année.',
@@ -19,7 +21,7 @@ const ImpactSection: React.FC = () => {
       link: '/impact/beneficiaires',
     },
     {
-      icon: <Shirt />,
+      icon: <Weight />,
       number: '500 kilos',
       title: 'Vêtements collectés',
       description: 'Collecte solidaire en 2025.',
@@ -29,7 +31,7 @@ const ImpactSection: React.FC = () => {
       link: '/impact/collecte-vetements',
     },
     {
-      icon: <BookOpenText />,
+      icon: <Presentation />,
       number: 40,
       title: 'Ateliers organisés',
       description: 'Sessions image de soi.',
@@ -47,18 +49,52 @@ const ImpactSection: React.FC = () => {
         <p className="text-gray-600 max-w-2xl mx-auto">
           Chaque chiffre raconte une histoire de transformation et d'espoir.
         </p>
-      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 md:px-0 mb-12">
-        {impactData.map((item, index) => (
-          <ImpactSectionCard key={index} {...item} />
-        ))}
-      </div>
+        {/* 📊 Mini-Stats Impact */}
+        <div className="grid md:grid-cols-3 gap-8 text-center mb-12 justify-center">
+          <motion.div
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.5 }}
+          >
+            <FaUsers className="mx-auto text-pink-500 w-10 h-10 mb-2" />
+            <p className="text-2xl font-bold">150</p>
+            <p className="text-sm">Bénéficiaires accompagnés</p>
+          </motion.div>
 
-      <div className="text-center">
-        <Button variant="fake" size="lg">
-          Ensemble, redonnons l'espoir d'y arriver.
-        </Button>
+          <motion.div
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Shirt className="mx-auto text-blue-500 w-10 h-10 mb-2" />
+            <p className="text-2xl font-bold">500 kilos</p>
+            <p className="text-sm">Vêtements collectés</p>
+          </motion.div>
+
+          <motion.div
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.7 }}
+          >
+            <BookOpenText className="mx-auto text-yellow-500 w-10 h-10 mb-2" />
+            <p className="text-2xl font-bold">40</p>
+            <p className="text-sm">Ateliers organisés</p>
+          </motion.div>
+        </div>
+
+        {/* LARGE CARDS */}
+        <div className="grid md:grid-cols-3 gap-8 px-4 md:px-0 mt-12">
+          {impactData.map((item, index) => (
+            <ImpactSectionCard key={index} {...item} />
+          ))}
+        </div>
+
+        <div className="text-center mt-8">
+          <Button variant="fake" size="lg">
+            Ensemble, redonnons l'espoir d'y arriver.
+          </Button>
+        </div>
       </div>
     </section>
   );
