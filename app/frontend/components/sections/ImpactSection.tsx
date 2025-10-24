@@ -57,7 +57,7 @@ const ImpactSection: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.5 }}
           >
-            <FaUsers className="mx-auto text-pink-500 w-10 h-10 mb-2" />
+            <Users className="mx-auto text-pink-500 w-10 h-10 mb-2" />
             <p className="text-2xl font-bold">150</p>
             <p className="text-sm">Bénéficiaires accompagnés</p>
           </motion.div>
@@ -67,7 +67,7 @@ const ImpactSection: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.6 }}
           >
-            <Shirt className="mx-auto text-blue-500 w-10 h-10 mb-2" />
+            <Weight className="mx-auto text-blue-500 w-10 h-10 mb-2" />
             <p className="text-2xl font-bold">500 kilos</p>
             <p className="text-sm">Vêtements collectés</p>
           </motion.div>
@@ -77,7 +77,7 @@ const ImpactSection: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.7 }}
           >
-            <BookOpenText className="mx-auto text-yellow-500 w-10 h-10 mb-2" />
+            <Presentation className="mx-auto text-yellow-500 w-10 h-10 mb-2" />
             <p className="text-2xl font-bold">40</p>
             <p className="text-sm">Ateliers organisés</p>
           </motion.div>
