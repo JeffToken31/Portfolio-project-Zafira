@@ -12,35 +12,43 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import {getTestimonials, TestimonialDto} from '@/lib/api/testimonials';
+import {getUserById, UserDto} from '@/lib/api/user';
 
 export default function BeneficiaireDashboard() {
+  const [user, setUser] = useState<UserDto | null>(null);
   const [temoignages, setTemoignages] = useState<TestimonialDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Exemple de données utilisateur
-  const user = {
-    firstName: 'Prénom',
-    lastName: 'Nom',
-    email: 'user@example.com',
-    createdAt: '01/01/2023',
-  };
-
   useEffect(() => {
-    async function fetchTemoignages() {
-      setLoading(true);
-      setError(null);
+    async function fetchData() {
       try {
-        const data = await getTestimonials(); // récupère tous les témoignages de ce user
-        setTemoignages(data);
+        // fetch user infos
+        const userId = localStorage.getItem('userId'); 
+        if (!userId) throw new Error('Utilisateur non connecté');
+        const userData = await getUserById(userId);
+        setUser(userData);
+
+        // get testimonials
+        const temoignagesData = await getTestimonials();
+        setTemoignages(temoignagesData);
       } catch (err: unknown) {
         setError(err instanceof Error ? err.message : 'Erreur inconnue');
       } finally {
         setLoading(false);
       }
     }
-    fetchTemoignages();
+
+    fetchData();
   }, []);
+
+  if (loading) {
+    return <div className="p-8 text-center">Chargement...</div>;
+  }
+
+  if (error) {
+    return <div className="p-8 text-center text-red-500">{error}</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -62,7 +70,7 @@ export default function BeneficiaireDashboard() {
       <div className="grid grid-cols-3 gap-6">
         {/* Left Column */}
         <div className="flex flex-col gap-6 col-span-1">
-          {/* Mon profil */}
+          {/* profil */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col gap-4 relative">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold">Mon profil</h2>
@@ -72,25 +80,38 @@ export default function BeneficiaireDashboard() {
                 </button>
               </Link>
             </div>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Heart className="w-5 h-5 text-[var(--color-primary)]" />
-                <span>
-                  {user.firstName} {user.lastName}
-                </span>
+            {user ? (
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Heart className="w-5 h-5 text-[var(--color-primary)]" />
+                  <span>
+                    {user.firstName} {user.lastName}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-5 h-5 text-[var(--color-primary)]" />
+                  <span>{user.email}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CalendarCheck className="w-5 h-5 text-[var(--color-primary)]" />
+                  <span>
+                    Depuis le{' '}
+                    {new Date(user.createdAt).toLocaleDateString('fr-FR', {
+                      day: '2-digit',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Mail className="w-5 h-5 text-[var(--color-primary)]" />
-                <span>{user.email}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CalendarCheck className="w-5 h-5 text-[var(--color-primary)]" />
-                <span>Depuis le {user.createdAt}</span>
-              </div>
-            </div>
+            ) : (
+              <p className="text-gray-500">
+                Impossible de charger votre profil.
+              </p>
+            )}
           </div>
 
-          {/* Partager mon expérience */}
+          {/* share my expérience */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
             <h2 className="text-xl font-semibold">Partager mon expérience</h2>
             <div className="text-gray-600">
@@ -107,49 +128,38 @@ export default function BeneficiaireDashboard() {
 
         {/* Right Column */}
         <div className="flex flex-col gap-6 col-span-2">
-          {/* Mes activités */}
+          {/* Activité */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
             <h2 className="text-xl font-semibold">Mes activités</h2>
             <div className="text-gray-600">Aucune activité pour le moment.</div>
           </div>
 
-          {/* Mes témoignages */}
+          {/* testimonials */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
             <h2 className="text-xl font-semibold">Mes témoignages</h2>
 
-            {loading && <p>Chargement...</p>}
-            {error && <p className="text-red-500">{error}</p>}
-
-            {!loading && !error && temoignages.length === 0 && (
+            {temoignages.length === 0 ? (
               <p className="text-gray-500 text-sm">
                 Vous n’avez pas encore partagé de témoignages.
               </p>
+            ) : (
+              <div className="space-y-4">
+                {temoignages.map((t) => (
+                  <div
+                    key={t.id}
+                    className="border border-gray-200 rounded-lg p-4 bg-gray-50"
+                  >
+                    <p className="text-gray-800">{t.content}</p>
+                    <p className="text-xs text-gray-500 mt-2">
+                      Statut :{' '}
+                      {t.validated
+                        ? '✅ Validé'
+                        : '⏳ En attente de validation par un administrateur'}
+                    </p>
+                  </div>
+                ))}
+              </div>
             )}
-
-            <div className="space-y-4">
-              {temoignages.map((t) => (
-                <div
-                  key={t.id}
-                  className="border border-gray-200 rounded-lg p-4 bg-gray-50"
-                >
-                  <p className="text-gray-800">{t.content}</p>
-                  <p className="text-xs text-gray-500 mt-2">
-                    Statut :{' '}
-                    {t.validated
-                      ? '✅ Validé'
-                      : '⏳ En attente de validation par un administrateur'}
-                  </p>
-                  <p className="text-xs text-gray-400">
-                    Envoyé le{' '}
-                    {new Date(t.createdAt).toLocaleDateString('fr-FR', {
-                      day: '2-digit',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
