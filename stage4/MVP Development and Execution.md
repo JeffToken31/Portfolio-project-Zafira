@@ -28,6 +28,7 @@
 * [🧩Conclusion](#conclusion)
 <br>
 <br>
+
 ## 🗓️1. Planning and Sprint Definition
 The project was organized using the **Agile Scrum methodology**, divided into **three main sprints**, with:
 - **Daily stand-up meetings**
@@ -115,6 +116,7 @@ The project was organized using the **Agile Scrum methodology**, divided into **
 - Enhanced SEO performance and faster rendering.
 <br>
 <br>
+
 ## 📆3. Progress Tracking and Adjustments
 
 As a team project, progress was tracked collaboratively through **daily meetings** and **continuous iteration**.
@@ -134,6 +136,7 @@ Each merge into the main branch was followed by:
 - QA verification
 <br>
 <br>
+
 ## 🧪4. Testing Strategy and Quality Assurance
 
 The team applied a **multi-layered testing approach** combining unit, integration, and end-to-end tests.
