@@ -1,32 +1,100 @@
 'use client';
 
-import { useState } from 'react';
-import { Mail, Phone, MapPin, Calendar, Save } from 'lucide-react';
+import {useState, useEffect} from 'react';
+import {Mail, Save, Trash2} from 'lucide-react';
+import {fetchUser, logout} from '@/lib/api/auth';
+import {getUserById, updateUser, deleteUser, UserDto} from '@/lib/api/user';
+import toast from 'react-hot-toast';
 
 export default function EditProfilBeneficiaire() {
-  // 🔹 Exemple de données initiales mockées
-  const initialUser = {
-    firstName: 'Marie',
-    lastName: 'Dupont',
-    email: 'marie.dupont@example.com',
-    dateCreation: '12 mars 2024',
-  };
+  const [user, setUser] = useState<UserDto | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const [user, setUser] = useState(initialUser);
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const me = await fetchUser();
+        if (!me?.user?.id)
+          throw new Error("Impossible de récupérer l'utilisateur");
+
+        const fullUser = await getUserById(me.user.id);
+        setUser(fullUser);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'Erreur inconnue');
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadUser();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    if (!user) return;
+    setUser({...user, [e.target.name]: e.target.value});
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Ici tu pourrais appeler ton API ou le backend pour sauvegarder les modifications
-    alert('Profil mis à jour !');
+    if (!user) return;
+
+    try {
+      setSaving(true);
+      setError(null);
+
+      await updateUser(user.id, {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      });
+      setSuccessMessage('Modifications enregistrées !');
+      setTimeout(() => setSuccessMessage(null), 4000);
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : 'Erreur lors de la sauvegarde';
+      setError(message);
+      toast.error(message);
+    } finally {
+      setSaving(false);
+    }
   };
+
+  const handleDeleteAccount = async () => {
+    if (!user) return;
+    if (
+      !confirm(
+        'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.'
+      )
+    )
+      return;
+
+    try {
+      await deleteUser(user.id);
+      await logout();
+      toast.success('Compte supprimé avec succès');
+      window.location.href = '/';
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : 'Erreur lors de la suppression du compte';
+      toast.error(message);
+    }
+  };
+
+  if (loading)
+    return <div className="p-8 text-center">Chargement du profil...</div>;
+  if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
+  if (!user) return null;
 
   return (
     <section className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow-md">
-      <h2 className="text-2xl font-bold text-[var(--color-primary)] mb-6 text-center">
+      <h2 className="text-2xl font-bold text-text mb-6 text-center">
         Modifier mon profil
       </h2>
 
@@ -38,7 +106,7 @@ export default function EditProfilBeneficiaire() {
             type="text"
             name="firstName"
             placeholder="Prénom"
-            value={user.firstName}
+            value={user.firstName || ''}
             onChange={handleChange}
             className="border p-2 rounded w-full"
           />
@@ -51,7 +119,7 @@ export default function EditProfilBeneficiaire() {
             type="text"
             name="lastName"
             placeholder="Nom"
-            value={user.lastName}
+            value={user.lastName || ''}
             onChange={handleChange}
             className="border p-2 rounded w-full"
           />
@@ -63,31 +131,37 @@ export default function EditProfilBeneficiaire() {
           <input
             type="email"
             name="email"
-            value={user.email}
+            value={user.email || ''}
             onChange={handleChange}
             className="border p-2 rounded w-full"
           />
         </div>
 
-        {/* Date d’inscription (lecture seule) */}
-        <div className="flex items-center gap-3">
-          <Calendar className="w-5 h-5 text-[var(--color-primary)]" />
-          <input
-            type="text"
-            name="dateCreation"
-            value={user.dateCreation}
-            readOnly
-            className="border p-2 rounded w-full bg-gray-100 cursor-not-allowed"
-          />
+        {/* Boutons */}
+        <div className="flex gap-4 mt-4 flex-col md:flex-row">
+          <button
+            type="submit"
+            disabled={saving}
+            className="bg-[var(--color-accent)] text-black py-3 rounded-full hover:text-red-600 hover:bg-yellow-200 transition flex-1"
+          >
+            {saving ? 'Enregistrement...' : 'Enregistrer les modifications'}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDeleteAccount}
+            className="bg-red-500 text-white py-3 rounded-full hover:bg-red-600 hover:text-accent transition flex-1 flex items-center justify-center gap-2"
+          >
+            <Trash2 className="w-5 h-5" /> Supprimer mon compte
+          </button>
         </div>
 
-        {/* Bouton sauvegarder */}
-        <button
-          type="submit"
-          className="bg-[var(--color-primary)] text-black py-3 rounded-lg mt-4 hover:bg-[var(--color-primary-dark)] transition"
-        >
-          Enregistrer les modifications
-        </button>
+        {/* Message de succès */}
+        {successMessage && (
+          <p className="text-green-600 mt-4 text-center font-medium">
+            {successMessage}
+          </p>
+        )}
       </form>
     </section>
   );

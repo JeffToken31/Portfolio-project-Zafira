@@ -72,3 +72,27 @@ export async function createUser(dto: CreateUserDto): Promise<UserDto> {
   }
   return res.json();
 }
+
+// PATCH/PUT user
+export async function updateUser(
+  id: string,
+  dto: Partial<Pick<UserDto, 'firstName' | 'lastName' | 'email'>>
+): Promise<UserDto> {
+  const res = await fetch(`${API_BASE}/user/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(dto),
+  });
+
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(
+      error.message || 'Erreur lors de la mise à jour de l’utilisateur'
+    );
+  }
+
+  return res.json();
+}
