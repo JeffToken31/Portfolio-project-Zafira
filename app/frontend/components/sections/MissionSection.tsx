@@ -22,7 +22,7 @@ export default function MissionSection() {
         {/* 🖼️ Image principale + mini-carte info */}
         <div className="relative">
           <Image
-            src="/images/mission-photo.jpg"
+            src="/notre mission1.jpeg"
             alt="Notre mission"
             width={600}
             height={400}

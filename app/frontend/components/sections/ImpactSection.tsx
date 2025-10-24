@@ -2,10 +2,9 @@
 
 import React from 'react';
 import ImpactSectionCard from '../uiStyled/impact-section-card';
-import {Button} from '../uiStyled/button';
+import { Button } from '../uiStyled/button';
 import { FaUsers } from 'react-icons/fa';
-import { Shirt } from 'lucide-react';
-import { BookOpenText } from 'lucide-react';
+import { Shirt, BookOpenText } from 'lucide-react';
 
 const ImpactSection: React.FC = () => {
   const impactData = [
@@ -16,7 +15,7 @@ const ImpactSection: React.FC = () => {
       description: 'Personnes aidées cette année.',
       color: 'text-blue-500',
       excerpt: "Accompagnement individuel et collectif pour mieux vivre au quotidien.",
-      image: '/images/beneficiaires.jpg',
+      image: '/bénéficiaires accompagnés.jpg',
       link: '/impact/beneficiaires',
     },
     {
@@ -26,7 +25,7 @@ const ImpactSection: React.FC = () => {
       description: 'Collecte solidaire en 2025.',
       color: 'text-green-500',
       excerpt: 'Collecte, tri et redistribution de vêtements pour les familles dans le besoin.',
-      image: '/images/collecte-vetements.jpg',
+      image: '/vetements collectés.jpg',
       link: '/impact/collecte-vetements',
     },
     {
@@ -36,7 +35,7 @@ const ImpactSection: React.FC = () => {
       description: 'Sessions image de soi.',
       color: 'text-yellow-500',
       excerpt: "Ateliers pratiques et théoriques pour renforcer l'estime de soi.",
-      image: '/images/ateliers.jpg',
+      image: '/ateliers organisés.jpg',
       link: '/impact/ateliers',
     },
   ];
@@ -50,14 +49,16 @@ const ImpactSection: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8 px-4 md:px-0 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 md:px-0 mb-12">
         {impactData.map((item, index) => (
           <ImpactSectionCard key={index} {...item} />
         ))}
       </div>
 
       <div className="text-center">
-        <Button variant='fake' size='lg'>Ensemble, redonnons l'espoir d'y arriver.</Button>
+        <Button variant="fake" size="lg">
+          Ensemble, redonnons l'espoir d'y arriver.
+        </Button>
       </div>
     </section>
   );

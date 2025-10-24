@@ -50,21 +50,21 @@ export default function PartnersSection() {
       {/* 🧩 Cartes partenaires */}
       <div className="grid md:grid-cols-3 gap-8 mb-16">
         <PartnersCard
-          logo="/images/france-travail.png"
+          logo="/Logo FranceTravail.png"
           name="France Travail"
           type="Institution publique"
           typeColor="text-blue-600"
           description="Partenaire principal pour l’orientation des demandeurs d’emploi."
         />
         <PartnersCard
-          logo="/images/missions-locales.png"
+          logo="/Logo MissionsLocales.png"
           name="Missions Locales"
           type="Insertion jeunesse"
           typeColor="text-orange-500"
           description="Accompagnement des 16–25 ans en insertion."
         />
         <PartnersCard
-          logo="/images/ccas.png"
+          logo="/Logo CCAS Aulnay.png"
           name="CCAS"
           type="Sociale"
           typeColor="text-pink-600"
