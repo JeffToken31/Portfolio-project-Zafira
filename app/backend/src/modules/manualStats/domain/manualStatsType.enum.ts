@@ -1,0 +1,5 @@
+export enum ManualStatisticType {
+  BENEFICIARIES = 'BENEFICIARIES',
+  CLOTHES_KG = 'CLOTHES_KG',
+  WORKSHOPS = 'WORKSHOPS',
+}

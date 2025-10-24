@@ -122,3 +122,27 @@ model Testimonial {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+model ManualStatistic {
+  id             String                @id @default(uuid())
+  type           ManualStatisticType   @unique
+  totalQuantity  Int                   @default(0)
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  entries        ManualStatisticEntry[]
+}
+
+model ManualStatisticEntry {
+  id                String      @id @default(uuid())
+  quantity          Int
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  manualStatistic   ManualStatistic @relation(fields: [manualStatisticId], references: [id])
+  manualStatisticId String
+}
+
+enum ManualStatisticType {
+  BENEFICIARIES
+  CLOTHES_KG
+  WORKSHOPS
+}
