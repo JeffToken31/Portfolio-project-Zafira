@@ -11,7 +11,6 @@ export default function UserMenuDialog() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Fermer si clic en dehors
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -26,8 +25,8 @@ export default function UserMenuDialog() {
     <div
       ref={ref}
       className="relative"
-      onMouseEnter={() => setOpen(true)}   // ouvre au hover desktop
-      onMouseLeave={() => setOpen(false)} // ferme au leave desktop
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
     >
       <Button
         onClick={() => setOpen(!open)}
@@ -45,12 +44,6 @@ export default function UserMenuDialog() {
             transition={{ duration: 0.2 }}
             className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50 overflow-hidden"
           >
-            <Link
-              href="/dashboard/user"
-              className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
-            >
-              <User className="w-4 h-4" /> Mon profil utilisateur
-            </Link>
             <Link
               href="/dashboard/beneficiary"
               className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"

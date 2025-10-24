@@ -63,7 +63,7 @@ export default function TemoignagePage() {
     <div className="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow space-y-8">
       {/* Form */}
       <section>
-        <h2 className="text-2xl font-bold mb-4 text-[var(--color-primary)]">
+        <h2 className="text-2xl font-bold mb-4 text-text">
           Partager mon témoignage
         </h2>
 
