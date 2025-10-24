@@ -29,13 +29,14 @@ export default function FAQSection() {
   ];
 
   return (
-    <section className="py-16 bg-[var(--color-bg-alt)] text-center">
+    <section className="py-16 bg-gray-100 text-center">
       <div className="container mx-auto px-4 max-w-3xl">
         <h2 className="text-4xl font-bold mb-6 text-text">
           Foire Aux Questions
         </h2>
         <p className="text-gray-600 mb-10">
-          Vous trouverez ici les réponses aux questions les plus fréquemment posées.
+          Vous trouverez ici les réponses aux questions les plus fréquemment
+          posées.
         </p>
 
         {/* 🧩 Liste des questions en accordéon */}
@@ -43,7 +44,7 @@ export default function FAQSection() {
 
         {/* 🔘 Bouton "Voir toutes les questions" */}
         <div className="mt-10 flex justify-center">
-          <Button href="#faq" variant='connect'>
+          <Button href="#faq" variant="connect">
             Voir toutes les questions
           </Button>
         </div>

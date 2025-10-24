@@ -1,17 +1,16 @@
 import type {Config} from 'tailwindcss';
 
 const config: Config = {
-  darkMode: ['class'], // active le mode sombre basé sur `.dark`
+  darkMode: ['class'],
   content: [
     './app/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './lib/**/*.{ts,tsx}',
-    './node_modules/@shadcn/ui/dist/**/*.{ts,tsx}', // compatibilité Shadcn
+    './node_modules/@shadcn/ui/dist/**/*.{ts,tsx}', 
   ],
   theme: {
     extend: {
       colors: {
-        // 🌈 Couleurs principales liées aux variables CSS
         primary: 'var(--color-primary)',
         'primary-hover': 'var(--color-primary-hover)',
 
@@ -21,7 +20,6 @@ const config: Config = {
         accent: 'var(--color-accent)',
         'accent-hover': 'var(--color-accent-hover)',
 
-        // 🎨 Couleurs de fond et texte
         bg: 'var(--color-bg)',
         'bg-alt': 'var(--color-bg-alt)',
         surface: 'var(--color-surface)',
@@ -29,14 +27,12 @@ const config: Config = {
         'text-light': 'var(--color-text-light)',
       },
 
-      // 🖋️ Typographie
       fontFamily: {
         heading: ['var(--font-heading)', 'sans-serif'],
         body: ['var(--font-body)', 'sans-serif'],
         ui: ['var(--font-ui)', 'sans-serif'],
       },
 
-      // 🔲 Radius et ombres
       borderRadius: {
         sm: 'var(--radius-sm)',
         md: 'var(--radius-md)',
@@ -50,7 +46,6 @@ const config: Config = {
         lg: 'var(--shadow-lg)',
       },
 
-      // ⚡ Transitions
       transitionProperty: {
         base: 'var(--transition-base)',
       },

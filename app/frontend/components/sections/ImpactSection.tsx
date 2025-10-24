@@ -2,10 +2,8 @@
 
 import React from 'react';
 import ImpactSectionCard from '../uiStyled/impact-section-card';
-import ImpactMiniCard from '../uiStyled/impact-section-minicard';
 import { Button } from '../uiStyled/button';
-import { FaUsers } from 'react-icons/fa';
-import { Users, Shirt, BookOpenText, Weight, Presentation } from 'lucide-react';
+import { Users, Weight, Presentation } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const ImpactSection: React.FC = () => {
@@ -43,7 +41,7 @@ const ImpactSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gray-100">
       <div className="container mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold mb-4">Notre Impact</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">

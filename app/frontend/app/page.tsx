@@ -18,18 +18,6 @@ export default function HomePage() {
         <HeroSection />
       </section>
 
-      <section id="actions">
-        <ActionSection />
-      </section>
-      
-      <section id="blog">
-        <BlogSection />
-      </section>
-      
-      <section id="faq">
-        <FAQSection />
-      </section>
-
       <section id="impact">
         <ImpactSection />
       </section>
@@ -38,12 +26,24 @@ export default function HomePage() {
         <MissionSection />
       </section>
 
-      <section id="participation">
-        <ParticipationSection />
+      <section id="actions">
+        <ActionSection />
+      </section>
+
+      <section id="blog">
+        <BlogSection />
+      </section>
+
+      <section id="faq">
+        <FAQSection />
       </section>
 
       <section id="partners">
         <PartnersSection />
+      </section>
+
+      <section id="participation">
+        <ParticipationSection />
       </section>
 
       <section id="testimonials">

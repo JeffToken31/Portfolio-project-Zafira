@@ -21,7 +21,7 @@
 
   /* Background colors */
   --color-bg: #ffffff;
-  --color-bg-alt: oklch(.869 .005 56.366)/* keep on tailwind*/
+  --color-bg-alt: #c7c6c3
   --color-surface: #fdfdfd;
 
   /* font colors */

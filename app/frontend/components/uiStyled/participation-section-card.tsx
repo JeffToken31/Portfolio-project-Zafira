@@ -21,7 +21,7 @@ export default function ParticipationCard({
   type,
 }: ParticipationCardProps) {
   return (
-    <div className="bg-[var(--color-surface)] rounded-lg shadow-lg p-6 flex flex-col gap-6 w-full">
+    <div className="bg-bg rounded-lg shadow-lg p-6 flex flex-col gap-6 w-full">
       {/* Titre principal */}
       <div className="flex flex-col items-center text-center gap-3 mb-2">
         <div className="text-[var(--color-primary)] text-5xl">{icon}</div>

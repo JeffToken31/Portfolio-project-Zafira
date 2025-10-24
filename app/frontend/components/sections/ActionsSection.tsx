@@ -5,7 +5,7 @@ import ActionSectionCarousel from '../uiStyled/action-section-carousel';
 
 export default function ActionSection() {
   return (
-    <section className="bg-bg-alt text-center">
+    <section className="bg-gray-100 text-center">
       {/* Carrousel des actions */}
       <ActionSectionCarousel limit={5} />
 

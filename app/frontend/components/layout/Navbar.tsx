@@ -43,22 +43,34 @@ export default function Navbar() {
           Accueil
         </a>
         <a
+          href="#mission"
+          className="text-text hover:text-primary transition-colors"
+        >
+          À propos
+        </a>{' '}
+        <a
           href="#actions"
           className="text-text hover:text-primary transition-colors"
         >
           Actions
-        </a>
+        </a>{' '}
         <a
-          href="#about"
+          href="#blog"
           className="text-text hover:text-primary transition-colors"
         >
-          À propos
-        </a>
+          Actualitées
+        </a>{' '}
         <a
-          href="#contact"
+          href="#faq"
           className="text-text hover:text-primary transition-colors"
         >
-          Contact
+          Faq
+        </a>
+        <a
+          href="#participation"
+          className="text-text hover:text-primary transition-colors"
+        >
+          Don
         </a>
         {renderUserSection()}
       </div>
