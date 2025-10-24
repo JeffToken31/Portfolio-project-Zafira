@@ -58,7 +58,7 @@ export default function AdminDashboard() {
       <NavDashboard />
 
       {/* 📊 3 cartes statistiques */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="bg-bg grid grid-cols-1 md:grid-cols-3 gap-6">
         <AdminCard icon={<Eye />} label="Visiteurs aujourd'hui" value="6" />
         <AdminCard icon={<TrendingUp />} label="Total visiteurs" value="45" />
         <AdminCard icon={<Users />} label="Bénéficiaires inscrits" value="9" />
@@ -67,7 +67,7 @@ export default function AdminDashboard() {
       {/* 🕒 Activités récentes */}
       <div>
         <h2 className="text-xl font-bold mb-4">Activités récentes</h2>
-        <div className="space-y-3">
+        <div className="space-y-3 bg-bg">
           {activities.map((activity) => (
             <AdminActivityCard
               key={activity.id}

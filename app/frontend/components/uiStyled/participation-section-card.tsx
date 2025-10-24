@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ParticipationMiniCard from './participation-section-minicard';
-import { Phone, Info, ExternalLink, Gift } from 'lucide-react';
+import { Phone, Info, ExternalLink} from 'lucide-react';
 import Link from 'next/link';
 
 interface ParticipationCardProps {

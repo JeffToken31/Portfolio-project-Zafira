@@ -1,15 +1,12 @@
 'use client';
 
 import { HeartHandshake } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/hooks/useAuth';
-import { Button } from '../uiStyled/button';
 import MobileMenu from './MobileMenu';
 import LoginDialog from '../uiStyled/LoginDialog';
 import UserMenuDialog from "../uiStyled/UserMenuDialog";
 
 export default function Navbar() {
-  const router = useRouter();
   const { user } = useAuth();
 
   const renderUserSection = () => {
