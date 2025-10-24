@@ -36,9 +36,30 @@ export default function Navbar() {
 
       {/* Desktop */}
       <div className="hidden md:flex items-center gap-6">
-        <a href="#actions" className="text-text hover:text-primary transition-colors">Actions</a>
-        <a href="#about" className="text-text hover:text-primary transition-colors">À propos</a>
-        <a href="#contact" className="text-text hover:text-primary transition-colors">Contact</a>
+        <a
+          href="http://localhost:3000/"
+          className="text-text hover:text-primary transition-colors"
+        >
+          Accueil
+        </a>
+        <a
+          href="#actions"
+          className="text-text hover:text-primary transition-colors"
+        >
+          Actions
+        </a>
+        <a
+          href="#about"
+          className="text-text hover:text-primary transition-colors"
+        >
+          À propos
+        </a>
+        <a
+          href="#contact"
+          className="text-text hover:text-primary transition-colors"
+        >
+          Contact
+        </a>
         {renderUserSection()}
       </div>
 

@@ -7,7 +7,7 @@ export async function login(credentials: {email: string; password: string}) {
   });
   if (!res.ok) throw new Error('Login failed');
   return res.json();
-} // a verifier ligne 5
+}
 
 export async function register(payload: {
   firstname: string;
@@ -35,11 +35,21 @@ export async function loginWithGoogle() {
 
 export async function fetchUser() {
   const res = await fetch('http://localhost:3001/auth/me', {
-    credentials: 'include',
+    method: 'GET',
+    credentials: 'include', // essentiel pour envoyer le cookie
   });
-  if (!res.ok) throw new Error('User fetch failed');
-  return res.json();
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('❌ fetchUser failed:', res.status, text);
+    throw new Error('User fetch failed');
+  }
+
+  const data = await res.json();
+  console.log('✅ fetchUser success:', data);
+  return data;
 }
+
 
 export async function logout() {
   const res = await fetch('http://localhost:3001/auth/logout', {

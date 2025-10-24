@@ -92,6 +92,7 @@ export class AuthController {
 
     return res.redirect('http://localhost:3000/');
   }
+
   @Get('me')
   @UseGuards(JwtAuthGuard)
   getMe(@Req() req: Request & { user?: User }) {
@@ -104,6 +105,7 @@ export class AuthController {
 
   // Route pour logout
   @Post('logout')
+  @UseGuards(JwtAuthGuard)
   logout(@Res() res: Response) {
     res.clearCookie('auth_token', {
       httpOnly: true,

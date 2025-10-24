@@ -9,7 +9,7 @@ export default function HeaderDashboard() {
 
   return (
     <header className="bg-[var(--color-bg-alt)] p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold text-[var(--color-primary)]">Dashboard Bénéficiaire</h1>
+      <h1 className="text-xl font-bold text-text">Dashboard Bénéficiaire</h1>
 
       <nav className="space-x-4">
         <Link
@@ -19,8 +19,8 @@ export default function HeaderDashboard() {
           Accueil
         </Link>
         <Link
-          href="/dashboard/beneficiary/profile"
-          className={pathname === '/dashboard/beneficiary/profile' ? 'font-semibold text-[var(--color-primary)]' : ''}
+          href="/dashboard/beneficiary/edit"
+          className={pathname === '/dashboard/beneficiary/edit' ? 'font-semibold text-[var(--color-primary)]' : ''}
         >
           Modifier mes infos
         </Link>
