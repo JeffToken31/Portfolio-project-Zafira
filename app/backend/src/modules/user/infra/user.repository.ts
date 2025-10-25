@@ -120,4 +120,8 @@ export class UserRepository implements IUserRepository {
       data: { passwordHash },
     });
   }
+
+  async countUsers(): Promise<number> {
+    return this.prisma.user.count();
+  }
 }
