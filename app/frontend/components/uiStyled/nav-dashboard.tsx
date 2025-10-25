@@ -14,6 +14,7 @@ const NavDashboard: React.FC = () => {
     {name: 'Témoignages', href: '/dashboard/admin/testimonial'},
     {name: 'Blog', href: '/dashboard/admin/blog'},
     {name: 'Prestations', href: '/dashboard/admin/action'},
+    {name: 'Statistiques', href: '/dashboard/admin/manualStats'},
   ];
 
   return (

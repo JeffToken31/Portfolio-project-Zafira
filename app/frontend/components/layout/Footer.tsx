@@ -4,9 +4,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-100 text-[var(--color-text)] border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* --- 3 colonnes principales --- */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 justify-center items-center text-center sm:text-left">
-          {/* Zafira Solidaire */}
           <div>
             <h3 className="font-bold text-lg mb-4">Zafira Solidaire</h3>
             <p>Association loi 1901</p>
@@ -18,7 +16,6 @@ export default function Footer() {
             <p>Ensemble, redonnons de la dignité par l'image.</p>
           </div>
 
-          {/* Nous contacter */}
           <div>
             <h3 className="font-bold text-lg mb-4">Nous contacter</h3>
             <p>18 rue Charles Gouppy</p>
@@ -44,7 +41,6 @@ export default function Footer() {
             <p>Lundi au vendredi : 9h - 17h</p>
           </div>
 
-          {/* Liens rapides */}
           <div>
             <h3 className="font-bold text-lg mb-4">Liens rapides</h3>
             <ul className="space-y-2">
@@ -124,7 +120,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* --- Suivez-nous --- */}
         <div className="mt-12 border-t border-gray-300 pt-6">
           <h3 className="font-bold text-lg mb-4 text-center sm:text-left">
             Suivez-nous
@@ -135,7 +130,7 @@ export default function Footer() {
                 href="https://www.facebook.com/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow hover:bg-blue-500 transition"
+                className="flex items-center justify-center w-16 h-16 bg-white rounded-full shadow hover:bg-blue-500 transition"
               >
                 <Lucide.Facebook className="text-blue-600 w-12 h-12 hover:text-white" />
               </a>
@@ -145,7 +140,7 @@ export default function Footer() {
                 href="https://www.instagram.com/accounts/login/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow hover:bg-pink-500 transition"
+                className="flex items-center justify-center w-16 h-16 bg-white rounded-full shadow hover:bg-pink-500 transition"
               >
                 <Lucide.Instagram className="text-pink-500 w-12 h-12 hover:text-white" />
               </a>
@@ -155,7 +150,7 @@ export default function Footer() {
                 href="https://www.linkedin.com/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow hover:bg-blue-700 transition"
+                className="flex items-center justify-center w-16 h-16 bg-white rounded-full shadow hover:bg-blue-700 transition"
               >
                 <Lucide.Linkedin className="text-blue-700 w-12 h-12 hover:text-white" />
               </a>
@@ -165,7 +160,7 @@ export default function Footer() {
                 href="https://twitter.com/i/flow/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow hover:bg-black transition"
+                className="flex items-center justify-center w-16 h-16 bg-white rounded-full shadow hover:bg-black transition"
               >
                 <Lucide.X className="text-black w-12 h-12 hover:text-white" />
               </a>
