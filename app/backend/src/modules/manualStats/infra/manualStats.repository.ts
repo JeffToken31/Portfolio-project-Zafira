@@ -48,13 +48,28 @@ export class ManualStatsRepository implements IManualStatisticRepository {
   }
 
   // --------------------- ManualStatisticEntry ---------------------
+  // addEntry: create entry + increment totalQuantity
   async addEntry(
     statId: string,
     entry: ManualStatisticEntry,
   ): Promise<ManualStatisticEntry> {
+    // create entry
     const raw = await this.prisma.manualStatisticEntry.create({
-      data: ManualStatsMapper.toEntryPersistence(entry),
+      data: {
+        id: entry.id,
+        quantity: entry.quantity,
+        createdAt: entry.createdAt,
+        updatedAt: entry.updatedAt,
+        manualStatistic: { connect: { id: statId } },
+      },
     });
+
+    // increment the parent totalQuantity
+    await this.prisma.manualStatistic.update({
+      where: { id: statId },
+      data: { totalQuantity: { increment: raw.quantity } },
+    });
+
     return new ManualStatisticEntry(
       raw.id,
       raw.manualStatisticId,
@@ -67,13 +82,25 @@ export class ManualStatsRepository implements IManualStatisticRepository {
   async updateEntry(
     entry: ManualStatisticEntry,
   ): Promise<ManualStatisticEntry> {
+    // get current entry to know old quantity
+    const before = await this.prisma.manualStatisticEntry.findUnique({
+      where: { id: entry.id },
+    });
+    if (!before) throw new Error('Entry not found');
+
     const raw = await this.prisma.manualStatisticEntry.update({
       where: { id: entry.id },
-      data: {
-        quantity: entry.quantity,
-        updatedAt: entry.updatedAt,
-      },
+      data: { quantity: entry.quantity, updatedAt: entry.updatedAt },
     });
+
+    const diff = entry.quantity - before.quantity;
+    if (diff !== 0) {
+      await this.prisma.manualStatistic.update({
+        where: { id: raw.manualStatisticId },
+        data: { totalQuantity: { increment: diff } },
+      });
+    }
+
     return new ManualStatisticEntry(
       raw.id,
       raw.manualStatisticId,
@@ -84,7 +111,19 @@ export class ManualStatsRepository implements IManualStatisticRepository {
   }
 
   async deleteEntry(entryId: string): Promise<void> {
+    // fetch entry
+    const before = await this.prisma.manualStatisticEntry.findUnique({
+      where: { id: entryId },
+    });
+    if (!before) throw new Error('Entry not found');
+
     await this.prisma.manualStatisticEntry.delete({ where: { id: entryId } });
+
+    // decrement total
+    await this.prisma.manualStatistic.update({
+      where: { id: before.manualStatisticId },
+      data: { totalQuantity: { decrement: before.quantity } },
+    });
   }
 
   async findEntriesByStatistic(
@@ -102,6 +141,54 @@ export class ManualStatsRepository implements IManualStatisticRepository {
           raw.createdAt,
           raw.updatedAt,
         ),
+    );
+  }
+
+  // updateEntryQuantity: met à jour entry et ajuste totalQuantity en transaction
+  async updateEntryQuantity(
+    entryId: string,
+    newQuantity: number,
+  ): Promise<ManualStatisticEntry> {
+    // Récupérer l'état actuel de l'entrée
+    const before = await this.prisma.manualStatisticEntry.findUnique({
+      where: { id: entryId },
+    });
+    if (!before) throw new Error('Entry not found');
+
+    // transaction : update entry puis update totalQuantity
+    const [updatedEntry] = await this.prisma.$transaction([
+      this.prisma.manualStatisticEntry.update({
+        where: { id: entryId },
+        data: { quantity: newQuantity, updatedAt: new Date() },
+      }),
+      this.prisma.manualStatistic.update({
+        where: { id: before.manualStatisticId },
+        data: { totalQuantity: { increment: newQuantity - before.quantity } },
+      }),
+    ]);
+
+    // Mapper vers instance domaine
+    return new ManualStatisticEntry(
+      updatedEntry.id,
+      updatedEntry.manualStatisticId,
+      updatedEntry.quantity,
+      updatedEntry.createdAt,
+      updatedEntry.updatedAt,
+    );
+  }
+  async findEntryById(entryId: string): Promise<ManualStatisticEntry | null> {
+    const raw = await this.prisma.manualStatisticEntry.findUnique({
+      where: { id: entryId },
+    });
+
+    if (!raw) return null;
+
+    return new ManualStatisticEntry(
+      raw.id,
+      raw.manualStatisticId,
+      raw.quantity,
+      raw.createdAt,
+      raw.updatedAt,
     );
   }
 }

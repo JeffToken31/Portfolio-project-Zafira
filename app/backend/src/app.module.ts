@@ -9,7 +9,7 @@ import { ActionModule } from './modules/action/action.module';
 import { PartnerModule } from './modules/partner/partner.module';
 import { TestimonialModule } from './modules/testimonial/testimonial.module';
 import { UploadModule } from './modules/upload/upload.module';
-//import { ManualStatsModule } from './modules/manualStats/manualStats.module';
+import { ManualStatsModule } from './modules/manualStats/manualStats.module';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { UploadModule } from './modules/upload/upload.module';
     PartnerModule,
     TestimonialModule,
     UploadModule,
-    //ManualStatsModule,
+    ManualStatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

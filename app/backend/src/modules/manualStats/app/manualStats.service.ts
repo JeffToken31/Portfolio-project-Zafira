@@ -1,10 +1,11 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import type { IManualStatisticRepository } from '../domain/ImanualStats.repository';
 import { ManualStatistic } from '../domain/manualStats.entity';
-import { CreateManualStatisticDto } from '../interface/dto/create-entry.dto';
-import { UpdateManualStatisticDto } from '../interface/dto/update-entry.dto';
+import { ManualStatisticEntry } from '../domain/manualStatsEntry.entity';
+import { ManualStatisticType } from '../domain/manualStatsType.enum';
+import { CreateManualStatisticEntryDto } from '../interface/dto/create-entry.dto';
+import { UpdateManualStatisticEntryDto } from '../interface/dto/update-entry.dto';
 import { ManualStatsDtoMapper } from '../interface/dto/manualStats-dto.mapper';
-import type { ManualStatisticType } from '../domain/manualStatsType.enum';
 
 @Injectable()
 export class ManualStatsService {
@@ -13,7 +14,9 @@ export class ManualStatsService {
     private readonly manualStatsRepo: IManualStatisticRepository,
   ) {}
 
-  // --------------------- Lecture ---------------------
+  async getAll(): Promise<ManualStatistic[]> {
+    return this.manualStatsRepo.findAll();
+  }
 
   async getById(id: string): Promise<ManualStatistic> {
     const stat = await this.manualStatsRepo.findById(id);
@@ -21,50 +24,42 @@ export class ManualStatsService {
     return stat;
   }
 
-  async getByType(typeStr: string): Promise<ManualStatistic | null> {
+  async getByType(typeStr: string): Promise<ManualStatistic> {
     const type = typeStr as ManualStatisticType;
     const stat = await this.manualStatsRepo.findByType(type);
+    if (!stat)
+      throw new NotFoundException(`ManualStatistic type ${type} not found`);
     return stat;
   }
 
-  async getAll(): Promise<ManualStatistic[]> {
-    return this.manualStatsRepo.findAll();
+  async addEntry(
+    statId: string,
+    dto: CreateManualStatisticEntryDto,
+  ): Promise<ManualStatisticEntry> {
+    const stat = await this.manualStatsRepo.findById(statId);
+    if (!stat)
+      throw new NotFoundException(`ManualStatistic ${statId} not found`);
+
+    const entry = ManualStatsDtoMapper.toEntryDomain(statId, dto);
+
+    return this.manualStatsRepo.addEntry(statId, entry);
   }
 
-  // --------------------- Création ---------------------
+  async updateEntry(
+    entryId: string,
+    dto: UpdateManualStatisticEntryDto,
+  ): Promise<ManualStatisticEntry> {
+    if (dto.quantity === undefined) {
+      throw new Error('Quantity is required for update.');
+    }
 
-  async create(dto: CreateManualStatisticDto): Promise<ManualStatistic> {
-    const stat = ManualStatsDtoMapper.toDomainFromCreate(dto);
-    return this.manualStatsRepo.create(stat);
+    return this.manualStatsRepo.updateEntryQuantity(entryId, dto.quantity);
   }
 
-  // --------------------- Mise à jour ---------------------
+  async deleteEntry(entryId: string): Promise<void> {
+    const entry = await this.manualStatsRepo.findEntryById(entryId);
+    if (!entry) throw new NotFoundException(`Entry ${entryId} not found`);
 
-  async updateById(
-    id: string,
-    dto: UpdateManualStatisticDto,
-  ): Promise<ManualStatistic> {
-    const existing = await this.manualStatsRepo.findById(id);
-    if (!existing)
-      throw new NotFoundException(`ManualStatistic ${id} not found`);
-
-    const updated = ManualStatsDtoMapper.toDomainFromUpdate(dto, existing);
-    return this.manualStatsRepo.update(updated);
-  }
-
-  async update(stat: ManualStatistic): Promise<ManualStatistic> {
-    const existing = await this.manualStatsRepo.findById(stat.id);
-    if (!existing)
-      throw new NotFoundException(`ManualStatistic ${stat.id} not found`);
-    return this.manualStatsRepo.update(stat);
-  }
-
-  // --------------------- Suppression ---------------------
-
-  async delete(id: string): Promise<void> {
-    const existing = await this.manualStatsRepo.findById(id);
-    if (!existing)
-      throw new NotFoundException(`ManualStatistic ${id} not found`);
-    return this.manualStatsRepo.delete(id);
+    return this.manualStatsRepo.deleteEntry(entryId);
   }
 }
