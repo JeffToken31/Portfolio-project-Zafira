@@ -81,4 +81,8 @@ export class UserService {
   async deleteUser(userId: string): Promise<void> {
     await this.userRepo.delete(userId);
   }
+
+  async countUsers(): Promise<number> {
+    return this.userRepo.countUsers();
+  }
 }
