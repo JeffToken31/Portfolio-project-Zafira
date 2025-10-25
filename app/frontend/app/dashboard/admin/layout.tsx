@@ -43,7 +43,7 @@ export default function DashboardLayout({children}: DashboardLayoutProps) {
         </div>
       </header>
 
-      <main className="p-8">{children}</main>
+      <main className="p-8 bg-gray-50">{children}</main>
     </div>
   );
 }

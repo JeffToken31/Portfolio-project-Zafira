@@ -61,7 +61,7 @@ export default function AdminDashboard() {
 
       <div>
         <h2 className="text-xl font-bold mb-4">Activités récentes</h2>
-        <div className="space-y-3">
+        <div className="space-y-3 bg-bg">
           {activities.map((activity) => (
             <AdminActivityCard
               key={activity.id}
