@@ -29,7 +29,10 @@ services:
     volumes:
       - ../backend:/app
       - /app/node_modules
-    command: npm run start:dev
+    command:
+    - sh
+    - -c
+    - "npx prisma migrate deploy && npx prisma db seed && npm run start:dev"
 
   frontend:
     build:
