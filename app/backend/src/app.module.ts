@@ -10,7 +10,7 @@ import { PartnerModule } from './modules/partner/partner.module';
 import { TestimonialModule } from './modules/testimonial/testimonial.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { ManualStatsModule } from './modules/manualStats/manualStats.module';
-
+import { StatsModule } from './modules/stats/stats.module';
 @Module({
   imports: [
     PrismaModule,
@@ -22,6 +22,7 @@ import { ManualStatsModule } from './modules/manualStats/manualStats.module';
     TestimonialModule,
     UploadModule,
     ManualStatsModule,
+    StatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
