@@ -15,8 +15,7 @@ export default function DashboardLayout({children}: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-[var(--color-bg-alt)]">
       {/* Header */}
-      <header className="bg-[var(--color-surface)] shadow-md p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        {/* Titre et sous-titre */}
+      <header className="bg-[var(--color-surface p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold text-[var(--color-text)]">
             Dashboard Administrateur
@@ -26,7 +25,6 @@ export default function DashboardLayout({children}: DashboardLayoutProps) {
           </h2>
         </div>
 
-        {/* Boutons */}
         <div className="flex gap-4">
           <Link
             href="/dashboard/admin/testimonial"

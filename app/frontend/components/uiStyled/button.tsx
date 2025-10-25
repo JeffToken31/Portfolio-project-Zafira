@@ -14,6 +14,10 @@ const buttonVariants = cva(
         bleu: 'bg-secondary text-text hover:bg-secondary-hover hover:text-white',
         blanc: 'bg-bg text-text text-blue-500 hover:bg-blue-50',
         fake: 'bg-white text-primary-foreground',
+        delete:
+          'border border-red-500 bg-white text-red-500 hover:bg-red-500 hover:text-bg hover:border-gray-100',
+        light:
+          'border bg-bg text-primary border-black hover:bg-gray-100 hover:border-primary',
         jaune: 'bg-accent text-text hover:bg-accent-hover hover:text-white',
         heroSection: 'bg-secondary text-white hover:bg-secondary-hover',
         destructive: 'bg-destructive text-white hover:bg-destructive/90',
