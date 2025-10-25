@@ -1,13 +1,46 @@
 import { PrismaClient, ManualStatisticType, Role } from '@prisma/client';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
-async function main() {
+async function main(): Promise<void> {
+  console.log('🌱 Seeding database...');
+
+  // ---- ADMIN USER ----
+  const adminEmail = 'admin@example.com';
+  const existingAdmin = await prisma.user.findUnique({
+    where: { email: adminEmail },
+  });
+
+  if (!existingAdmin) {
+    const hashedPassword = await bcrypt.hash('ChangeMe123!', 10);
+
+    // Création de l'utilisateur avec relation Credential + PasswordCredential
+    await prisma.user.create({
+      data: {
+        email: adminEmail,
+        role: Role.ADMIN,
+        credentials: {
+          create: {
+            password: {
+              create: {
+                passwordHash: hashedPassword,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    console.log('✅ Created admin user with credentials');
+  } else {
+    console.log('↩️  Admin user already exists');
+  }
+
+  // ---- MANUAL STATISTICS ----
   console.log('🌱 Seeding manual statistics...');
 
-  // Seed des manual statistics
-  const types = [
+  const types: ManualStatisticType[] = [
     ManualStatisticType.BENEFICIARIES,
     ManualStatisticType.CLOTHES_KG,
     ManualStatisticType.WORKSHOPS,
@@ -31,47 +64,17 @@ async function main() {
     }
   }
 
-  // Seed admin user
-  const adminEmail = 'admin@example.com';
-  const adminPassword = 'ChangeMe123!'; // à changer après le seed
-
-  const existingAdmin = await prisma.user.findUnique({
-    where: { email: adminEmail },
-  });
-
-  if (!existingAdmin) {
-    const hashedPassword = await bcrypt.hash(adminPassword, 10);
-
-    const adminUser = await prisma.user.create({
-      data: {
-        email: adminEmail,
-        emailVerified: true,
-        role: Role.ADMIN,
-        firstName: 'Admin',
-        lastName: 'User',
-        credentials: {
-          create: {
-            password: {
-              create: {
-                passwordHash: hashedPassword,
-              },
-            },
-          },
-        },
-      },
-    });
-
-    console.log(`✅ Admin user created: ${adminEmail}`);
-  } else {
-    console.log(`↩️ Admin user already exists: ${adminEmail}`);
-  }
-
   console.log('✅ Seeding completed.');
 }
 
+// ---- EXECUTION ----
 main()
-  .catch((e) => {
-    console.error(e);
+  .catch((err: unknown) => {
+    if (err instanceof Error) {
+      console.error('❌ Error during seeding:', err.message);
+    } else {
+      console.error('❌ Unknown error during seeding:', err);
+    }
     process.exit(1);
   })
   .finally(() => {
