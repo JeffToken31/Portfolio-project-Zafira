@@ -116,4 +116,11 @@ export class UserController {
     await this.userService.deleteUser(id);
     return { message: `Utilisateur ${id} supprimé` };
   }
+
+  @Get('count')
+  @ApiOperation({ summary: 'Get total number of users' })
+  async getUserCount() {
+    const totalUsers = await this.userService.countUsers();
+    return { totalUsers };
+  }
 }

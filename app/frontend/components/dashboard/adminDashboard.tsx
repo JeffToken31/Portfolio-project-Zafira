@@ -1,13 +1,20 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import AdminCard from './admin-card';
 import AdminActivityCard from './admin-activity-card';
 import NavDashboard from '@/components/uiStyled/nav-dashboard';
-import { Eye, TrendingUp, Users, MessageSquare, FileText } from 'lucide-react';
+import {Eye, TrendingUp, Users, MessageSquare, FileText} from 'lucide-react';
+import {getStats, getTotalUsers} from '@/lib/api/stats';
 
 export default function AdminDashboard() {
   const [activities, setActivities] = useState<any[]>([]);
+  const [stats, setStats] = useState({
+    daily: 0,
+    monthly: 0,
+    global: 0,
+    users: 0,
+  });
 
   useEffect(() => {
     const now = new Date();
@@ -19,7 +26,7 @@ export default function AdminDashboard() {
         type: 'Bénéficiaire',
         firstName: 'Alice',
         lastName: 'Dupont',
-        time: new Date(now.getTime() - 2 * 60 * 60 * 1000), // il y a 2h
+        time: new Date(now.getTime() - 2 * 60 * 60 * 1000),
       },
       {
         id: 2,
@@ -39,8 +46,26 @@ export default function AdminDashboard() {
     ];
 
     setActivities(fakeActivities);
-  }, []);
 
+    async function fetchStats() {
+      try {
+        const [statRes, usersRes] = await Promise.all([
+          getStats(),
+          getTotalUsers(),
+        ]);
+        setStats({
+          daily: statRes.daily,
+          monthly: statRes.monthly,
+          global: statRes.global,
+          users: usersRes.totalUsers,
+        });
+      } catch (err) {
+        console.error('Erreur lors de la récupération des stats', err);
+      }
+    }
+
+    fetchStats();
+  }, []);
   const getTimeAgo = (date: Date) => {
     const diff = Date.now() - date.getTime();
     const hours = Math.floor(diff / (1000 * 60 * 60));
@@ -53,10 +78,27 @@ export default function AdminDashboard() {
     <div className="space-y-12">
       <NavDashboard />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <AdminCard icon={<Eye />} label="Visiteurs aujourd'hui" value="6" />
-        <AdminCard icon={<TrendingUp />} label="Total visiteurs" value="45" />
-        <AdminCard icon={<Users />} label="Bénéficiaires inscrits" value="9" />
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <AdminCard
+          icon={<Eye />}
+          label="Visiteurs aujourd'hui"
+          value={stats.daily}
+        />
+        <AdminCard
+          icon={<TrendingUp />}
+          label="Visiteurs ce mois"
+          value={stats.monthly}
+        />
+        <AdminCard
+          icon={<TrendingUp />}
+          label="Total visiteurs"
+          value={stats.global}
+        />
+        <AdminCard
+          icon={<Users />}
+          label="Bénéficiaires inscrits"
+          value={stats.users}
+        />
       </div>
 
       <div>
