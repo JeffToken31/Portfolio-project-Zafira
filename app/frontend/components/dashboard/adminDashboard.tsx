@@ -6,6 +6,9 @@ import AdminActivityCard from './admin-activity-card';
 import NavDashboard from '@/components/uiStyled/nav-dashboard';
 import {Eye, TrendingUp, Users, MessageSquare, FileText} from 'lucide-react';
 import {getStats, getTotalUsers} from '@/lib/api/stats';
+import {getRecentActivities, ActivityDto} from '@/lib/api/activity';
+import {Button} from '@/components/uiStyled/button';
+
 
 export default function AdminDashboard() {
   const [activities, setActivities] = useState<any[]>([]);
@@ -15,40 +18,60 @@ export default function AdminDashboard() {
     global: 0,
     users: 0,
   });
-
+const [limit, setLimit] = useState(3); 
   useEffect(() => {
-    const now = new Date();
-
-    const fakeActivities = [
-      {
-        id: 1,
-        icon: <Users />,
-        type: 'Bénéficiaire',
-        firstName: 'Alice',
-        lastName: 'Dupont',
-        time: new Date(now.getTime() - 2 * 60 * 60 * 1000),
-      },
-      {
-        id: 2,
-        icon: <MessageSquare />,
-        type: 'Témoignage',
-        firstName: 'Jean',
-        lastName: 'Martin',
-        time: new Date(now.getTime() - 3 * 60 * 60 * 1000),
-      },
-      {
-        id: 3,
-        icon: <FileText />,
-        type: 'Blog',
-        title: "L'impact de notre association",
-        time: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000),
-      },
-    ];
-
-    setActivities(fakeActivities);
-
-    async function fetchStats() {
+    async function fetchDashboardData() {
       try {
+        // Récupérer les 3 dernières activités
+        const recentActivities: ActivityDto[] = await getRecentActivities(limit);
+
+        const mappedActivities = recentActivities.map((act) => {
+          let icon, typeLabel, description;
+
+          switch (act.type) {
+            case 'USER_REGISTERED':
+              icon = <Users />;
+              typeLabel = 'Bénéficiaire';
+              description = act.title;
+              break;
+            case 'TESTIMONIAL_SUBMITTED':
+              icon = <MessageSquare />;
+              typeLabel = 'Témoignage';
+              description = act.title;
+              break;
+            case 'BLOG_PUBLISHED':
+              icon = <FileText />;
+              typeLabel = 'Blog';
+              description = act.title;
+              break;
+            case 'PARTNER_ADDED':
+              icon = <Users />;
+              typeLabel = 'Partenaire';
+              description = act.title;
+              break;
+            case 'ACTION_PUBLISHED':
+              icon = <TrendingUp />;
+              typeLabel = 'Action';
+              description = act.title;
+              break;
+            default:
+              icon = <FileText />;
+              typeLabel = 'Autre';
+              description = act.title ?? 'Nouvelle activité';
+          }
+
+          return {
+            id: act.id,
+            icon,
+            type: typeLabel,
+            description,
+            time: new Date(act.createdAt),
+          };
+        });
+
+        setActivities(mappedActivities);
+
+        // Fetch stats
         const [statRes, usersRes] = await Promise.all([
           getStats(),
           getTotalUsers(),
@@ -60,12 +83,16 @@ export default function AdminDashboard() {
           users: usersRes.totalUsers,
         });
       } catch (err) {
-        console.error('Erreur lors de la récupération des stats', err);
+        console.error(
+          'Erreur lors de la récupération des données du dashboard',
+          err
+        );
       }
     }
 
-    fetchStats();
-  }, []);
+    fetchDashboardData();
+  }, [limit]);
+
   const getTimeAgo = (date: Date) => {
     const diff = Date.now() - date.getTime();
     const hours = Math.floor(diff / (1000 * 60 * 60));
@@ -108,16 +135,21 @@ export default function AdminDashboard() {
             <AdminActivityCard
               key={activity.id}
               icon={activity.icon}
-              description={
-                activity.type === 'Bénéficiaire'
-                  ? `Nouveau bénéficiaire inscrit : ${activity.firstName} ${activity.lastName[0]}.`
-                  : activity.type === 'Témoignage'
-                  ? `Nouveau témoignage soumis par : ${activity.firstName} ${activity.lastName[0]}.`
-                  : `Article de blog publié : "${activity.title}"`
-              }
+              description={activity.description}
               timeAgo={getTimeAgo(activity.time)}
             />
           ))}
+        </div>
+        <div className="mt-4 text-center">
+          {limit === 3 ? (
+            <Button variant="bleu" size="lg" onClick={() => setLimit(100)}>
+              Voir tout
+            </Button>
+          ) : (
+            <Button variant="bleu" size="lg" onClick={() => setLimit(3)}>
+              Réduire
+            </Button>
+          )}
         </div>
       </div>
     </div>
