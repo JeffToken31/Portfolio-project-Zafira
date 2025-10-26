@@ -157,7 +157,7 @@ model DailyVisit {
 
 model MonthlyVisit {
   id        Int      @id @default(autoincrement())
-  month     String   @unique // exemple: "2025-10"
+  month     String   @unique
   total     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -166,4 +166,20 @@ model MonthlyVisit {
 model Stats {
   id            Int @id @default(1)
   totalVisitors Int @default(0)
+}
+
+model Activity {
+  id          String   @id @default(uuid())
+  type        ActivityType
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+enum ActivityType {
+  USER_REGISTERED
+  TESTIMONIAL_SUBMITTED
+  BLOG_PUBLISHED
+  PARTNER_ADDED
+  ACTION_PUBLISHED
 }

@@ -1,12 +1,15 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import type { IActionRepository } from '../domain/Iaction.repository';
 import { Action } from '../domain/action.entity';
+import { ActivityService } from '../../activity/app/activity.service';
+import { ActivityType } from '@prisma/client';
 
 @Injectable()
 export class ActionService {
   constructor(
     @Inject('IActionRepository')
     private readonly actionRepo: IActionRepository,
+    private readonly activityService: ActivityService,
   ) {}
 
   // Get by id
@@ -24,7 +27,15 @@ export class ActionService {
   }
 
   async create(action: Action): Promise<Action> {
-    return this.actionRepo.create(action);
+    const created = await this.actionRepo.create(action);
+
+    // record activity
+    await this.activityService.recordActivity(
+      ActivityType.ACTION_PUBLISHED,
+      `Nouvelle prestation publié : ${created.title}`,
+    );
+
+    return created;
   }
 
   async update(action: Action): Promise<Action> {

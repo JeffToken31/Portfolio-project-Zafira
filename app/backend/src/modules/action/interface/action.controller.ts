@@ -40,9 +40,9 @@ export class ActionController {
 
   // CREATE
   @Post()
-  // @ApiBearerAuth()
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new action' })
   @ApiResponse({ status: 201, description: 'Action successfully created.' })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
@@ -61,9 +61,9 @@ export class ActionController {
 
   // UPDATE (PUT)
   @Put(':id')
-  //@ApiBearerAuth()
-  //@UseGuards(JwtAuthGuard, RolesGuard)
-  //@Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @ApiOperation({ summary: 'Fully update an action' })
   @ApiResponse({ status: 200, description: 'Action successfully updated.' })
   @ApiResponse({ status: 404, description: 'Action not found.' })
@@ -86,9 +86,9 @@ export class ActionController {
 
   // PATCH (PARTIAL UPDATE)
   @Patch(':id')
-  //@ApiBearerAuth()
-  //@UseGuards(JwtAuthGuard, RolesGuard)
-  //@Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @ApiOperation({ summary: 'Partially update an action' })
   @ApiResponse({ status: 200, description: 'Action partially updated.' })
   @ApiResponse({ status: 404, description: 'Action not found.' })
@@ -111,9 +111,9 @@ export class ActionController {
 
   // DELETE
   @Delete(':id')
-  //@ApiBearerAuth()
-  //@UseGuards(JwtAuthGuard, RolesGuard)
-  //@Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Delete an action by ID' })
   @ApiResponse({ status: 200, description: 'Action deleted.' })

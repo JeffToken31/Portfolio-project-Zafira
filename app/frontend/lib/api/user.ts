@@ -56,27 +56,12 @@ export async function deleteUser(id: string) {
   return res.json();
 }
 
-// CREATE user mayby later useful...
-export async function createUser(dto: CreateUserDto): Promise<UserDto> {
-  const res = await fetch(`${API_BASE}/user`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    credentials: 'include',
-    body: JSON.stringify(dto),
-  });
-  if (!res.ok) {
-    const error = await res.json().catch(() => ({}));
-    throw new Error(
-      error.message || 'Erreur lors de la création de l’utilisateur'
-    );
-  }
-  return res.json();
-}
-
 // PATCH/PUT user
 export async function updateUser(
   id: string,
-  dto: Partial<Pick<UserDto, 'firstName' | 'lastName' | 'email'>>
+  dto: Partial<Pick<UserDto, 'firstName' | 'lastName' | 'email'>> & {
+    password?: string;
+  }
 ): Promise<UserDto> {
   const res = await fetch(`${API_BASE}/user/${id}`, {
     method: 'PUT',

@@ -18,7 +18,7 @@ const NavDashboard: React.FC = () => {
   ];
 
   return (
-    <nav className="flex justify-around px-6 w-full text-[var(--color-primary)] font-semibold">
+    <nav className="flex justify-around pb-6 w-full text-[var(--color-primary)] font-semibold">
       {links.map((item) => {
         const isActive = pathname === item.href;
         return (

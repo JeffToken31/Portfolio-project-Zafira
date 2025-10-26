@@ -5,7 +5,8 @@ import { AuthRepository } from '../infra/auth.repository';
 import { MailService } from './mail.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
-import { User } from '@prisma/client';
+import { User, ActivityType } from '@prisma/client';
+import { ActivityService } from '../../activity/app/activity.service';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
     private readonly authRepo: AuthRepository,
     private readonly mailService: MailService,
     private readonly jwtService: JwtService,
+    private readonly activityService: ActivityService,
   ) {}
 
   // Suscrib and send verification email
@@ -42,6 +44,12 @@ export class AuthService {
     // Send mail
     await this.mailService.sendVerificationEmail(email, tokenRow.token);
     console.log('sendVerification called');
+
+    // activity record
+    await this.activityService.recordActivity(
+      ActivityType.USER_REGISTERED,
+      `Nouvel utilisateur inscrit : ${user.firstName}`,
+    );
 
     return { message: 'User created. Verification email sent.' };
   }
@@ -103,7 +111,10 @@ export class AuthService {
       googleSub,
       googleAvatarUrl,
     });
-
+    await this.activityService.recordActivity(
+      ActivityType.USER_REGISTERED,
+      `Nouvel utilisateur inscrit via Google : ${user.email}`,
+    );
     return user;
   }
 

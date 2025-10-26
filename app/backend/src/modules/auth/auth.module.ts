@@ -8,6 +8,7 @@ import { UserModule } from '../user/user.module';
 import { PrismaService } from '../../prisma/prisma.service';
 import { GoogleStrategy } from './infra/strategy/google.strategy';
 import { JwtStrategy } from './infra/strategy/jwt.strategy';
+import { ActivityModule } from '../activity/activity.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { JwtStrategy } from './infra/strategy/jwt.strategy';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: process.env.JWT_EXPIRES_IN ?? '7d' },
     }),
+    ActivityModule,
   ],
   controllers: [AuthController],
   providers: [

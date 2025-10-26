@@ -11,6 +11,7 @@ import { TestimonialModule } from './modules/testimonial/testimonial.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { ManualStatsModule } from './modules/manualStats/manualStats.module';
 import { StatsModule } from './modules/stats/stats.module';
+import { ActivityModule } from './modules/activity/activity.module';
 @Module({
   imports: [
     PrismaModule,
@@ -23,6 +24,7 @@ import { StatsModule } from './modules/stats/stats.module';
     UploadModule,
     ManualStatsModule,
     StatsModule,
+    ActivityModule,
   ],
   controllers: [AppController],
   providers: [AppService],

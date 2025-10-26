@@ -1,12 +1,15 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import type { IPartnerRepository } from '../domain/Ipartner.repository';
 import { Partner } from '../domain/partner.entity';
+import { ActivityService } from '../../activity/app/activity.service';
+import { ActivityType } from '@prisma/client';
 
 @Injectable()
 export class PartnerService {
   constructor(
     @Inject('IPartnerRepository')
     private readonly partnerRepo: IPartnerRepository,
+    private readonly activityService: ActivityService,
   ) {}
 
   // Get one Partner by ID
@@ -24,9 +27,16 @@ export class PartnerService {
 
   // Create a new Partner
   async create(partner: Partner): Promise<Partner> {
-    return this.partnerRepo.create(partner);
-  }
+    const created = await this.partnerRepo.create(partner);
 
+    // Record activity
+    await this.activityService.recordActivity(
+      ActivityType.PARTNER_ADDED,
+      `Nouveau partenire : ${created.companyName}`,
+    );
+
+    return created;
+  }
   // Update an existing Partner
   async update(partner: Partner): Promise<Partner> {
     const existing = await this.partnerRepo.findById(partner.id);

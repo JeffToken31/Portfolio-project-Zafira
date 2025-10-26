@@ -10,7 +10,7 @@ export default function ActionSection() {
       <ActionSectionCarousel limit={5} />
 
       {/* Bouton vers toutes les actions */}
-      <div className="p-2">
+      <div className="p-8">
         <ActionSectionButton href="/actions">
           Toutes nos prestations
         </ActionSectionButton>
