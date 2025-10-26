@@ -10,23 +10,23 @@ import {
   BadRequestException,
   HttpCode,
   HttpStatus,
-  //UseGuards,
+  UseGuards,
   Inject,
 } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
   ApiResponse,
-  //ApiBearerAuth,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { PartnerService } from '../app/partner.service';
 import { CreatePartnerDto } from './dto/register-partner.dto';
 import { UpdatePartnerDto } from './dto/update-partner.dto';
 import { PartnerDtoMapper } from './dto/partner-dto.mapper';
 import { Partner } from '../domain/partner.entity';
-//import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
-//import { RolesGuard } from '../../../common/guards/roles.guard';
-//import { Roles } from '../../../common/decorators/roles.decorator';
+import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../../common/guards/roles.guard';
+import { Roles } from '../../../common/decorators/roles.decorator';
 
 @ApiTags('partners')
 @Controller('partners')
@@ -38,9 +38,9 @@ export class PartnerController {
 
   // CREATE
   @Post()
-  //@ApiBearerAuth()
-  //@UseGuards(JwtAuthGuard, RolesGuard)
-  //@Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @ApiOperation({ summary: 'Create a new partner' })
   @ApiResponse({ status: 201, description: 'Partner successfully created.' })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
@@ -59,9 +59,9 @@ export class PartnerController {
 
   // UPDATE (PUT)
   @Put(':id')
-  //@ApiBearerAuth()
-  //@UseGuards(JwtAuthGuard, RolesGuard)
-  //@Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @ApiOperation({ summary: 'Fully update a partner' })
   @ApiResponse({ status: 200, description: 'Partner successfully updated.' })
   @ApiResponse({ status: 404, description: 'Partner not found.' })
@@ -85,9 +85,9 @@ export class PartnerController {
 
   // PARTIAL UPDATE (PATCH)
   @Patch(':id')
-  //@ApiBearerAuth()
-  //@UseGuards(JwtAuthGuard, RolesGuard)
-  //@Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @ApiOperation({ summary: 'Partially update a partner' })
   @ApiResponse({ status: 200, description: 'Partner partially updated.' })
   @ApiResponse({ status: 404, description: 'Partner not found.' })
@@ -111,9 +111,9 @@ export class PartnerController {
 
   // DELETE
   @Delete(':id')
-  //@ApiBearerAuth()
-  //@UseGuards(JwtAuthGuard, RolesGuard)
-  //@Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a partner' })
   @ApiResponse({ status: 204, description: 'Partner deleted successfully.' })

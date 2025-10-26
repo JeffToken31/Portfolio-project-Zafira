@@ -14,8 +14,8 @@ import { UserService } from '../app/user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
-// import { Roles } from '../../../common/decorators/roles.decorator';
-// import { RolesGuard } from '../../../common/guards/roles.guard';
+import { Roles } from '../../../common/decorators/roles.decorator';
+import { RolesGuard } from '../../../common/guards/roles.guard';
 import type { Request } from 'express';
 
 interface JwtUser {
@@ -74,9 +74,9 @@ export class UserController {
   // Get all users
   @Get()
   @ApiOperation({ summary: 'Get all users' })
-  // @ApiBearerAuth()
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   async findAll() {
     const users = await this.userService.findAllUsers();
     return users.map((u) => u.toJSON());
@@ -109,9 +109,9 @@ export class UserController {
   // Delete user
   @Delete(':id')
   @ApiOperation({ summary: 'Delete user (temporary open for dev)' })
-  // @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard) // , RolesGuard)
-  // @Roles('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   async delete(@Param('id') id: string) {
     await this.userService.deleteUser(id);
     return { message: `Utilisateur ${id} supprimé` };
