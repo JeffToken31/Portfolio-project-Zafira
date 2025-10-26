@@ -46,6 +46,41 @@ export class AuthRepository {
     googleSub: string;
     googleAvatarUrl?: string;
   }): Promise<User> {
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: data.email },
+      include: { credentials: { include: { google: true } } },
+    });
+
+    if (existingUser) {
+      let credential = existingUser.credentials[0];
+      if (!credential) {
+        credential = await this.prisma.credential.create({
+          data: { userId: existingUser.id },
+          include: { google: true },
+        });
+      }
+
+      await this.prisma.googleCredential.upsert({
+        where: { googleSub: data.googleSub },
+        update: {
+          googleEmail: data.email,
+          googleFirstName: data.firstName,
+          googleLastName: data.lastName,
+          googleAvatarUrl: data.googleAvatarUrl,
+        },
+        create: {
+          googleSub: data.googleSub,
+          googleEmail: data.email,
+          googleFirstName: data.firstName,
+          googleLastName: data.lastName,
+          googleAvatarUrl: data.googleAvatarUrl,
+          credentialId: credential.id,
+        },
+      });
+
+      return UserMapper.toDomain(existingUser);
+    }
+
     const created = await this.prisma.user.create({
       data: {
         email: data.email,
