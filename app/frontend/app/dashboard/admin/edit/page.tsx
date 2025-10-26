@@ -1,10 +1,12 @@
 'use client';
 
 import {useState, useEffect} from 'react';
-import {Mail, Save, Trash2, Lock} from 'lucide-react';
-import {fetchUser, logout} from '@/lib/api/auth';
-import {getUserById, updateUser, deleteUser, UserDto} from '@/lib/api/user';
+import {Mail, Save, Lock} from 'lucide-react';
+import {fetchUser} from '@/lib/api/auth';
+import {getUserById, updateUser, UserDto} from '@/lib/api/user';
 import toast from 'react-hot-toast';
+import NavDashboard from '@/components/uiStyled/nav-dashboard';
+
 
 export default function EditProfilBeneficiaire() {
   const [user, setUser] = useState<UserDto | null>(null);
@@ -74,41 +76,23 @@ export default function EditProfilBeneficiaire() {
     }
   };
 
-  const handleDeleteAccount = async () => {
-    if (!user) return;
-    if (
-      !confirm(
-        'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.'
-      )
-    )
-      return;
-
-    try {
-      await deleteUser(user.id);
-      await logout();
-      toast.success('Compte supprimé avec succès');
-      window.location.href = '/';
-    } catch (err: unknown) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : 'Erreur lors de la suppression du compte';
-      toast.error(message);
-    }
-  };
-
   if (loading)
     return <div className="p-8 text-center">Chargement du profil...</div>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
   if (!user) return null;
 
   return (
-    <section className="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow-md">
-      <h2 className="text-2xl font-bold text-text mb-6 text-center">
+    <section className="min-h-screen p-6 bg-gray-50">
+      <NavDashboard />
+
+      <h2 className="text-2xl p-8 font-bold text-text m-10 text-center">
         Modifier mon profil
       </h2>
 
-      <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+      <form
+        className="max-w-2xl flex flex-col mx-auto gap-8"
+        onSubmit={handleSubmit}
+      >
         {/* First name */}
         <div className="flex items-center gap-3">
           <Save className="w-5 h-5 text-[var(--color-primary)]" />
@@ -174,24 +158,13 @@ export default function EditProfilBeneficiaire() {
         </div>
 
         {/* Button */}
-        <div className="flex gap-4 mt-4 flex-col md:flex-row">
-          <button
-            type="submit"
-            disabled={saving}
-            className="bg-[var(--color-accent)] text-black py-3 rounded-full hover:text-red-600 hover:bg-yellow-200 transition flex-1"
-          >
-            {saving ? 'Enregistrement...' : 'Enregistrer les modifications'}
-          </button>
-
-          <button
-            type="button"
-            onClick={handleDeleteAccount}
-            className="bg-red-500 text-white py-3 rounded-full hover:bg-red-600 hover:text-accent transition flex-1 flex items-center justify-center gap-2"
-          >
-            <Trash2 className="w-5 h-5" /> Supprimer mon compte
-          </button>
-        </div>
-
+        <button
+          type="submit"
+          disabled={saving}
+          className="bg-[var(--color-accent)] text-black py-3 rounded-full hover:text-red-600 hover:bg-yellow-200 transition flex-1"
+        >
+          {saving ? 'Enregistrement...' : 'Enregistrer les modifications'}
+        </button>
         {/* Success message */}
         {successMessage && (
           <p className="text-green-600 mt-4 text-center font-medium">
