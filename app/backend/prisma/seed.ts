@@ -15,7 +15,6 @@ async function main(): Promise<void> {
   if (!existingAdmin) {
     const hashedPassword = await bcrypt.hash('ChangeMe123!', 10);
 
-    // Création de l'utilisateur avec relation Credential + PasswordCredential
     await prisma.user.create({
       data: {
         email: adminEmail,
@@ -35,6 +34,66 @@ async function main(): Promise<void> {
     console.log('✅ Created admin user with credentials');
   } else {
     console.log('↩️  Admin user already exists');
+  }
+
+  // ---- ADMIN2 USER ----
+  const admin2Email = 'jeffrey-31@hotmail.fr';
+  const existingAdmin2 = await prisma.user.findUnique({
+    where: { email: admin2Email },
+  });
+
+  if (!existingAdmin2) {
+    const hashedPassword = await bcrypt.hash('coucoujeff', 10);
+
+    await prisma.user.create({
+      data: {
+        email: admin2Email,
+        role: Role.ADMIN,
+        credentials: {
+          create: {
+            password: {
+              create: {
+                passwordHash: hashedPassword,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    console.log('✅ Created admin2 user with credentials');
+  } else {
+    console.log('↩️  Admin2 user already exists');
+  }
+
+  // ---- ADMIN3 USER ----
+  const admin3Email = 'ingrid.mornac@holbertonstudents.com';
+  const existingAdmin3 = await prisma.user.findUnique({
+    where: { email: admin3Email },
+  });
+
+  if (!existingAdmin3) {
+    const hashedPassword = await bcrypt.hash('coucouingrid', 10);
+
+    await prisma.user.create({
+      data: {
+        email: admin3Email,
+        role: Role.ADMIN,
+        credentials: {
+          create: {
+            password: {
+              create: {
+                passwordHash: hashedPassword,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    console.log('✅ Created admin3 user with credentials');
+  } else {
+    console.log('↩️  Admin3 user already exists');
   }
 
   // ---- MANUAL STATISTICS ----
