@@ -78,18 +78,18 @@ export default function ActionSectionCarousel({
                 key={action.id}
                 className="flex-shrink-0 w-full sm:w-80"
               >
-                <div className="p-4">
-                  <Card className="bg-[var(--color-surface)] shadow-md rounded-2xl overflow-hidden">
+                <div>
+                  <Card className="bg-bg shadow-md rounded-2xl overflow-hidden">
                     {action.imageUrl && (
                       <Image
                         src={action.imageUrl}
                         alt={action.title || 'Action'}
-                        width={800} // largeur max desktop
-                        height={450} // ratio 16:9
-                        className="w-full h-auto object-contain md:object-cover rounded-2xl"
+                        width={800}
+                        height={450}
+                        className="w-full md:object-cover rounded-2xl"
                       />
                     )}
-                    <CardContent className="p-6">
+                    <CardContent className="p-8">
                       <h3 className="text-xl font-semibold text-[var(--color-text)] mb-2">
                         {action.title}
                       </h3>
@@ -106,8 +106,8 @@ export default function ActionSectionCarousel({
             ))}
           </CarouselContent>
 
-          <CarouselPrevious className="text-[var(--color-primary)]" />
-          <CarouselNext className="text-[var(--color-primary)]" />
+          <CarouselPrevious className="text-text" />
+          <CarouselNext className="text-text" />
         </Carousel>
       </div>
     </section>
