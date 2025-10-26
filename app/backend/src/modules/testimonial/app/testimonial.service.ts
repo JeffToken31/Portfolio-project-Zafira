@@ -3,17 +3,20 @@ import type { ITestimonialRepository } from '../domain/Itestimonial.repository';
 import { Testimonial } from '../domain/testimonial.entity';
 import { CreateTestimonialDto } from '../interface/dto/create-testimonial.dto';
 import { TestimonialDtoMapper } from '../interface/dto/testimonial-dto.mapper';
-import { UserService } from '../../user/app/user.service'; // supposons que tu as un service utilisateur
+import { UserService } from '../../user/app/user.service';
+import { ActivityService } from '../../activity/app/activity.service';
+import { ActivityType } from '@prisma/client';
 
 @Injectable()
 export class TestimonialService {
   constructor(
     @Inject('ITestimonialRepository')
     private readonly testimonialRepo: ITestimonialRepository,
-    private readonly userService: UserService, // pour récupérer le nom de l'utilisateur
+    private readonly userService: UserService,
+    private readonly activityService: ActivityService,
   ) {}
 
-  // --- Get by ID ---
+  // Get by ID
   async getById(id: string): Promise<Testimonial> {
     const testimonial = await this.testimonialRepo.findById(id);
     if (!testimonial)
@@ -21,7 +24,7 @@ export class TestimonialService {
     return testimonial;
   }
 
-  // --- Get all ---
+  // Get all
   async getAll(params?: {
     limit?: number;
     published?: boolean;
@@ -42,11 +45,18 @@ export class TestimonialService {
       authorName,
       userId,
     );
+    const created = await this.testimonialRepo.create(testimonial);
 
-    return this.testimonialRepo.create(testimonial);
+    // activity record
+    await this.activityService.recordActivity(
+      ActivityType.TESTIMONIAL_SUBMITTED,
+      `Nouvel article publié : ${created.authorName}`,
+    );
+
+    return created;
   }
 
-  // --- Update ---
+  // Update
   async update(testimonial: Testimonial): Promise<Testimonial> {
     const existing = await this.testimonialRepo.findById(testimonial.id);
     if (!existing) {
@@ -55,7 +65,7 @@ export class TestimonialService {
     return this.testimonialRepo.update(testimonial);
   }
 
-  // --- Delete ---
+  // Delete
   async delete(id: string): Promise<void> {
     const existing = await this.testimonialRepo.findById(id);
     if (!existing) {
@@ -64,7 +74,7 @@ export class TestimonialService {
     return this.testimonialRepo.delete(id);
   }
 
-  // --- Publish ---
+  // Publish
   async publish(id: string): Promise<Testimonial> {
     const testimonial = await this.testimonialRepo.findById(id);
     if (!testimonial) {
@@ -73,7 +83,7 @@ export class TestimonialService {
     return this.testimonialRepo.publish(testimonial);
   }
 
-  // --- Unpublish ---
+  // Unpublish
   async unpublish(id: string): Promise<Testimonial> {
     const testimonial = await this.testimonialRepo.findById(id);
     if (!testimonial) {
@@ -82,7 +92,7 @@ export class TestimonialService {
     return this.testimonialRepo.unpublish(testimonial);
   }
 
-  // --- Validate ---
+  // Validate
   async validate(id: string): Promise<Testimonial> {
     const testimonial = await this.testimonialRepo.findById(id);
     if (!testimonial) {
@@ -91,7 +101,7 @@ export class TestimonialService {
     return this.testimonialRepo.validate(testimonial);
   }
 
-  // --- Unvalidate ---
+  // Unvalidate
   async unvalidate(id: string): Promise<Testimonial> {
     const testimonial = await this.testimonialRepo.findById(id);
     if (!testimonial) {
