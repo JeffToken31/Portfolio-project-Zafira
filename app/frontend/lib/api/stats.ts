@@ -10,7 +10,6 @@ export interface MonthlyVisitDto {
   month: string;
   total: number;
 }
-
 export interface GlobalStatsDto {
   id: number;
   totalVisitors: number;
@@ -22,8 +21,8 @@ export interface UsersCountDto {
 
 export function getApiBase(ssr = false) {
   return ssr
-    ? process.env.API_BASE_SSR || 'http://backend:3001'
-    : process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+    ? process.env.API_BASE_SSR
+    : process.env.NEXT_PUBLIC_API_BASE;
 }
 
 export async function getCurrentMonthVisits(

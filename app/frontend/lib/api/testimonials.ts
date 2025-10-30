@@ -1,5 +1,3 @@
-// lib/api/testimonial.ts
-
 // ----------------------------
 // DTOs (Data Transfer Objects)
 // ----------------------------
@@ -107,6 +105,21 @@ export async function getTestimonialById(
   if (!res.ok) throw new Error('Témoignage non trouvé');
   return res.json();
 }
+
+// ----------------------------
+// GET Testimonials of the logged-in beneficiary
+// ----------------------------
+export async function getMyTestimonials(ssr = false): Promise<TestimonialDto[]> {
+  const res = await fetch(`${getApiBase(ssr)}/testimonials/my`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!res.ok)
+    throw new Error('Erreur lors de la récupération de vos témoignages');
+  return res.json();
+}
+
 
 // ----------------------------
 // PATCH (mise à jour partielle)

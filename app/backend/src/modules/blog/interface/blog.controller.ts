@@ -52,6 +52,16 @@ export class BlogController {
     return blogs.map((blog) => blog.toJSON());
   }
 
+  @Get('public')
+  @ApiOperation({ summary: 'Get published blogs (for public website)' })
+  @ApiResponse({ status: 200, description: 'List of published blogs.' })
+  async findPublished(
+    @Query('limit') limit = 10,
+  ): Promise<Record<string, unknown>[]> {
+    const blogs = await this.blogService.getPublishedLatest(Number(limit));
+    return blogs.map((blog) => blog.toJSON());
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get a blog by ID' })
   @ApiResponse({ status: 200, description: 'The blog object.' })

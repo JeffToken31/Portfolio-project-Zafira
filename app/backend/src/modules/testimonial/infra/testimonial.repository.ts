@@ -18,6 +18,15 @@ export class TestimonialRepository implements ITestimonialRepository {
     return raw ? this.mapPrismaToDomain(raw) : null;
   }
 
+  async findByBeneficiaryId(beneficiaryId: string): Promise<Testimonial[]> {
+    const raws = await this.prisma.testimonial.findMany({
+      where: { beneficiaryId },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return raws.map((raw) => this.mapPrismaToDomain(raw));
+  }
+
   async findAll(params?: {
     limit?: number;
     published?: boolean;

@@ -29,6 +29,10 @@ export class BlogService {
     return this.blogRepo.findLatest(limit);
   }
 
+  async getPublishedLatest(limit: number): Promise<Blog[]> {
+    return this.blogRepo.findLatest(limit, true);
+  }
+
   async create(blog: Blog): Promise<Blog> {
     const created = await this.blogRepo.create(blog);
 
@@ -46,7 +50,7 @@ export class BlogService {
     if (!blog) throw new NotFoundException(`Blog ${id} not found`);
 
     if (dto.title) blog.updateTitle(dto.title);
-    if (dto.content) blog.updateContent(dto.content); // 🧠 Régénère excerpt
+    if (dto.content) blog.updateContent(dto.content);
     if (dto.coverImageUrl) blog.setCoverImage(dto.coverImageUrl);
     if (dto.mediaUrl && dto.mediaType) {
       if (!Object.values(MediaType).includes(dto.mediaType)) {

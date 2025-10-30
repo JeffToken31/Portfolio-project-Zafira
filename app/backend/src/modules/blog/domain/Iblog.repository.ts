@@ -4,7 +4,7 @@ export interface IBlogRepository {
   // CRUD operations
   findById(id: string): Promise<Blog | null>;
   findBySlug(slug: string): Promise<Blog | null>;
-  findLatest(limit: number): Promise<Blog[]>;
+  findLatest(limit: number, onlyPublished?: boolean): Promise<Blog[]>;
 
   create(blog: Blog): Promise<Blog>;
 

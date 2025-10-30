@@ -27,7 +27,6 @@ export class RolesGuard implements CanActivate {
 
     if (!requiredRoles) return true;
 
-    // 🔹 Si c’est une string, on la transforme en tableau
     if (typeof requiredRoles === 'string') {
       requiredRoles = [requiredRoles];
     }
@@ -36,7 +35,6 @@ export class RolesGuard implements CanActivate {
     const user = req.user;
     if (!user) return false;
 
-    // 🔹 Comparaison insensible à la casse
     if (
       !requiredRoles
         .map((r) => r.toLowerCase())

@@ -157,6 +157,33 @@ export class TestimonialController {
     }
   }
 
+  // GET testimonials of the connected beneficiary
+  @Get('my')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('beneficiary')
+  @ApiOperation({
+    summary: 'Get all testimonials of the logged-in beneficiary',
+  })
+  @ApiResponse({ status: 200, description: 'List of testimonials by user.' })
+  async findMyTestimonials(
+    @Req() req: { user: JwtUser },
+  ): Promise<Record<string, unknown>[]> {
+    try {
+      const userId = req.user.id;
+      const testimonials =
+        await this.testimonialService.getByBeneficiaryId(userId);
+      return testimonials.map((t) => t.toJSON());
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new BadRequestException(error.message);
+      }
+      throw new BadRequestException(
+        'Unknown error while fetching user testimonials',
+      );
+    }
+  }
+
   // GET ONE BY ID
   @Get(':id')
   @ApiOperation({ summary: 'Get a testimonial by ID' })

@@ -14,4 +14,5 @@ export interface ITestimonialRepository {
   unpublish(testimonial: Testimonial): Promise<Testimonial>;
   validate(testimonial: Testimonial): Promise<Testimonial>;
   unvalidate(testimonial: Testimonial): Promise<Testimonial>;
+  findByBeneficiaryId(beneficiaryId: string): Promise<Testimonial[]>;
 }

@@ -10,7 +10,7 @@ import {
   Pen,
 } from 'lucide-react';
 import Link from 'next/link';
-import {getTestimonials, TestimonialDto} from '@/lib/api/testimonials';
+import {getMyTestimonials, TestimonialDto} from '@/lib/api/testimonials';
 import {getUserById, UserDto} from '@/lib/api/user';
 import {fetchUser, logout} from '@/lib/api/auth';
 
@@ -35,7 +35,7 @@ export default function BeneficiaireDashboard() {
         const userData = await getUserById(me.id);
         setUser(userData);
 
-        const temoignagesData = await getTestimonials();
+        const temoignagesData = await getMyTestimonials();
         setTemoignages(temoignagesData);
       } catch (err: unknown) {
         console.error('❌ Erreur fetchData:', err);
