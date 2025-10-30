@@ -36,13 +36,11 @@ export async function loginWithGoogle() {
 export async function fetchUser() {
   const res = await fetch('http://localhost:3001/auth/me', {
     method: 'GET',
-    credentials: 'include', // essentiel pour envoyer le cookie
+    credentials: 'include',
   });
 
   if (!res.ok) {
-    const text = await res.text();
-    console.error('❌ fetchUser failed:', res.status, text);
-    throw new Error('User fetch failed');
+    return
   }
 
   const data = await res.json();

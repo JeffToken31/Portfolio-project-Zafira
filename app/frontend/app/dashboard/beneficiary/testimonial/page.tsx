@@ -3,6 +3,7 @@
 import {useEffect, useState} from 'react';
 import {
   createTestimonial,
+  getMyTestimonials,
   getTestimonials,
   TestimonialDto,
 } from '@/lib/api/testimonials';
@@ -21,7 +22,7 @@ export default function TemoignagePage() {
       setLoading(true);
       setError(null);
       try {
-        const data = await getTestimonials();
+        const data = await getMyTestimonials();
         setTemoignages(data);
       } catch (err: unknown) {
         setError(err instanceof Error ? err.message : 'Erreur inconnue');

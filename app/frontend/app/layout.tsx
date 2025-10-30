@@ -1,4 +1,5 @@
 'use client';
+
 import './globals.css';
 import {ReactNode, useEffect} from 'react';
 import Footer from '@/components/layout/Footer';

@@ -24,6 +24,10 @@ export class TestimonialService {
     return testimonial;
   }
 
+  async getByBeneficiaryId(beneficiaryId: string): Promise<Testimonial[]> {
+    return this.testimonialRepo.findByBeneficiaryId(beneficiaryId);
+  }
+
   // Get all
   async getAll(params?: {
     limit?: number;

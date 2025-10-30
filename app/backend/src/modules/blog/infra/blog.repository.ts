@@ -23,8 +23,9 @@ export class BlogRepository implements IBlogRepository {
     return raw ? this.mapPrismaToDomain(raw) : null;
   }
 
-  async findLatest(limit: number): Promise<Blog[]> {
+  async findLatest(limit: number, onlyPublished = false): Promise<Blog[]> {
     const raws = await this.prisma.blog.findMany({
+      where: onlyPublished ? { published: true } : {},
       orderBy: { publishedAt: 'desc' },
       take: limit,
     });

@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from 'react';
 import BlogSectionCard from '../uiStyled/blog-section-card';
 import {Button} from '@/components/uiStyled/button';
-import {getBlogs, BlogDto} from '@/lib/api/blog';
+import {getPublishedBlogs, BlogDto} from '@/lib/api/blog';
 
 export default function BlogSection() {
   const [blogs, setBlogs] = useState<BlogDto[]>([]);
@@ -13,12 +13,11 @@ export default function BlogSection() {
   useEffect(() => {
     async function fetchBlogs() {
       try {
-        // 👇 Appel avec limit=3
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE}/blogs?limit=3`
         );
         if (!res.ok) throw new Error('Erreur de récupération des articles');
-        const data = await getBlogs(false); // côté client
+        const data = await getPublishedBlogs(false);
         setBlogs(data.slice(0, 3));
       } catch (err) {
         console.error('Erreur de chargement des blogs :', err);
@@ -40,13 +39,13 @@ export default function BlogSection() {
           nous partageons.
         </p>
 
-        {/* 🌀 Loader */}
+        {/* Loader */}
         {loading && <p className="text-gray-500">Chargement des articles...</p>}
 
-        {/* ⚠️ Erreur */}
+        {/* Erreur */}
         {error && <p className="text-red-500">{error}</p>}
 
-        {/* 📚 Liste des articles */}
+        {/* Blog list */}
         {!loading &&
           !error &&
           (blogs.length > 0 ? (

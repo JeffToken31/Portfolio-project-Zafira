@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from 'react';
 import BlogSectionCard from '@/components/uiStyled/blog-section-card';
-import {getBlogs, BlogDto} from '@/lib/api/blog';
+import {getPublishedBlogs, BlogDto} from '@/lib/api/blog';
 
 export default function BlogPage() {
   const [blogs, setBlogs] = useState<BlogDto[]>([]);
@@ -13,7 +13,7 @@ export default function BlogPage() {
     async function fetchBlogs() {
       try {
         setLoading(true);
-        const freshBlogs = await getBlogs(false); // 👈 côté client
+        const freshBlogs = await getPublishedBlogs(false);
         setBlogs(freshBlogs);
       } catch (err) {
         console.error('❌ Erreur lors de la récupération des blogs :', err);
@@ -24,7 +24,7 @@ export default function BlogPage() {
     }
 
     fetchBlogs();
-  }, []); // 👈 se recharge à chaque ouverture de la page
+  }, []);
 
   if (loading) {
     return (

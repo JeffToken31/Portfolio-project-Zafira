@@ -1,4 +1,3 @@
-// lib/api/blog.ts
 export interface CreateBlogDto {
   title: string;
   content: string;
@@ -25,13 +24,13 @@ export interface BlogDto {
 }
 
 // ----------------------------
-// Gestion des URLs API
+// URL API management
 // ----------------------------
 
 function getApiBase(ssr: boolean) {
   return ssr
-    ? process.env.API_BASE_SSR || 'http://backend:3001'
-    : process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3001';
+    ? process.env.API_BASE_SSR
+    : process.env.NEXT_PUBLIC_API_BASE;
 }
 
 // ----------------------------
@@ -41,7 +40,7 @@ export async function createBlog(blog: CreateBlogDto, ssr = false) {
   const res = await fetch(`${getApiBase(ssr)}/blogs`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    // côté SSR, on n'envoie pas les cookies du navigateur
+    // On SSR side, cookie can't kepped
     credentials: ssr ? 'omit' : 'include',
     body: JSON.stringify(blog),
   });
@@ -85,7 +84,7 @@ export async function getBlogById(id: string, ssr = false): Promise<BlogDto> {
 // ----------------------------
 export async function getBlogBySlug(
   slug: string,
-  ssr = false
+  ssr = true
 ): Promise<BlogDto> {
   const res = await fetch(`${getApiBase(ssr)}/blogs/slug/${slug}`, {
     method: 'GET',
@@ -93,6 +92,20 @@ export async function getBlogBySlug(
   });
 
   if (!res.ok) throw new Error('Blog non trouvé');
+  return res.json();
+}
+
+// ----------------------------
+// GET Published Blogs (for public site)
+// ----------------------------
+export async function getPublishedBlogs(ssr = false): Promise<BlogDto[]> {
+  const res = await fetch(`${getApiBase(ssr)}/blogs/public`, {
+    method: 'GET',
+    cache: ssr ? 'no-store' : 'default',
+    credentials: ssr ? 'omit' : 'include',
+  });
+
+  if (!res.ok) throw new Error('Erreur lors de la récupération des blogs publiés');
   return res.json();
 }
 
