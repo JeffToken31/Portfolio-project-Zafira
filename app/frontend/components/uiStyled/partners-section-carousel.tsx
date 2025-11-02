@@ -7,6 +7,7 @@ import { getPartners, PartnerDto } from '@/lib/api/partners';
 
 export default function PartnersSectionCarousel() {
   const [partners, setPartners] = React.useState<PartnerDto[]>([]);
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     async function fetchPartners() {
@@ -20,53 +21,53 @@ export default function PartnersSectionCarousel() {
     fetchPartners();
   }, []);
 
-  const logos = partners.map((p) => p.logoUrl).filter(Boolean);
+  if (partners.length === 0) return null;
 
-  if (logos.length === 0) return null;
-
-  const logoSize = 120; // taille du logo
-  const gap = 160; // distance horizontale entre les logos
-  const baseSpeed = 40; // durée moyenne d’un cycle complet
+  // Largeur fixe du logo et espace entre les logos
+  const logoWidth = 120;
+  const gap = 100;
+  const speed = 50; // pixels/seconde
 
   return (
-    <section className="py-20 bg-[var(--color-bg-alt)] text-center overflow-hidden">
+    <section className="py-20 bg-[var(--color-bg-alt)] text-center overflow-hidden relative">
       <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-primary)] mb-12">
         Nos Partenaires
       </h2>
 
-{logos.length > 0 && (
-  <div className="relative w-full overflow-hidden">
-    <motion.div
-      className="flex"
-      style={{ gap: gap }}
-      animate={{ x: [- (logoSize + gap) * logos.length, 0] }}
-      transition={{
-        x: {
-          repeat: Infinity,
-          repeatType: 'loop',
-          duration: Math.max(15, logos.length * 5), // vitesse adaptative
-          ease: 'linear',
-        },
-      }}
-    >
-      {/* On duplique les logos pour boucle continue */}
-      {[...logos, ...logos].map((logoUrl, index) => (
-        <div
-          key={index}
-          className="flex-shrink-0 relative"
-          style={{ width: logoSize, height: logoSize }}
-        >
-          <Image
-            src={logoUrl!}
-            alt={`Logo partenaire ${index + 1}`}
-            fill
-            style={{ objectFit: 'contain' }}
-          />
-        </div>
-      ))}
-    </motion.div>
-  </div>
-)}
+      <div
+        ref={containerRef}
+        className="relative w-full h-[160px] overflow-hidden"
+      >
+        {partners.map((partner, index) => {
+          const totalDistance = (logoWidth + gap) * partners.length; // distance exacte
+          const duration = totalDistance / speed;
+
+          return (
+            <motion.div
+              key={partner.id}
+              className="absolute top-1/2 -translate-y-1/2"
+              initial={{ x: -index * (logoWidth + gap) }}
+              animate={{ x: [ -index * (logoWidth + gap), window.innerWidth - logoWidth - index * (logoWidth + gap) ] }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: 'loop',
+                  duration,
+                  ease: 'linear',
+                },
+              }}
+              style={{ width: logoWidth, height: logoWidth }}
+            >
+              <Image
+                src={partner.logoUrl!}
+                alt={`Logo partenaire ${partner.id}`}
+                fill
+                style={{ objectFit: 'contain' }}
+              />
+            </motion.div>
+          );
+        })}
+      </div>
     </section>
   );
 }
