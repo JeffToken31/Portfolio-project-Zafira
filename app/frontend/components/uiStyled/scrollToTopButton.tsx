@@ -2,13 +2,20 @@
 
 import { motion } from 'framer-motion';
 import { Home } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function ScrollToHomeButton() {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const goToHome = () => {
+    if (pathname === '/') {
+      // Déjà sur la home → scroll en haut
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Naviguer vers la home avec scroll automatique
+      router.push('/', { scroll: true });
+    }
   };
 
   return (
@@ -30,7 +37,7 @@ export default function ScrollToHomeButton() {
 
       {/* Bouton principal */}
       <motion.button
-        onClick={scrollToTop}
+        onClick={goToHome}
         aria-label="Revenir à l'accueil"
         className="relative p-4 rounded-full bg-[#38b6ff] text-white shadow-lg hover:shadow-2xl transition-all duration-300"
         whileHover={{ scale: 1.15 }}

@@ -78,33 +78,43 @@ export default function ActionSectionCarousel({
                 key={action.id}
                 className="flex-shrink-0 w-full sm:w-80"
               >
-                <div>
-                  <Card className="bg-bg shadow-md rounded-2xl overflow-hidden">
-                    {action.imageUrl && (
+                <Card className="bg-bg shadow-md rounded-2xl overflow-hidden flex flex-col h-[450px]">
+                  {/* Conteneur image avec ratio fixe */}
+                  {action.imageUrl && (
+                    <div className="relative w-full h-[200px] sm:h-[220px] md:h-[250px] lg:h-[280px]">
                       <Image
                         src={action.imageUrl}
                         alt={action.title || 'Action'}
-                        width={800}
-                        height={450}
-                        className="w-full md:object-cover rounded-2xl"
+                        fill
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
+                        className="rounded-t-2xl"
                       />
-                    )}
-                    <CardContent className="p-8">
+                    </div>
+                  )}
+
+                  {/* Contenu texte */}
+                  <CardContent className="p-6 flex flex-col justify-between flex-1">
+                    <div>
                       <h3 className="text-xl font-semibold text-[var(--color-text)] mb-2">
                         {action.title}
                       </h3>
-                      <p className="text-text pb-4">
+                      <p className="text-text text-sm sm:text-base">
                         {action.description}
                       </p>
+                    </div>
+
+                    {/* Bouton centré en bas */}
+                    <div className="flex justify-center mt-4">
                       <Link href={`/actions/${action.id}`}>
                         <Button variant="blog">Découvrir</Button>
                       </Link>
-                    </CardContent>
-                  </Card>
-                </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </CarouselItem>
             ))}
           </CarouselContent>
+
 
           <CarouselPrevious className="text-text" />
           <CarouselNext className="text-text" />
