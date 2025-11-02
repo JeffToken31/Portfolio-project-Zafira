@@ -22,7 +22,7 @@ export default function BlogSectionCard({ title, excerpt, image, link }: BlogCar
         className="w-full h-56 object-cover"
         unoptimized
       />
-      <div className="p-6 text-left">
+      <div className="p-6 text-center">
         <h3 className="text-xl font-semibold text-text mb-2">
           {title}
         </h3>

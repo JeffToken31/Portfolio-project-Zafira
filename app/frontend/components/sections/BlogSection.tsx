@@ -1,9 +1,9 @@
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import BlogSectionCard from '../uiStyled/blog-section-card';
-import {Button} from '@/components/uiStyled/button';
-import {getPublishedBlogs, BlogDto} from '@/lib/api/blog';
+import { Button } from '@/components/uiStyled/button';
+import { getPublishedBlogs, BlogDto } from '@/lib/api/blog';
 
 export default function BlogSection() {
   const [blogs, setBlogs] = useState<BlogDto[]>([]);
@@ -46,28 +46,36 @@ export default function BlogSection() {
         {error && <p className="text-red-500">{error}</p>}
 
         {/* Blog list */}
-        {!loading &&
-          !error &&
-          (blogs.length > 0 ? (
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {blogs.map((blog) => (
-                <BlogSectionCard
-                  key={blog.id}
-                  title={blog.title}
-                  excerpt={blog.excerpt ?? ''}
-                  image={
-                    blog.coverImageUrl ||
-                    blog.mediaUrl ||
-                    '/images/placeholder.jpg'
-                  }
-                  link={`/blog/${blog.slug}`}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">Aucun article pour le moment.</p>
-          ))}
+        {!loading && !error && (
+          <>
+            {blogs.length > 0 ? (
+              <div
+                className="
+                  flex flex-wrap justify-center gap-8
+                  max-w-7xl mx-auto
+                "
+              >
+                {blogs.map((blog) => (
+                  <BlogSectionCard
+                    key={blog.id}
+                    title={blog.title}
+                    excerpt={blog.excerpt ?? ''}
+                    image={
+                      blog.coverImageUrl ||
+                      blog.mediaUrl ||
+                      '/images/placeholder.jpg'
+                    }
+                    link={`/blog/${blog.slug}`}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500">Aucun article pour le moment.</p>
+            )}
+          </>
+        )}
 
+        {/* Bouton "Tous les articles" */}
         <div className="mt-12">
           <Button href="/blog" variant="connect">
             Tous les articles

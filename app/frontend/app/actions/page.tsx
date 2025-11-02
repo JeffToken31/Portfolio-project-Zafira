@@ -1,8 +1,8 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import ActionSectionCard from '@/components/uiStyled/action-section-card';
-import {getActions, ActionDto} from '@/lib/api/actions';
+import { getActions, ActionDto } from '@/lib/api/actions';
 
 export default function ActionsPage() {
   const [actions, setActions] = useState<ActionDto[]>([]);
@@ -12,7 +12,6 @@ export default function ActionsPage() {
   useEffect(() => {
     async function fetchActions() {
       try {
-        setLoading(true);
         const data = await getActions();
         setActions(data);
       } catch (err) {
@@ -41,18 +40,16 @@ export default function ActionsPage() {
     );
 
   return (
-    <main className="bg-bg">
-      <div className="max-w-6xl mx-auto py-12 px-4">
-        <h1 className="text-3xl font-bold mb-8 text-center">
-          Nos prestations
-        </h1>
+    <main className="bg-bg min-h-screen py-12 px-4">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-center">Nos prestations</h1>
 
         {actions.length === 0 ? (
           <p className="text-gray-500 text-center">
-            Aucune prestations trouvée pour le moment.
+            Aucune prestation trouvée pour le moment.
           </p>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="flex justify-center gap-6 flex-wrap">
             {actions.map((action) => (
               <ActionSectionCard
                 key={action.id}
