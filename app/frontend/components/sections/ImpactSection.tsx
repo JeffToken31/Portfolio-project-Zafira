@@ -3,7 +3,6 @@
 import React from 'react';
 import {motion} from 'framer-motion';
 import {Users, Weight, Presentation} from 'lucide-react';
-import {Button} from '../uiStyled/button';
 import ImpactSectionCard from '../uiStyled/impact-section-card';
 import {useManualStats} from '@/lib/hooks/useManualStats';
 
@@ -27,7 +26,6 @@ const ImpactSection: React.FC = () => {
       excerpt:
         'Accompagnement individuel et collectif pour mieux vivre au quotidien.',
       image: '/bénéficiaires accompagnés.jpg',
-      link: '/impact/beneficiaires',
     },
     {
       icon: <Weight />,
@@ -38,7 +36,6 @@ const ImpactSection: React.FC = () => {
       excerpt:
         'Collecte, tri et redistribution de vêtements pour les familles dans le besoin.',
       image: '/vetements collectés.jpg',
-      link: '/impact/collecte-vetements',
     },
     {
       icon: <Presentation />,
@@ -49,7 +46,6 @@ const ImpactSection: React.FC = () => {
       excerpt:
         "Ateliers pratiques et théoriques pour renforcer l'estime de soi.",
       image: '/ateliers organisés.jpg',
-      link: '/impact/ateliers',
     },
   ];
 
@@ -105,11 +101,6 @@ const ImpactSection: React.FC = () => {
           ))}
         </div>
 
-        <div className="text-center mt-8">
-          <Button variant="fake" size="lg">
-            Ensemble, redonnons l'espoir d'y arriver.
-          </Button>
-        </div>
       </div>
     </section>
   );
