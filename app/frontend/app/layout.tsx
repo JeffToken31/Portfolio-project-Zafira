@@ -6,7 +6,6 @@ import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
 import {AuthProvider} from '@/lib/context/AuthContext';
 import {recordVisit} from '@/lib/api/stats';
-import ScrollToTopButton from '@/components/uiStyled/scrollToTopButton';
 
 interface LayoutProps {
   children: ReactNode;
@@ -47,7 +46,6 @@ export default function RootLayout({children}: LayoutProps) {
           <Navbar />
           <main className="min-h-[calc(100vh-100px)]">{children}</main>
           <Footer />
-          <ScrollToTopButton />
         </AuthProvider>
       </body>
     </html>

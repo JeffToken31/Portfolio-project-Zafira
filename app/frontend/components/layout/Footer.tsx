@@ -108,6 +108,14 @@ export default function Footer() {
                   Devenir bénévole
                 </a>
               </li>
+              <li>
+                <a
+                  href="#contact"
+                  className="hover:text-[var(--color-primary)] transition"
+                >
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
         </div>

@@ -35,7 +35,7 @@ export default function MissionSectionButton({
   );
 
   if (href) {
-    return <a href={href}>{button}</a>;
+    return <Link href={href}>{button}</Link>;
   }
 
   return button;
