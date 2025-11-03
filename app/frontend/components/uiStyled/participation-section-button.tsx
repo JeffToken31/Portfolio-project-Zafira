@@ -30,9 +30,10 @@ export default function ParticipationButton({
       ? 'bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)]'
       : 'bg-[var(--color-secondary)] hover:bg-[var(--color-secondary-hover)]';
 
-const widthClass =
+  // 🔧 On définit une largeur exacte pour le mode “half”
+  const widthClass =
     width === 'half'
-      ? 'w-[100%]'
+      ? 'w-[100%]' // 👈 40% de la largeur du conteneur parent
       : 'w-full';
 
   const button = (
@@ -45,6 +46,7 @@ const widthClass =
     </Button>
   );
 
+  // ⚡ Correction : le Link doit hériter de la largeur du bouton
   if (href)
     return (
       <Link href={href} className={`${widthClass} flex justify-center`}>
