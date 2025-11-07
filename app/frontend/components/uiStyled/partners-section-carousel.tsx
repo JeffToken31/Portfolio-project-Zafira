@@ -1,9 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { getPartners, PartnerDto } from '@/lib/api/partners';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import { usePartners } from '@/lib/hooks/usePartners';
 
 export default function PartnersSectionCarousel() {
   const [partners, setPartners] = React.useState<PartnerDto[]>([]);
