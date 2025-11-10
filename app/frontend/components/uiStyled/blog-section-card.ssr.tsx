@@ -29,7 +29,7 @@ export default function BlogSectionCard({
       </div>
 
       {/* Contenu centré */}
-      <div className="p-6 text-center">
+      <div className="p-6 text-center flex flex-col">
         <h3 className="text-xl md:text-2xl font-semibold break-words">
           {title}
         </h3>

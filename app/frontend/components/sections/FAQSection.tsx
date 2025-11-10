@@ -2,6 +2,7 @@
 
 import React from 'react';
 import FAQSectionAccordion from '../uiStyled/faq-section-accordion';
+import {Button} from '../uiStyled/button';
 
 export default function FAQSection() {
   const faqItems = [
@@ -41,6 +42,12 @@ export default function FAQSection() {
         {/* 🧩 Liste des questions en accordéon */}
         <FAQSectionAccordion items={faqItems} />
 
+        {/* 🔘 Bouton "Voir toutes les questions" */}
+        <div className="mt-10 flex justify-center">
+          <Button href="#faq" variant="connect">
+            Voir toutes les questions
+          </Button>
+        </div>
       </div>
     </section>
   );

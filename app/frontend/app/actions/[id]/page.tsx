@@ -1,14 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { getActionById, ActionDto } from '@/lib/api/actions';
+import {useEffect, useState} from 'react';
+import {useParams} from 'next/navigation';
+import {getActionById, ActionDto} from '@/lib/api/actions';
 import Image from 'next/image';
-import BlogSectionButton from '@/components/uiStyled/blog-section-button';
 
 export default function ActionDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const [action, setAction] = useState<ActionDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +14,7 @@ export default function ActionDetailPage() {
   useEffect(() => {
     const id = params.id;
 
-    // Type guard pour s'assurer que id est un string
+    // Type guard runtime
     if (!id || Array.isArray(id)) {
       setError('ID invalide dans l’URL');
       setLoading(false);
@@ -25,6 +23,8 @@ export default function ActionDetailPage() {
 
     async function fetchAction() {
       try {
+        setLoading(true);
+        // TypeScript compliant avec "as string"
         const data = await getActionById(id as string);
         setAction(data);
       } catch (err) {
@@ -60,33 +60,17 @@ export default function ActionDetailPage() {
     );
 
   return (
-    <main className="bg-bg min-h-screen py-12 px-4 flex justify-center items-center">
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl overflow-hidden">
-        {/* Conteneur pour image, avec ratio fixe pour garder la netteté */}
-        <div className="w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] relative">
-          <Image
-            src={action.imageUrl || '/images/placeholder.jpg'}
-            alt={action.title}
-            fill
-            style={{ objectFit: 'contain', objectPosition: 'center' }}
-            priority
-          />
-        </div>
-
-        <div className="p-6 flex flex-col items-center gap-4 text-center">
-          <h1 className="text-3xl sm:text-4xl font-bold text-text">{action.title}</h1>
-          <p className="text-gray-700 text-lg sm:text-xl">{action.description}</p>
-
-          {/* Bouton centré */}
-          <div className="flex justify-center mt-4">
-            <BlogSectionButton
-              onClick={() => router.push('/actions')}
-              variant="secondary"
-            >
-              Retour aux prestations
-            </BlogSectionButton>
-          </div>
-        </div>
+    <main className="bg-bg min-h-screen">
+      <div className="max-w-4xl mx-auto py-12 px-4">
+        <h1 className="text-3xl font-bold mb-4">{action.title}</h1>
+        <Image
+          src={action.imageUrl || '/images/placeholder.jpg'}
+          alt={action.title}
+          width={800}
+          height={450}
+          className="w-full mb-4 rounded"
+        />
+        <p>{action.description}</p>
       </div>
     </main>
   );
