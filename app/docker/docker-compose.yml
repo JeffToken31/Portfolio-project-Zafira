@@ -6,9 +6,9 @@ services:
     container_name: zafira_db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: zafira
-      POSTGRES_PASSWORD: zafira_pass
-      POSTGRES_DB: zafira_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
@@ -16,33 +16,37 @@ services:
 
   backend:
     build:
-      context: ../back_end
+      context: ../backend
       dockerfile: Dockerfile
     container_name: zafira_backend
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://zafira:zafira_pass@db:5432/zafira_db
+      DATABASE_URL: ${DATABASE_URL}
     ports:
       - "3001:3001"
+      - "5555:5555" #prisma studio
     volumes:
-      - ../back_end:/app
+      - ../backend:/app
       - /app/node_modules
-    command: npm run start:dev
+    command:
+    - sh
+    - -c
+    - "npx prisma migrate deploy && npx prisma db seed && npm run start:dev"
 
   frontend:
     build:
-      context: ../front_end
+      context: ../frontend
       dockerfile: Dockerfile
     container_name: zafira_frontend
     depends_on:
       - backend
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:3001
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     ports:
       - "3000:3000"
     volumes:
-      - ../front_end:/app
+      - ../frontend:/app
       - /app/node_modules
     command: npm run dev
 
