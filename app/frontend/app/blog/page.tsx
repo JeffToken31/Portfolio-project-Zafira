@@ -56,9 +56,8 @@ export default function BlogPage() {
         ) : (
           <div className="flex justify-center gap-8">
             {blogs.map((blog) => (
-              <div className="flex-shrink-0">
+              <div key={blog.id} className="flex-shrink-0">
                 <BlogSectionCard
-                  key={blog.id}
                   title={blog.title}
                   excerpt={blog.excerpt ?? ''}
                   image={blog.coverImageUrl || '/images/placeholder.jpg'}

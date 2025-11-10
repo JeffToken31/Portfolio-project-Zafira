@@ -50,10 +50,7 @@ export default function BlogSection() {
           <>
             {blogs.length > 0 ? (
               <div
-                className="
-                  flex flex-wrap justify-center gap-8
-                  max-w-7xl mx-auto
-                "
+                className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
               >
                 {blogs.map((blog) => (
                   <BlogSectionCard
