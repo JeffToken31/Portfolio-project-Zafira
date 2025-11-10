@@ -1,8 +1,8 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import BlogSectionCard from '@/components/uiStyled/blog-section-card';
-import {getPublishedBlogs, BlogDto} from '@/lib/api/blog';
+import { getPublishedBlogs, BlogDto } from '@/lib/api/blog';
 
 export default function BlogPage() {
   const [blogs, setBlogs] = useState<BlogDto[]>([]);
@@ -14,7 +14,7 @@ export default function BlogPage() {
       try {
         setLoading(true);
         const freshBlogs = await getPublishedBlogs(false);
-        setBlogs(freshBlogs);
+        setBlogs(freshBlogs.slice(0, 3)); // max 3 cards
       } catch (err) {
         console.error('❌ Erreur lors de la récupération des blogs :', err);
         setError('Impossible de charger les articles du blog.');
@@ -44,8 +44,8 @@ export default function BlogPage() {
 
   return (
     <main className="bg-bg">
-      <div className="max-w-6xl mx-auto py-12 px-4">
-        <h1 className="text-3xl font-bold mb-8 text-center">
+      <div className="max-w-7xl mx-auto py-16 px-6">
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-text">
           Tous les articles du blog
         </h1>
 
@@ -54,7 +54,7 @@ export default function BlogPage() {
             Aucun article trouvé pour le moment.
           </p>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="flex justify-center gap-8">
             {blogs.map((blog) => (
               <div key={blog.id} className="flex-shrink-0">
                 <BlogSectionCard

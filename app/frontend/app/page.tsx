@@ -13,7 +13,7 @@ import TestimonialSection from '@/components/sections/TestimonialSection';
 export default function HomePage() {
   return (
     <main>
-      <section id="home">
+      <section id="home" className="min-h-screen">
         <HeroSection />
       </section>
 

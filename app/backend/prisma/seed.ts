@@ -67,7 +67,7 @@ async function main(): Promise<void> {
   }
 
   // ---- ADMIN3 USER ----
-  const admin3Email = 'ingrid.mornac@holbertonstudents.com';
+  const admin3Email = 'imornac@gmail.com';
   const existingAdmin3 = await prisma.user.findUnique({
     where: { email: admin3Email },
   });

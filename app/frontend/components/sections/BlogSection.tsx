@@ -1,9 +1,9 @@
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import BlogSectionCard from '../uiStyled/blog-section-card';
-import {Button} from '@/components/uiStyled/button';
-import {getPublishedBlogs, BlogDto} from '@/lib/api/blog';
+import { Button } from '@/components/uiStyled/button';
+import { getPublishedBlogs, BlogDto } from '@/lib/api/blog';
 
 export default function BlogSection() {
   const [blogs, setBlogs] = useState<BlogDto[]>([]);
@@ -72,6 +72,7 @@ export default function BlogSection() {
           </>
         )}
 
+        {/* Bouton "Tous les articles" */}
         <div className="mt-12">
           <Button href="/blog" variant="connect">
             Tous les articles
