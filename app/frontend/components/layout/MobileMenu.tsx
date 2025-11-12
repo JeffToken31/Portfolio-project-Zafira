@@ -1,12 +1,16 @@
 'use client';
 
 import * as React from 'react';
-import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
-import { Menu } from 'lucide-react';
-import { Button } from '../uiStyled/button';
+import {Popover, PopoverTrigger, PopoverContent} from '@radix-ui/react-popover';
+import {Menu} from 'lucide-react';
+import {Button} from '../uiStyled/button';
 import {cn} from '@/lib/utils/cn';
 
-export default function MobileMenu() {
+interface MobileMenuProps {
+  handleNavigation: (sectionId: string) => void;
+}
+
+export default function MobileMenu({handleNavigation}: MobileMenuProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -22,24 +26,42 @@ export default function MobileMenu() {
           'space-y-3'
         )}
       >
-        <a
-          href="#actions"
+        <button
+          onClick={() => handleNavigation('#hero')}
           className="text-text hover:text-primary transition-colors"
         >
-          Actions
-        </a>
-        <a
-          href="#about"
+          Accueil
+        </button>
+        <button
+          onClick={() => handleNavigation('#mission')}
           className="text-text hover:text-primary transition-colors"
         >
           À propos
-        </a>
-        <a
-          href="#contact"
+        </button>
+        <button
+          onClick={() => handleNavigation('#actions')}
           className="text-text hover:text-primary transition-colors"
         >
-          Contact
-        </a>
+          Actions
+        </button>
+        <button
+          onClick={() => handleNavigation('#blog')}
+          className="text-text hover:text-primary transition-colors"
+        >
+          Actualités
+        </button>
+        <button
+          onClick={() => handleNavigation('#faq')}
+          className="text-text hover:text-primary transition-colors"
+        >
+          FAQ
+        </button>
+        <button
+          onClick={() => handleNavigation('#participation')}
+          className="text-text hover:text-primary transition-colors"
+        >
+          Dons
+        </button>
       </PopoverContent>
     </Popover>
   );

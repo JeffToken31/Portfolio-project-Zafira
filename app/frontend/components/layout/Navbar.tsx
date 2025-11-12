@@ -1,13 +1,16 @@
 'use client';
 
-import { HeartHandshake } from 'lucide-react';
-import { useAuth } from '@/lib/hooks/useAuth';
+import {HeartHandshake} from 'lucide-react';
+import {useAuth} from '@/lib/hooks/useAuth';
 import MobileMenu from './MobileMenu';
 import LoginDialog from '../uiStyled/LoginDialog';
-import UserMenuDialog from "../uiStyled/UserMenuDialog";
+import UserMenuDialog from '../uiStyled/UserMenuDialog';
+import {usePathname, useRouter} from 'next/navigation';
 
 export default function Navbar() {
-  const { user } = useAuth();
+  const {user} = useAuth();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const renderUserSection = () => {
     if (!user) return <LoginDialog />;
@@ -16,6 +19,18 @@ export default function Navbar() {
         <UserMenuDialog />
       </div>
     );
+  };
+
+  const handleNavigation = (sectionId: string) => {
+    if (pathname === '/') {
+      const element = document.querySelector(sectionId);
+      if (element) {
+        element.scrollIntoView({behavior: 'smooth'});
+      }
+    } else {
+      // Redirige vers la page d'accueil avec l’ancre
+      router.push(`/${sectionId}`);
+    }
   };
 
   return (
@@ -30,56 +45,51 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Desktop navigation */}
       <div className="hidden md:flex items-center gap-6">
-        <a
-          href="http://localhost:3000/"
+        <button
+          onClick={() => handleNavigation('#hero')}
           className="text-text hover:text-primary transition-colors"
         >
-          {/* Accueil */}
           Accueil
-        </a>
-        <a
-          href="#mission"
+        </button>
+        <button
+          onClick={() => handleNavigation('#mission')}
           className="text-text hover:text-primary transition-colors"
         >
-          {/* Notre mission */}
           À propos
-        </a>{' '}
-        <a
-          href="#actions"
+        </button>
+        <button
+          onClick={() => handleNavigation('#actions')}
           className="text-text hover:text-primary transition-colors"
         >
-          {/* Actions */}
           Actions
-        </a>{' '}
-        <a
-          href="#blog"
+        </button>
+        <button
+          onClick={() => handleNavigation('#blog')}
           className="text-text hover:text-primary transition-colors"
         >
-          {/* Nos articles - Blog */}
           Actualités
-        </a>{' '}
-        <a
-          href="#faq"
+        </button>
+        <button
+          onClick={() => handleNavigation('#faq')}
           className="text-text hover:text-primary transition-colors"
         >
-          {/* Foire Aux Questions */}
           FAQ
-        </a>
-        <a
-          href="#participation"
+        </button>
+        <button
+          onClick={() => handleNavigation('#participation')}
           className="text-text hover:text-primary transition-colors"
         >
-          {/* Participer à notre mission */}
           Dons
-        </a>
+        </button>
         {renderUserSection()}
       </div>
 
-      {/* Mobile */}
+      {/* Mobile menu trigger */}
       <div className="md:hidden flex items-center gap-2">
         {renderUserSection()}
-        <MobileMenu />
+        <MobileMenu handleNavigation={handleNavigation} />
       </div>
     </nav>
   );

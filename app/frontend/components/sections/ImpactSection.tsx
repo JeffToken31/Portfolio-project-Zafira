@@ -50,19 +50,19 @@ const ImpactSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-100">
+    <section className="pt-20 lg:pb-20 bg-gray-100">
       <div className="container mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold mb-4">Notre Impact</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Chaque chiffre raconte une histoire de transformation et d'espoir.
         </p>
 
-        {/* Affichage en attente */}
+        {/* Loader */}
         {loading && <p className="text-gray-500 mt-4">Chargement...</p>}
         {error && <p className="text-red-500 mt-4">{error}</p>}
 
-        {/* 📊 Mini-Stats Impact */}
-        <div className="grid md:grid-cols-3 gap-8 text-center my-8 justify-center">
+        {/* Stats Impact */}
+        <div className="grid md:grid-cols-3 gap-8 text-center mt-8 justify-center">
           <motion.div
             whileInView={{opacity: 1, y: 0}}
             initial={{opacity: 0, y: 30}}
