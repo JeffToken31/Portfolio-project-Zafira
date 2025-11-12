@@ -14,10 +14,10 @@ export default function BlogPage() {
       try {
         setLoading(true);
         const freshBlogs = await getPublishedBlogs(false);
-        setBlogs(freshBlogs);
+        setBlogs(freshBlogs); // fetch all blogs
       } catch (err) {
-        console.error('❌ Erreur lors de la récupération des blogs :', err);
-        setError('Impossible de charger les articles du blog.');
+        console.error('❌ Error fetching blogs:', err);
+        setError('Unable to load blog posts.');
       } finally {
         setLoading(false);
       }
@@ -29,7 +29,7 @@ export default function BlogPage() {
   if (loading) {
     return (
       <main className="bg-bg min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Chargement des articles...</p>
+        <p className="text-gray-500">Loading blog posts...</p>
       </main>
     );
   }
@@ -44,17 +44,16 @@ export default function BlogPage() {
 
   return (
     <main className="bg-bg">
-      <div className="max-w-6xl mx-auto py-12 px-4">
-        <h1 className="text-3xl font-bold mb-8 text-center">
+      <div className="max-w-7xl mx-auto py-16 px-6">
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-text">
           Tous les articles du blog
         </h1>
 
         {blogs.length === 0 ? (
-          <p className="text-gray-500 text-center">
-            Aucun article trouvé pour le moment.
-          </p>
+          <p className="text-gray-500 text-center">No blog posts found.</p>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          // Use CSS grid instead of flex for responsive layout
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {blogs.map((blog) => (
               <BlogSectionCard
                 key={blog.id}

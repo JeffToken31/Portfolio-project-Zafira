@@ -3,12 +3,14 @@ import {notFound} from 'next/navigation';
 import Image from 'next/image';
 
 interface BlogSlugPageProps {
-  params: {slug: string};
+  params: Promise<{slug: string}>;
 }
 
 export async function generateMetadata({params}: BlogSlugPageProps) {
+  const {slug} = await params;
+
   try {
-    const blog = await getBlogBySlug(params.slug, true);
+    const blog = await getBlogBySlug(slug, true);
 
     if (!blog) {
       return {
@@ -50,9 +52,8 @@ export async function generateMetadata({params}: BlogSlugPageProps) {
   }
 }
 
-
 export default async function BlogSlugPage({params}: BlogSlugPageProps) {
-  const {slug} = params;
+  const {slug} = await params;
 
   let blog;
   try {
@@ -78,7 +79,7 @@ export default async function BlogSlugPage({params}: BlogSlugPageProps) {
   return (
     <main className="max-w-5xl mx-auto py-10 px-4 sm:px-8">
       <article className="space-y-10">
-        {/* Header : titre + date */}
+        {/* Header */}
         <header className="text-center mb-6 sm:mb-10">
           <h1 className="text-3xl sm:text-5xl font-extrabold mb-2 text-gray-900 leading-tight">
             {blog.title}
@@ -115,6 +116,7 @@ export default async function BlogSlugPage({params}: BlogSlugPageProps) {
             )}
           </div>
         )}
+
         <section
           className="prose prose-sm sm:prose-lg max-w-none text-gray-800 leading-relaxed"
           dangerouslySetInnerHTML={{__html: blog.content}}

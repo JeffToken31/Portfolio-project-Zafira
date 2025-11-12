@@ -19,7 +19,6 @@ export default function AdminTestimonialDashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [refreshFlag, setRefreshFlag] = useState(0);
 
-  // --- Récupération des témoignages ---
   useEffect(() => {
     let active = true;
 
@@ -45,7 +44,6 @@ export default function AdminTestimonialDashboardPage() {
 
   const refresh = () => setRefreshFlag((x) => x + 1);
 
-  // --- Validation ---
   const handleToggleValidation = async (t: TestimonialDto) => {
     try {
       if (t.validated) await unvalidateTestimonial(t.id);
@@ -60,7 +58,6 @@ export default function AdminTestimonialDashboardPage() {
     }
   };
 
-  // --- Publication ---
   const handleTogglePublish = async (t: TestimonialDto) => {
     try {
       if (t.published) await unpublishTestimonial(t.id);
@@ -75,7 +72,6 @@ export default function AdminTestimonialDashboardPage() {
     }
   };
 
-  // --- Suppression ---
   const handleDelete = async (id: string) => {
     if (!confirm('Supprimer ce témoignage ?')) return;
     try {
@@ -123,7 +119,6 @@ export default function AdminTestimonialDashboardPage() {
                     {t.content}
                   </p>
                   <p className="text-xs text-gray-500 mt-2">
-                    Créé le {new Date(t.createdAt).toLocaleDateString('fr-FR')}
                     {t.published
                       ? t.publishedAt
                         ? ` — Publié le ${new Date(

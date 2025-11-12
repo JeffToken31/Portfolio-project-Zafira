@@ -3,7 +3,6 @@
 import React from 'react';
 import {motion} from 'framer-motion';
 import {Users, Weight, Presentation} from 'lucide-react';
-import {Button} from '../uiStyled/button';
 import ImpactSectionCard from '../uiStyled/impact-section-card';
 import {useManualStats} from '@/lib/hooks/useManualStats';
 
@@ -27,7 +26,6 @@ const ImpactSection: React.FC = () => {
       excerpt:
         'Accompagnement individuel et collectif pour mieux vivre au quotidien.',
       image: '/bénéficiaires accompagnés.jpg',
-      link: '/impact/beneficiaires',
     },
     {
       icon: <Weight />,
@@ -38,7 +36,6 @@ const ImpactSection: React.FC = () => {
       excerpt:
         'Collecte, tri et redistribution de vêtements pour les familles dans le besoin.',
       image: '/vetements collectés.jpg',
-      link: '/impact/collecte-vetements',
     },
     {
       icon: <Presentation />,
@@ -49,24 +46,23 @@ const ImpactSection: React.FC = () => {
       excerpt:
         "Ateliers pratiques et théoriques pour renforcer l'estime de soi.",
       image: '/ateliers organisés.jpg',
-      link: '/impact/ateliers',
     },
   ];
 
   return (
-    <section className="py-20 bg-gray-100">
+    <section className="pt-20 lg:pb-20 bg-gray-100">
       <div className="container mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold mb-4">Notre Impact</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Chaque chiffre raconte une histoire de transformation et d'espoir.
         </p>
 
-        {/* Affichage en attente */}
+        {/* Loader */}
         {loading && <p className="text-gray-500 mt-4">Chargement...</p>}
         {error && <p className="text-red-500 mt-4">{error}</p>}
 
-        {/* 📊 Mini-Stats Impact */}
-        <div className="grid md:grid-cols-3 gap-8 text-center my-8 justify-center">
+        {/* Stats Impact */}
+        <div className="grid md:grid-cols-3 gap-8 text-center mt-8 justify-center">
           <motion.div
             whileInView={{opacity: 1, y: 0}}
             initial={{opacity: 0, y: 30}}
@@ -105,11 +101,6 @@ const ImpactSection: React.FC = () => {
           ))}
         </div>
 
-        <div className="text-center mt-8">
-          <Button variant="fake" size="lg">
-            Ensemble, redonnons l'espoir d'y arriver.
-          </Button>
-        </div>
       </div>
     </section>
   );

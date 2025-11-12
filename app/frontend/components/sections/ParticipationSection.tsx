@@ -3,7 +3,6 @@
 import React from 'react';
 import { CheckSquare, Gift, Heart, Euro, Home, Info } from 'lucide-react';
 import ParticipationCard from '@/components/uiStyled/participation-section-card';
-import Link from 'next/link';
 
 export default function ParticipationSection() {
   return (
@@ -19,7 +18,7 @@ export default function ParticipationSection() {
       </p>
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
-        {/* 🧥 Donner des vêtements */}
+        {/* Donner des vêtements */}
         <ParticipationCard
           type="clothing"
           icon={<Gift className="text-blue-500 w-6 h-6" />}
@@ -38,7 +37,7 @@ export default function ParticipationSection() {
             },
             {
               icon: <CheckSquare className="text-blue-500 w-5 h-5" />,
-              title: 'Toute taille',
+              title: 'Toutes tailles',
               description: 'Du XS au XXL',
             },
             {
@@ -49,7 +48,7 @@ export default function ParticipationSection() {
           ]}
         />
 
-        {/* 💖 Soutenir financièrement */}
+        {/* Soutenir financièrement */}
         <ParticipationCard
           type="donation"
           icon={<Heart className="text-red-500 w-6 h-6" />}
@@ -59,12 +58,11 @@ export default function ParticipationSection() {
             {
               icon: <Info className="text-red-500 w-5 h-5" />,
               title: (
-                <Link
-                  href="/don-helloasso"
+                <a
                   className="text-black hover:underline rouded-full font-medium flex items-center gap-2"
                 >
                   Formulaire HelloAsso
-                </Link>
+                </a>
               ),
               description:
                 'Remplissez notre formulaire sécurisé de don en ligne',
@@ -73,9 +71,6 @@ export default function ParticipationSection() {
               icon: <Gift className="text-red-500 w-5 h-5" />,
               title: (
                 <a
-                  href="https://www.helloasso.com/associations/zafira-vestiaire-solidaire"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="text-black hover:underline font-medium flex items-center gap-2"
                 >
                   Faire un don
