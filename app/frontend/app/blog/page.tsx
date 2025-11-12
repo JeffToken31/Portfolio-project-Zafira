@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import BlogSectionCard from '@/components/uiStyled/blog-section-card';
-import { getPublishedBlogs, BlogDto } from '@/lib/api/blog';
+import {getPublishedBlogs, BlogDto} from '@/lib/api/blog';
 
 export default function BlogPage() {
   const [blogs, setBlogs] = useState<BlogDto[]>([]);
@@ -14,10 +14,10 @@ export default function BlogPage() {
       try {
         setLoading(true);
         const freshBlogs = await getPublishedBlogs(false);
-        setBlogs(freshBlogs.slice(0, 3)); // max 3 cards
+        setBlogs(freshBlogs); // fetch all blogs
       } catch (err) {
-        console.error('❌ Erreur lors de la récupération des blogs :', err);
-        setError('Impossible de charger les articles du blog.');
+        console.error('❌ Error fetching blogs:', err);
+        setError('Unable to load blog posts.');
       } finally {
         setLoading(false);
       }
@@ -29,7 +29,7 @@ export default function BlogPage() {
   if (loading) {
     return (
       <main className="bg-bg min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Chargement des articles...</p>
+        <p className="text-gray-500">Loading blog posts...</p>
       </main>
     );
   }
@@ -50,20 +50,18 @@ export default function BlogPage() {
         </h1>
 
         {blogs.length === 0 ? (
-          <p className="text-gray-500 text-center">
-            Aucun article trouvé pour le moment.
-          </p>
+          <p className="text-gray-500 text-center">No blog posts found.</p>
         ) : (
-          <div className="flex justify-center gap-8">
+          // Use CSS grid instead of flex for responsive layout
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {blogs.map((blog) => (
-              <div key={blog.id} className="flex-shrink-0">
-                <BlogSectionCard
-                  title={blog.title}
-                  excerpt={blog.excerpt ?? ''}
-                  image={blog.coverImageUrl || '/images/placeholder.jpg'}
-                  link={`/blog/${blog.slug}`}
-                />
-              </div>
+              <BlogSectionCard
+                key={blog.id}
+                title={blog.title}
+                excerpt={blog.excerpt ?? ''}
+                image={blog.coverImageUrl || '/images/placeholder.jpg'}
+                link={`/blog/${blog.slug}`}
+              />
             ))}
           </div>
         )}
